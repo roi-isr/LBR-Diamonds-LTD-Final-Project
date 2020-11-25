@@ -1,11 +1,17 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import Header from './Components/Header'
+import Footer from './Components/Footer'
+import Homepage from './Components/Homepage'
 
 function App() {
   return (
-    <div className="App">
-      פרויקט גמר LBR
-    </div>
+    <React.Fragment>
+      <Header />
+      {/* Router */}
+      <Homepage />
+      <Footer />
+    </React.Fragment>
   );
 }
 

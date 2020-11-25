@@ -12,9 +12,7 @@ const Header = () => {
 
         <header>
             <img src={Logo} className="logo" alt="logo image" />
-
             <NavItem />
-
         </header>
 
     )
@@ -37,11 +35,11 @@ const NavItem = () => {
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto" style={{ justifyContent: "space-between", width: "60%" }}>
                     <Nav.Link href="#login"><AccountCircleIcon className="login-btn" fontSize="medium" color="blue" /></Nav.Link>
-                    <Nav.Link href="#home">Home</Nav.Link>
-                    <Nav.Link href="#Shop">Shop</Nav.Link>
-                    <Nav.Link href="#About">About</Nav.Link>
-                    <Nav.Link href="#FAQ">FAQ</Nav.Link>
-                    <Nav.Link href="#Contact">Contact us</Nav.Link>
+                    <Nav.Link href="/home">Home</Nav.Link>
+                    <Nav.Link href="/store">Shop</Nav.Link>
+                    <Nav.Link href="/about">About</Nav.Link>
+                    <Nav.Link href="/qa">FAQ</Nav.Link>
+                    <Nav.Link href="/contact">Contact us</Nav.Link>
 
                 </Nav>
                 <Form inline>

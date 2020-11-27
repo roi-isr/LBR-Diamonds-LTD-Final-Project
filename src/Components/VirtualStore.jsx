@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 class VirtualStore extends React.Component {
     render() {
       return (

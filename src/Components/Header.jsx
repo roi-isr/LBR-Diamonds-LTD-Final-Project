@@ -23,7 +23,7 @@ const NavItem = () => {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto" style={{ justifyContent: "space-between", width: "60%", margin:"auto" }}>
-                    <Nav.Link href="#login"><AccountCircleIcon className="login-btn" fontSize="default" /></Nav.Link>
+                    <Nav.Link href="/sign"><AccountCircleIcon className="login-btn" fontSize="default" /></Nav.Link>
                     <Nav.Link href="/home">Home</Nav.Link>
                     <Nav.Link href="/store">Shop</Nav.Link>
                     <Nav.Link href="/about">About</Nav.Link>

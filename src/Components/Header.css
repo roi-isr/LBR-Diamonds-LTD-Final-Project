@@ -9,3 +9,15 @@ header{
 .logo-container{
     background-color: #ffffff;
 }
+
+
+@media only screen and (max-width: 990px)
+{
+    .logo{
+        width: 35%;
+    }
+    .gen-search-btn{
+        margin: auto;
+        margin-top: 5px;
+    }
+}

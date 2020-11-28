@@ -5,21 +5,26 @@ import ComPic2 from '../Assets/diamonds_comps/com02.png'
 import ComPic3 from '../Assets/diamonds_comps/com03.png'
 import ComPic4 from '../Assets/diamonds_comps/com04.png'
 
-
 const Footer = () => {
     const comp_pics = [ComPic1, ComPic2, ComPic3, ComPic4];
     return (
         <footer className="site-footer">
-            <p>
+            <p className="about-para">
                 LBR DIAMONDS currently operates in Israel and around the world, a company that provides
-             <br />
+            <br />
             For shops / individuals / merchants in the world diamonds, rough diamonds, polished and all that goes with it.
             <br />
             The company has over 20 years of experience, and specializes in diamond production.
             </p>
             <hr />
-            {comp_pics.map((item, index) =>
-                <img className="site-footer-img" key={"comp_pic" + index} src={item} alt={"comp" + index} />
+            {comp_pics.map(
+                (item, index) =>
+                    <img
+                        className="site-footer-img"
+                        key={"comp_pic" + index}
+                        src={item}
+                        alt={"comp" + index}
+                    />
             )}
         </footer>
     )

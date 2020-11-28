@@ -10,3 +10,41 @@
     display: flex;
     flex-direction: row;
 }
+.map-container-css{
+    height: 415px;
+    width: 800px;
+}
+
+.home-btn{
+    height: 30px;
+    width: 30px;
+    border-radius:60px;
+    position:absolute;
+    right:0;
+}
+.home-btn:focus{
+    outline: none;
+}
+
+.div-seperator{
+    border: 2px dashed #808080;
+}
+
+@media only screen and (max-width: 990px)
+{
+    .contact-form-div{
+        width: 100%;
+    }
+    .contact-div{
+        flex-direction: column;
+    }
+    .map-container-css{
+        width: 100%;
+    }
+    .home-btn{
+        top:553px;
+    }
+}
+
+
+

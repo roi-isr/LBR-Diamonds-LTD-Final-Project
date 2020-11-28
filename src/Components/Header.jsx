@@ -26,6 +26,7 @@ const NavItem = () => {
         <Navbar bg="light" expand="lg">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
+<<<<<<< HEAD
                 <Nav
                     className="mr-auto"
                     style={{ justifyContent: "space-between", width: "60%", margin: "auto" }}
@@ -35,6 +36,10 @@ const NavItem = () => {
                             className="login-btn"
                             fontSize="default" />
                     </Nav.Link>
+=======
+                <Nav className="mr-auto" style={{ justifyContent: "space-between", width: "60%", margin:"auto" }}>
+                    <Nav.Link href="/sign"><AccountCircleIcon className="login-btn" fontSize="default" /></Nav.Link>
+>>>>>>> 292cd1b0b97e2cb37084c908ec6fbc3cc3a1d919
                     <Nav.Link href="/home">Home</Nav.Link>
                     <Nav.Link href="/store">Shop</Nav.Link>
                     <Nav.Link href="/about">About</Nav.Link>

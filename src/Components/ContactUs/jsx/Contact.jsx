@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
-import './Contact.css'
+import '../css/Contact.css'
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import styled from 'styled-components/macro'
 import L from 'leaflet';

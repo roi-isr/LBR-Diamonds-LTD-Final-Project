@@ -1,9 +1,9 @@
 import React from 'react';
-import './Footer.css';
-import ComPic1 from '../Assets/diamonds_comps/com01.png'
-import ComPic2 from '../Assets/diamonds_comps/com02.png'
-import ComPic3 from '../Assets/diamonds_comps/com03.png'
-import ComPic4 from '../Assets/diamonds_comps/com04.png'
+import '../css/Footer.css';
+import ComPic1 from '../../Assets/diamonds_comps/com01.png'
+import ComPic2 from '../../Assets/diamonds_comps/com02.png'
+import ComPic3 from '../../Assets/diamonds_comps/com03.png'
+import ComPic4 from '../../Assets/diamonds_comps/com04.png'
 
 const Footer = () => {
     const comp_pics = [ComPic1, ComPic2, ComPic3, ComPic4];

@@ -1,6 +1,6 @@
 import React from 'react';
-import "./Header.css"
-import Logo from '../Assets/logo.jpg'
+import "../css/Header.css"
+import Logo from '../../Assets/logo.jpg'
 import { Form, FormControl, Button, Nav, Navbar } from 'react-bootstrap';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 

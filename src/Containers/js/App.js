@@ -1,13 +1,13 @@
 import React from 'react';
-import './App.css';
-import Header from '../Constants/Header'
-import Footer from '../Constants/Footer'
-import Homepage from '../Components/HomePage/Homepage'
-import Store from '../Components/VirtualStore/VirtualStore'
-import QA from '../Components/FAQ/QA'
-import Contact from '../Components/ContactUs/Contact'
-import About from '../Components/About/About'
-import Sign from '../Components/Login/SigninForm'
+import '../css/App.css';
+import Header from '../../Constants/jsx/Header'
+import Footer from '../../Constants/jsx/Footer'
+import Homepage from '../../Components/HomePage/jsx/Homepage'
+import Store from '../../Components/VirtualStore/jsx/VirtualStore'
+import QA from '../../Components/FAQ/jsx/QA'
+import Contact from '../../Components/ContactUs/jsx/Contact'
+import About from '../../Components/About/jsx/About'
+import Sign from '../../Components/Login/SigninForm'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 
 function App() {

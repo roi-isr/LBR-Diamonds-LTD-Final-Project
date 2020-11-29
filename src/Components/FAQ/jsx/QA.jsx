@@ -1,5 +1,5 @@
 import React from 'react';
-import './QA.css'
+import '../css/QA.css'
 import { Button } from 'react-bootstrap';
 
 class QA extends React.Component {

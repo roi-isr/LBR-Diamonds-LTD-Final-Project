@@ -17,6 +17,7 @@ const Footer = () => {
             The company has over 20 years of experience, and specializes in diamond production.
             </p>
             <hr />
+            {/* go through all imported images and map them into HTML's img tags  */}
             {comp_pics.map(
                 (item, index) =>
                     <img

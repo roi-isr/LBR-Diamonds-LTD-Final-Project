@@ -10,6 +10,7 @@
     display: flex;
     flex-direction: row;
 }
+
 .map-container-css{
     height: 415px;
     width: 800px;
@@ -19,7 +20,7 @@
     height: 30px;
     width: 30px;
     border-radius:60px;
-    position:absolute;
+    position: absolute;
     right:0;
 }
 .home-btn:focus{
@@ -30,6 +31,7 @@
     border: 2px dashed #808080;
 }
 
+/* Mobile compatibility */
 @media only screen and (max-width: 990px)
 {
     .contact-form-div{
@@ -42,7 +44,7 @@
         width: 100%;
     }
     .home-btn{
-        top:553px;
+        top:673px;
     }
 }
 

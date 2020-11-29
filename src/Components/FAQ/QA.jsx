@@ -1,5 +1,6 @@
 import React from 'react';
 import './QA.css'
+import { Button } from 'react-bootstrap';
 
 class QA extends React.Component {
   render() {
@@ -31,9 +32,9 @@ class QA extends React.Component {
 
         </p>
 
-        <button variant="contained" color="primary" disableElevation>
+        <Button className="qa-search-btn" color="primary" disableElevation>
           SEARCH FOR A DIAMOND NOW
-      </button>
+      </Button>
       </div>
 
     );

@@ -3,23 +3,21 @@ import "./Header.css"
 import Logo from '../Assets/logo.jpg'
 import { Form, FormControl, Button, Nav, Navbar } from 'react-bootstrap';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import SignInSide from '../MaterialUI_code/sign-in-side/SignInSide'
 
 const Header = () => {
     return (
         <header>
-            <div class="logo-container">
+            <div className="logo-container">
                 <img
                     src={Logo}
                     className="logo"
-                    alt="logo image"
+                    alt="logo"
                 />
             </div>
             <NavItem />
         </header>
     );
 }
-
 
 const NavItem = () => {
     return (

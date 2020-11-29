@@ -10,7 +10,7 @@ header{
     background-color: #ffffff;
 }
 
-
+/* Mobile compatibility */
 @media only screen and (max-width: 990px)
 {
     .logo{
@@ -19,5 +19,8 @@ header{
     .gen-search-btn{
         margin: auto;
         margin-top: 5px;
+    }
+    .mr-sm-2{
+        margin: auto;
     }
 }

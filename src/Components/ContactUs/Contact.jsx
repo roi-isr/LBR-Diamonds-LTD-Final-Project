@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import './Contact.css'
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import styled from 'styled-components/macro'
 import L from 'leaflet';
 import icon from 'leaflet/dist/images/marker-icon.png';
-import iconShadow from 'leaflet/dist/images/marker-shadow.png';
-import { Button } from 'react-bootstrap';
+// import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+// import { Button } from 'react-bootstrap';
 
-
+/* Creating a styled component that wraps the map and gives it a unique style */
 const MapWrapper = styled.div`
     position: relative
     width: 100%;
@@ -17,7 +17,7 @@ const MapWrapper = styled.div`
     grid-column: 2 / -1;
     z-index: 0;
 `
-
+/* Component that represents the display/render of the leaflet's map */
 const MapDisplay = () => {
     const [position, setPosition] = useState([32.08356032537613, 34.80143183635717]);
     var map = null;
@@ -32,13 +32,18 @@ const MapDisplay = () => {
     //     L.marker(position,{icon:markerIcon}).addTo(map)
     // },[])
     useEffect(() => {
-        if (map)
-            map.setView(position)
-    }, [position])
+        if (map) {
+            map.setZoom(15);
+            map.setView(position);
+        }
+    }, [position, map])
 
+    /* Return the map view to indicated centrelized position */
     const getBackToCenter = () => {
         setPosition([32.08356032537613, 34.80143183635717]);
     }
+
+    /* Mounting a map object to a variable for later map's potential manipulation */
     const MapFeatures = () => {
         map = useMap();
         return null;
@@ -60,6 +65,7 @@ const MapDisplay = () => {
                 </MapContainer>
                 {/* <div id="map" style={{width:"500px",height:"415px"}}></div> */}
             </MapWrapper>
+            {/* go back to centrelized position button */}
             <button
                 className="home-btn"
                 onClick={getBackToCenter}>
@@ -70,6 +76,7 @@ const MapDisplay = () => {
 
 }
 
+/* Contact us form component */
 const ContactForm = () => {
     return (
         <div className="contact-form-div">
@@ -95,6 +102,7 @@ const ContactForm = () => {
     );
 }
 
+/* full page component that binds all page's component together */
 const Contact = () => {
     return (
         <div className="contact-div">

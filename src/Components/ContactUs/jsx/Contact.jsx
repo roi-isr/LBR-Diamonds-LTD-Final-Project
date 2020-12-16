@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import '../css/Contact.css'
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import styled from 'styled-components/macro'
@@ -33,8 +34,8 @@ const MapDisplay = () => {
     // },[])
     useEffect(() => {
         if (map) {
-            map.setZoom(15);
-            map.setView(position);
+            map.setView(position)
+            setTimeout(() => map.setZoom(15), 300);
         }
     }, [position, map])
 
@@ -78,25 +79,86 @@ const MapDisplay = () => {
 
 /* Contact us form component */
 const ContactForm = () => {
+    const [email, setEmail] = useState("")
+    const [name, setName] = useState("")
+    const [phone, setPhone] = useState("")
+    const [content, setContent] = useState("")
+
+    //function that send the form data to the server .
+    const submitForm = (event) => {
+        event.preventDefault();
+        fetch("https://final-project-lbr.herokuapp.com/contact",
+            {
+                mode: 'no-cors',
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email_address: email,
+                    name: name,
+                    phone: phone,
+                    content: content
+                })
+            })
+            .then(() => onSubmitSuccess())
+            .catch(() => onSubmitFail())
+    }
+
+    // function that runs on a success submittion
+    const onSubmitSuccess = () => {
+        alert("הודעתך נשלחה בהצלחה!");
+        setEmail("");
+        setName("");
+        setPhone("");
+        setContent("");
+    }
+
+    // function that runs on a failed submittion
+    const onSubmitFail = () => {
+        alert("בעיה בשליחת ההודעה...");
+    }
+
     return (
         <div className="contact-form-div">
-            <Form>
+            <Form onSubmit={(e) => submitForm(e)}>
                 <Form.Group controlId="exampleForm.ControlInput1">
                     <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="name@example.com" />
+                    <Form.Control
+                        type="email"
+                        placeholder="name@example.com"
+                        value={email}
+                        onChange={(event) => setEmail(event.target.value)}
+                    />
                 </Form.Group>
                 <Form.Group controlId="name">
                     <Form.Label>Name</Form.Label>
-                    <Form.Control type="textarea" placeholder="Your name" />
+                    <Form.Control
+                        type="textarea"
+                        placeholder="Your name"
+                        value={name}
+                        onChange={(event) => setName(event.target.value)}
+                    />
                 </Form.Group>
                 <Form.Group controlId="num">
                     <Form.Label>Phone Number</Form.Label>
-                    <Form.Control type="Number" placeholder="054-345673" />
+                    <Form.Control
+                        type="Number"
+                        placeholder="054-345673"
+                        value={phone}
+                        onChange={(event) => setPhone(event.target.value)}
+                    />
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlTextarea1">
                     <Form.Label>Content</Form.Label>
-                    <Form.Control as="textarea" rows={3} />
+                    <Form.Control
+                        as="textarea"
+                        rows={3}
+                        value={content}
+                        onChange={(event) => setContent(event.target.value)}
+                    />
                 </Form.Group>
+                <Button type='submit'>Contact us!</Button>
             </Form>
         </div>
     );

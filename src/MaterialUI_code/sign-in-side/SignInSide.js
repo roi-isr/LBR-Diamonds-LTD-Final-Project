@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
-
+// function that returns a login page to the webmaster, including a login form, username and password.
 export default function SignInSide() {
   const classes = useStyles();
 

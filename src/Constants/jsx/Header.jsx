@@ -4,6 +4,7 @@ import Logo from '../../Assets/logo.jpg'
 import { Form, FormControl, Button, Nav, Navbar } from 'react-bootstrap';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
+/* Creating header, which contains the logo of the LBR company */
 const Header = () => {
     return (
         <header>
@@ -19,6 +20,7 @@ const Header = () => {
     );
 }
 
+/* Creating a nav-item, using React-Bootstrap (with mobile capability)*/
 const NavItem = () => {
     return (
         <Navbar bg="light" expand="lg">

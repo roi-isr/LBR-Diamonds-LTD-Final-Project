@@ -27,11 +27,6 @@ const MapDisplay = () => {
             iconUrl: icon,
             iconSize: [25, 40]
         });
-    // useEffect(()=>{
-    // const map = L.map("map-layout").setView(position,13);
-    //     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map)
-    //     L.marker(position,{icon:markerIcon}).addTo(map)
-    // },[])
     useEffect(() => {
         if (map) {
             map.setView(position)
@@ -91,7 +86,8 @@ const ContactForm = () => {
             {
                 mode: 'no-cors',
                 method: 'POST',
-                headers: {
+                headers: 
+                {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({

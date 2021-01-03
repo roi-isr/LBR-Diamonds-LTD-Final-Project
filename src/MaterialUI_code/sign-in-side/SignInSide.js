@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,6 +14,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import RE5 from '../../Assets/Dmn_pic/RE5.jpg';
+import axios from 'axios'
 
 function Copyright() {
   return (
@@ -61,11 +63,45 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 // function that returns a login page to the webmaster, including a login form, username and password.
-export default function SignInSide() {
+const SignInSide = () => {
   const classes = useStyles();
+  // Using React Hooks in order to manage component's states
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const auth_handler = (event) => {
+    event.preventDefault();
+    const content = {
+      password: password,
+      username: email,
+    }
+    fetch("http://127.0.0.1:5000/auth",
+      {
+        method: "POST",
+        mode: 'no-cors',
+        headers:
+        {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(content)
+      })
+      // .then(response => response.json())
+      // .then(data => console.log(data))
+      // .catch(() => onSubmitFail())
+  }
+
+  // function that runs on a success submittion
+  const onSubmitSuccess = (response) => {
+    console.log(response);
+
+  }
+
+  // function that runs on a failed submittion
+  const onSubmitFail = () => {
+    alert("בעיה בשליחת ההודעה...");
+  }
 
   return (
-    <Grid container component="main" className={classes.root}>
+    <Grid container component="main" className={classes.root} onSubmit={(e) => auth_handler(e)}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -85,6 +121,8 @@ export default function SignInSide() {
               label="Email Address"
               name="email"
               autoComplete="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               autoFocus
             />
             <TextField
@@ -95,6 +133,8 @@ export default function SignInSide() {
               label="Password"
               type="password"
               id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               autoComplete="current-password"
             />
             <FormControlLabel
@@ -130,3 +170,5 @@ export default function SignInSide() {
     </Grid>
   );
 }
+
+export default SignInSide;

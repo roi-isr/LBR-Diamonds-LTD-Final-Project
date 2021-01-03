@@ -5,7 +5,12 @@ import { Form, FormControl, Button, Nav, Navbar } from 'react-bootstrap';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { connect } from 'react-redux'
 
+<<<<<<< HEAD
 const Header = (props) => {
+=======
+/* Creating header, which contains the logo of the LBR company */
+const Header = () => {
+>>>>>>> 095f450747dc033e1f7eb56b08fbf27c7b9f2d0e
     return (
         <header>
             <div className="logo-container">
@@ -20,7 +25,12 @@ const Header = (props) => {
     );
 }
 
+<<<<<<< HEAD
 export const CostumizedNavItem = (props) => {
+=======
+/* Creating a nav-item, using React-Bootstrap (with mobile capability)*/
+const NavItem = () => {
+>>>>>>> 095f450747dc033e1f7eb56b08fbf27c7b9f2d0e
     return (
         <Navbar bg="light" expand="lg">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />

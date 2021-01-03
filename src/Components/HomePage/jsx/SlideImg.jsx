@@ -8,13 +8,13 @@ import RE4 from '../../../Assets/Dmn_pic/RE4.jpg';
 import RE5 from '../../../Assets/Dmn_pic/RE5.jpg';
 import RE6 from '../../../Assets/Dmn_pic/RE6.jpg';
 
-/* component for sliding images that will be displayed in the home page */
+/* Component for sliding images that will be displayed in the home page */
 const SlideImg = () => {
     const slide_interval = 4000;
     const pic_arr = [RE1, RE2, RE3, RE4, RE5, RE6];
     return (
         <Carousel className="img-carousel">
-            {/* go through all imported images and map them into Carousel.Items components  */}
+            {/* Go through all imported images and map them into Carousel.Items components */}
             {pic_arr.map((item, index) =>
                 <Carousel.Item key={"pic" + index} interval={slide_interval}>
                     <img

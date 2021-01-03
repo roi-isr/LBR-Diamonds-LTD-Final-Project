@@ -3,8 +3,9 @@ import "../css/Header.css"
 import Logo from '../../Assets/logo.jpg'
 import { Form, FormControl, Button, Nav, Navbar } from 'react-bootstrap';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { connect } from 'react-redux'
 
-const Header = () => {
+const Header = (props) => {
     return (
         <header>
             <div className="logo-container">
@@ -14,12 +15,12 @@ const Header = () => {
                     alt="logo"
                 />
             </div>
-            <NavItem />
+            {props.visibility ? <CostumizedNavItem content={props.content} /> : null }
         </header>
     );
 }
 
-const NavItem = () => {
+export const CostumizedNavItem = (props) => {
     return (
         <Navbar bg="light" expand="lg">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -33,11 +34,12 @@ const NavItem = () => {
                             className="login-btn"
                             fontSize="default" />
                     </Nav.Link>
-                    <Nav.Link href="/home">Home</Nav.Link>
+                    {props.content.map(item => <Nav.Link href={item.path}>{item.name}</Nav.Link>)}
+                    {/* <Nav.Link href="/home">Home</Nav.Link>
                     <Nav.Link href="/store">Shop</Nav.Link>
                     <Nav.Link href="/about">About</Nav.Link>
                     <Nav.Link href="/qa">FAQ</Nav.Link>
-                    <Nav.Link href="/contact">Contact us</Nav.Link>
+                    <Nav.Link href="/contact">Contact us</Nav.Link> */}
                 </Nav>
                 <Form inline>
                     <FormControl type="text" placeholder="Search" className="mr-sm-2" />
@@ -52,4 +54,11 @@ const NavItem = () => {
     )
 }
 
-export default Header;
+const mapStateToProps = (state) => {
+    return {
+        visibility: state.navControl.visible,
+        content: state.navControl.content
+    }
+}
+
+export default connect(mapStateToProps)(Header);

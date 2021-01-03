@@ -8,6 +8,7 @@ import QA from '../../Components/FAQ/jsx/QA'
 import Contact from '../../Components/ContactUs/jsx/Contact'
 import About from '../../Components/About/jsx/About'
 import Sign from '../../Components/Login/SigninForm'
+import Admin from '../../Components/Admin/Admin'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 
 function App() {
@@ -19,12 +20,12 @@ function App() {
       <Router>
         <Switch>
           <Route path="/" exact><Homepage /></Route>
-          <Route path="/sign"><Sign /></Route>
           <Route path="/home"><Homepage /></Route>
           <Route path="/store"><Store /></Route>
           <Route path="/about"><About /></Route>
           <Route path="/qa"><QA /></Route>
           <Route path="/contact"><Contact /></Route>
+          <Route path="/admin"><Sign /></Route>
         </Switch>
       </Router>
       <hr className="page-seperator" />

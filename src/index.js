@@ -5,10 +5,19 @@ import App from './Containers/js/App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'leaflet/dist/leaflet.css';
+import {createStore,combineReducers} from 'redux'
+import { Provider } from "react-redux";
+import NavControlReducer from "./store/reducers/NavControlReducer";
+
+const rootReducer=combineReducers({
+  navControl: NavControlReducer 
+})
+const store = createStore(rootReducer)
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}><App /></Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

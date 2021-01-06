@@ -16,7 +16,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import RE5 from '../../Assets/Dmn_pic/RE5.jpg';
 import { connect } from 'react-redux'
 import { save_token } from '../../store/actions/actions'
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import Admin from '../../Components/Admin/Admin'
 
 function Copyright() {
   return (
@@ -111,6 +111,8 @@ const SignInSide = (props) => {
 
   return (
     <React.Fragment>
+      {props.auth_stat ?
+       <Admin/>:
       <Grid container component="main" className={classes.root} onSubmit={(e) => auth_handler(e)}>
         <CssBaseline />
         <Grid item xs={false} sm={4} md={7} className={classes.image} />
@@ -178,7 +180,7 @@ const SignInSide = (props) => {
           </div>
         </Grid>
       </Grid>
-      {props.auth_stat ? <Redirect to="/admin" /> : null}
+       }
     </React.Fragment>
   );
 }

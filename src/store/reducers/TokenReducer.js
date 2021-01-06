@@ -16,12 +16,6 @@ const token_reducer = (state = initialState, action) => {
             cookies.set('tokenStr', action.value, { path: '/' });
             return { ...state, isLoggedIn: true, token_string: action.value }
         case UPDATE_LOGIN_STAT:
-            // Server validation of sent token
-            // const token = action.value;
-            //     console.log(loginStat);
-            //     if (loginStat)
-            //        
-            //     return { ...state, isLoggedIn: false };
             if (action.value)
                 return { ...state, isLoggedIn: true, token_string: action.value };
             return { ...state, isLoggedIn: false };

@@ -34,7 +34,7 @@ export const CostumizedNavItem = (props) => {
                             className="login-btn"
                             fontSize="default" />
                     </Nav.Link> */}
-                    {props.content.map((item, index) => <Nav.Link key={index} className="nav-link" href={item.path}>{item.name}</Nav.Link>)}
+                    {props.content.map((item, index) => <Nav.Link key={index} className="nav-link" onClick={item.click||null} href={item.path||null}>{item.name}</Nav.Link>)}
                 </Nav>
                 <Form inline>
                     <FormControl type="text" placeholder="Search" className="mr-sm-2 search-input-nav" />

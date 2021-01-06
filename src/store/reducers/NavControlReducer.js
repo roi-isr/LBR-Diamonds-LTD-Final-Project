@@ -2,7 +2,7 @@ import {VIS_NAV, CHANGE_NAV} from "../actions/actions";
 
 const initialState = {
     visible: true,
-    content: [{name:"Home", path:'/home'}, {name:"Logout", path:'/logout'}]
+    content: [{name:"Home", path:'/home'}]
 }
 /*  <Route path="/" exact><Homepage /></Route>
           <Route path="/home"><Homepage /></Route>

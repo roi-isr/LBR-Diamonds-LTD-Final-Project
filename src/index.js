@@ -5,16 +5,27 @@ import App from './Containers/js/App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'leaflet/dist/leaflet.css';
-import {createStore,combineReducers} from 'redux'
-import { Provider } from "react-redux";
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { Provider} from "react-redux";
 import NavControlReducer from "./store/reducers/NavControlReducer";
 import Token from "./store/reducers/TokenReducer";
+import thunk from 'redux-thunk'
 
-const rootReducer=combineReducers({
+const rootReducer = combineReducers({
   navControl: NavControlReducer,
   tokenSaver: Token
-})
-const store = createStore(rootReducer)
+});
+// Middleware
+const logger = store => {
+  return next => {
+    return action => {
+      console.log("middleware dispatching", action)
+      const result = next(action);
+      return result;
+    }
+  }
+}
+const store = createStore(rootReducer, applyMiddleware(logger, thunk));
 
 
 ReactDOM.render(

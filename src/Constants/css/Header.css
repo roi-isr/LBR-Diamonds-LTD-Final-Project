@@ -10,6 +10,11 @@ header{
     background-color: #ffffff;
 }
 
+.nav-link{
+    margin: 0 50px;
+}
+
+
 /* Mobile compatibility */
 @media only screen and (max-width: 990px)
 {
@@ -21,6 +26,9 @@ header{
         margin-top: 5px;
     }
     .mr-sm-2{
+        margin: auto;
+    }
+    .site-nav-bar{
         margin: auto;
     }
 }

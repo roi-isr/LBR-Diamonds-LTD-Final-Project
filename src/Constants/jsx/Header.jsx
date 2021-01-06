@@ -26,23 +26,18 @@ export const CostumizedNavItem = (props) => {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav
-                    className="mr-auto"
-                    style={{ justifyContent: "space-between", width: "60%", margin: "auto" }}
+                    className="mr-auto site-nav-bar"
+                    style={{ width: "60%" }}
                 >
-                    <Nav.Link href="/sign">
+                    {/* <Nav.Link href="/sign">
                         <AccountCircleIcon
                             className="login-btn"
                             fontSize="default" />
-                    </Nav.Link>
-                    {props.content.map((item, index) => <Nav.Link key={index} href={item.path}>{item.name}</Nav.Link>)}
-                    {/* <Nav.Link href="/home">Home</Nav.Link>
-                    <Nav.Link href="/store">Shop</Nav.Link>
-                    <Nav.Link href="/about">About</Nav.Link>
-                    <Nav.Link href="/qa">FAQ</Nav.Link>
-                    <Nav.Link href="/contact">Contact us</Nav.Link> */}
+                    </Nav.Link> */}
+                    {props.content.map((item, index) => <Nav.Link key={index} className="nav-link" href={item.path}>{item.name}</Nav.Link>)}
                 </Nav>
                 <Form inline>
-                    <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+                    <FormControl type="text" placeholder="Search" className="mr-sm-2 search-input-nav" />
                     <Button
                         className="gen-search-btn"
                         variant="outline-success">

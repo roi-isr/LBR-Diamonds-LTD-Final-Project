@@ -4,6 +4,7 @@ export const CHANGE_NAV = "CHANGE_NAV"
 export const VIS_NAV = "VIS_NAV"
 export const SAVE_TOKEN = "SAVE_TOKEN"
 export const UPDATE_LOGIN_STAT = "UPDATE_LOGIN_STAT"
+export const LOG_OUT = "log_out"
 
 /* Verify token through server, making admin sessions possible, even after page refresh*/
 const verify_token = (token) => {
@@ -66,5 +67,11 @@ export const update_login_stat = (val) => {
             dispatch(update_login(value));
         })
     }
+}
 
+export const log_out = val => {
+    return {
+        type: LOG_OUT,
+        value: val
+    }
 }

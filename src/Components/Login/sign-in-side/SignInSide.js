@@ -13,10 +13,10 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import RE5 from '../../Assets/Dmn_pic/RE5.jpg';
+import RE5 from '../../../Assets/Dmn_pic/RE5.jpg';
 import { connect } from 'react-redux'
-import { save_token } from '../../store/actions/actions'
-import Admin from '../../Components/Admin/Admin'
+import { save_token } from '../../../store/actions/actions'
+import Admin from '../../Admin/Admin'
 
 function Copyright() {
   return (

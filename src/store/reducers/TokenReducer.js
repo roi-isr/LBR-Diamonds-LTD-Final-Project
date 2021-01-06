@@ -1,13 +1,10 @@
-import { SAVE_TOKEN, UPDATE_LOGIN_STAT } from "../actions/actions";
+import { SAVE_TOKEN, UPDATE_LOGIN_STAT, LOG_OUT } from "../actions/actions";
 import Cookies from "universal-cookie";
 
 const initialState = {
     token_string: "",
     isLoggedIn: false
 }
-
-// Verify token through the server
-
 
 const token_reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -19,6 +16,8 @@ const token_reducer = (state = initialState, action) => {
             if (action.value)
                 return { ...state, isLoggedIn: true, token_string: action.value };
             return { ...state, isLoggedIn: false };
+        case LOG_OUT:
+            return { ...state, isLoggedIn: false }
         default:
             return state;
     }

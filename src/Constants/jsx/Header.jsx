@@ -34,7 +34,7 @@ export const CostumizedNavItem = (props) => {
                             className="login-btn"
                             fontSize="default" />
                     </Nav.Link>
-                    {props.content.map(item => <Nav.Link href={item.path}>{item.name}</Nav.Link>)}
+                    {props.content.map((item, index) => <Nav.Link key={index} href={item.path}>{item.name}</Nav.Link>)}
                     {/* <Nav.Link href="/home">Home</Nav.Link>
                     <Nav.Link href="/store">Shop</Nav.Link>
                     <Nav.Link href="/about">About</Nav.Link>
@@ -53,7 +53,7 @@ export const CostumizedNavItem = (props) => {
         </Navbar>
     )
 }
-
+// consumer
 const mapStateToProps = (state) => {
     return {
         visibility: state.navControl.visible,

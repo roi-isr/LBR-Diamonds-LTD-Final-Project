@@ -5,7 +5,7 @@ import {CostumizedNavItem} from '../../Constants/jsx/Header'
 
 const Admin = () => {
     return (
-        <div/> 
+        <div>Admin page</div> 
     // <NavItem/> 
     );
 }

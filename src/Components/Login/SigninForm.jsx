@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import SignInSide from '../../MaterialUI_code/sign-in-side/SignInSide';
-import { change_content, change_visiblity} from '../../store/actions/actions'
+import { change_content, change_visiblity } from '../../store/actions/actions'
 import { connect } from 'react-redux'
 
 const SigninForm = (props) => {
@@ -12,9 +12,9 @@ const SigninForm = (props) => {
     );
 }
 
-const mapDispatchToProp= (dispatch)=>{
-    return{
-        hide_nav: ()=>dispatch(change_visiblity(false))
+const mapDispatchToProp = (dispatch) => {
+    return {
+        hide_nav: () => dispatch(change_visiblity(false))
     }
 }
 

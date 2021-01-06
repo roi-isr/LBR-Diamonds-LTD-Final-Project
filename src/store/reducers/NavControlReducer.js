@@ -1,8 +1,8 @@
-import * as actionTypes from "../actions/actions";
+import {VIS_NAV, CHANGE_NAV} from "../actions/actions";
 
 const initialState = {
     visible: true,
-    content: [{name:"Home", path:'/home'}]
+    content: [{name:"Home", path:'/home'}, {name:"Logout", path:'/logout'}]
 }
 /*  <Route path="/" exact><Homepage /></Route>
           <Route path="/home"><Homepage /></Route>
@@ -13,10 +13,10 @@ const initialState = {
           <Route path="/admin"><Sign /></Route>*/
 const nav_reducer = (state = initialState, action) => {
     switch (action.type){
-        case actionTypes.VIS_NAV:
-            return {...state, visible: action.value.visiblity}
-        case actionTypes.CHANGE_NAV:
-            return {...state, content: action.value.contentArr.slice()}
+        case VIS_NAV:
+            return {...state, visible: action.value}
+        case CHANGE_NAV:
+            return {...state, content: action.value.slice()}
         default:
             return state;
     }

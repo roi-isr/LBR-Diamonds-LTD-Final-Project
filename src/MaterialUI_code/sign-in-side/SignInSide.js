@@ -14,7 +14,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import RE5 from '../../Assets/Dmn_pic/RE5.jpg';
-import axios from 'axios'
+import { connect } from 'react-redux'
+import { save_token } from '../../store/actions/actions'
 
 function Copyright() {
   return (
@@ -31,7 +32,7 @@ function Copyright() {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '100vh',
+    height: '40vh',
   },
   image: {
     backgroundImage: `url(${RE5})`,
@@ -63,30 +64,37 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 // function that returns a login page to the webmaster, including a login form, username and password.
-const SignInSide = () => {
+const SignInSide = (props) => {
   const classes = useStyles();
   // Using React Hooks in order to manage component's states
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [admin, setAdmin] = useState(false)
+
   const auth_handler = (event) => {
     event.preventDefault();
-    const content = {
-      password: password,
+    const content =
+    {
       username: email,
+      password: password,
     }
     fetch("http://127.0.0.1:5000/auth",
       {
-        method: "POST",
-        mode: 'no-cors',
+        method: 'POST',
         headers:
         {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(content)
       })
-      // .then(response => response.json())
-      // .then(data => console.log(data))
-      // .catch(() => onSubmitFail())
+      .then(response => response.json())
+      .then(data => {
+        if (data.access_token)
+          props.token_saver(data.access_token);
+        else
+          alert(data.description);
+      })
+      .catch(() => onSubmitFail())
   }
 
   // function that runs on a success submittion
@@ -171,4 +179,10 @@ const SignInSide = () => {
   );
 }
 
-export default SignInSide;
+const mapDispatchToProp = (dispatch) => {
+  return {
+      token_saver: (token) => dispatch(save_token(token))
+  }
+}
+
+export default connect(null, mapDispatchToProp)(SignInSide);

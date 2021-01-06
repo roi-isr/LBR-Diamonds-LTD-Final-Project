@@ -8,9 +8,11 @@ import 'leaflet/dist/leaflet.css';
 import {createStore,combineReducers} from 'redux'
 import { Provider } from "react-redux";
 import NavControlReducer from "./store/reducers/NavControlReducer";
+import Token from "./store/reducers/TokenReducer";
 
 const rootReducer=combineReducers({
-  navControl: NavControlReducer 
+  navControl: NavControlReducer,
+  tokenSaver: Token
 })
 const store = createStore(rootReducer)
 

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-// import { NavItem } from 'react-bootstrap';
-// import {CostumizedNavItem} from '../../Constants/jsx/Header'
+
 import { connect } from 'react-redux'
 import { change_content, change_visiblity, update_login_stat } from '../../store/actions/actions'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'

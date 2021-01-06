@@ -30,7 +30,8 @@ const Admin = (props) => {
         getTokenFromCookies()
     }
     useEffect(() => {
-        changeToAdmin()
+        if (!props.isLoggedIn)
+            changeToAdmin()
     }
         , [])
 

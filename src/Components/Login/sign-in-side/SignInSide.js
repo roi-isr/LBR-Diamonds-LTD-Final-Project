@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 // function that returns a login page to the webmaster, including a login form, username and password.
-const SignInSide = (props) => {
+function SignInSide(props) {
   const classes = useStyles();
   // Using React Hooks in order to manage component's states
   const [email, setEmail] = useState("")
@@ -112,75 +112,75 @@ const SignInSide = (props) => {
   return (
     <React.Fragment>
       {props.auth_stat ?
-       <Admin/>:
-      <Grid container component="main" className={classes.root} onSubmit={(e) => auth_handler(e)}>
-        <CssBaseline />
-        <Grid item xs={false} sm={4} md={7} className={classes.image} />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-          <div className={classes.paper}>
-            <Avatar className={classes.avatar}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
+        <Admin /> :
+        <Grid container component="main" className={classes.root} onSubmit={(e) => auth_handler(e)}>
+          <CssBaseline />
+          <Grid item xs={false} sm={4} md={7} className={classes.image} />
+          <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+            <div className={classes.paper}>
+              <Avatar className={classes.avatar}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Sign in
           </Typography>
-            <form className={classes.form} noValidate>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                autoFocus
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                autoComplete="current-password"
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                className={classes.submit}
-              >
-                Sign In
+              <form className={classes.form} noValidate>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  autoFocus
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  autoComplete="current-password"
+                />
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="Remember me"
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  className={classes.submit}
+                >
+                  Sign In
             </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
+                <Grid container>
+                  <Grid item xs>
+                    <Link href="#" variant="body2">
+                      Forgot password?
                 </Link>
+                  </Grid>
+                  <Grid item>
+                    <Link href="#" variant="body2">
+                      {"Don't have an account? Sign Up"}
+                    </Link>
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
-              <Box sx={{ mt: 5 }}>
-                <Copyright />
-              </Box>
-            </form>
-          </div>
+                <Box sx={{ mt: 5 }}>
+                  <Copyright />
+                </Box>
+              </form>
+            </div>
+          </Grid>
         </Grid>
-      </Grid>
-       }
+      }
     </React.Fragment>
   );
 }

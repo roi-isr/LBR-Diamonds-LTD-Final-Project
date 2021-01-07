@@ -1,8 +1,8 @@
-import {VIS_NAV, CHANGE_NAV} from "../actions/actions";
-
+import { VIS_NAV, CHANGE_NAV } from "../actions/actions";
+import paths from '../../Routers/paths.json'
 const initialState = {
     visible: true,
-    content: [{name:"Home", path:'/home'}]
+    content: paths["home_paths"]
 }
 /*  <Route path="/" exact><Homepage /></Route>
           <Route path="/home"><Homepage /></Route>
@@ -12,11 +12,12 @@ const initialState = {
           <Route path="/contact"><Contact /></Route>
           <Route path="/admin"><Sign /></Route>*/
 const nav_reducer = (state = initialState, action) => {
-    switch (action.type){
+    switch (action.type) {
         case VIS_NAV:
-            return {...state, visible: action.value}
+            // console.log(paths["home_paths"]);
+            return { ...state, visible: action.value }
         case CHANGE_NAV:
-            return {...state, content: action.value.slice()}
+            return { ...state, content: action.value.slice() }
         default:
             return state;
     }

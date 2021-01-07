@@ -19,7 +19,7 @@ const MapWrapper = styled.div`
     z-index: 0;
 `
 /* Component that represents the display/render of the leaflet's map */
-const MapDisplay = () => {
+function MapDisplay() {
     const [position, setPosition] = useState([32.08356032537613, 34.80143183635717]);
     var map = null;
     const markerIcon = L.icon
@@ -73,7 +73,7 @@ const MapDisplay = () => {
 }
 
 /* Contact us form component */
-const ContactForm = () => {
+function ContactForm() {
     const [email, setEmail] = useState("")
     const [name, setName] = useState("")
     const [phone, setPhone] = useState("")
@@ -86,7 +86,7 @@ const ContactForm = () => {
             {
                 mode: 'no-cors',
                 method: 'POST',
-                headers: 
+                headers:
                 {
                     'Content-Type': 'application/json',
                 },
@@ -161,7 +161,7 @@ const ContactForm = () => {
 }
 
 /* full page component that binds all page's component together */
-const Contact = () => {
+function Contact() {
     return (
         <div className="contact-div">
             <ContactForm />

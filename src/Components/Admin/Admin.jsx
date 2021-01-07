@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import Cookies from "universal-cookie";
 
 
-const Admin = (props) => {
+function Admin(props) {
     useEffect(() => {
         changeNavToAdmin()
     }, [])

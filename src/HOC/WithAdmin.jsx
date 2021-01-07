@@ -4,7 +4,7 @@ import { change_visiblity, update_login_stat } from '../store/actions/actions'
 import { connect } from 'react-redux';
 import Cookies from "universal-cookie";
 
-const WithAdmin = (props) => {
+function WithAdmin(props) {
     useEffect(() => {
         props.hide_nav()
         if (!props.isLoggedIn)

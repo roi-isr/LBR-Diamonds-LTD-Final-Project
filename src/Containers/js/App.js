@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import '../css/App.css';
 import Header from '../../Constants/jsx/Header'
 import Footer from '../../Constants/jsx/Footer'
@@ -16,9 +16,7 @@ import NotFound from '../../Components/NotFound/NotFound'
 // import { propTypes } from 'react-bootstrap/esm/Image';
 // import { update_login_stat } from '../../store/actions/actions'
 
-const App = (props) => {
-
-
+function App(props) {
   return (
     <React.Fragment>
       <Header />
@@ -26,7 +24,7 @@ const App = (props) => {
       {/* using react-router-dom for implementing multi-page application with a router component */}
       <Router>
         <Switch>
-          <Route path="/" exact><Redirect to="home"/></Route>
+          <Route path="/" exact><Redirect to="home" /></Route>
           <Route path="/home"><Homepage /></Route>
           <Route path="/store"><Store /></Route>
           <Route path="/about"><About /></Route>

@@ -1,0 +1,24 @@
+{
+    "home_paths": [
+        {
+            "name": "Home",
+            "path": "/home"
+        },
+        {
+            "name": "Store",
+            "path": "/store"
+        },
+        {
+            "name": "About",
+            "path": "/about"
+        },
+        {
+            "name": "Q&A",
+            "path": "/qa"
+        },
+        {
+            "name": "Contact",
+            "path": "/contact"
+        }
+    ]
+}

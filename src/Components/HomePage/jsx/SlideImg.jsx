@@ -9,7 +9,7 @@ import RE5 from '../../../Assets/Dmn_pic/RE5.jpg';
 import RE6 from '../../../Assets/Dmn_pic/RE6.jpg';
 
 /* Component for sliding images that will be displayed in the home page */
-const SlideImg = () => {
+function SlideImg() {
     const slide_interval = 4000;
     const pic_arr = [RE1, RE2, RE3, RE4, RE5, RE6];
     return (

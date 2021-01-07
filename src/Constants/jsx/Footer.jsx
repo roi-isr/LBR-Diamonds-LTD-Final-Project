@@ -6,7 +6,7 @@ import ComPic3 from '../../Assets/diamonds_comps/com03.png'
 import ComPic4 from '../../Assets/diamonds_comps/com04.png'
 import { connect } from 'react-redux'
 
-const Footer = (props) => {
+function Footer(props) {
     const comp_pics = [ComPic1, ComPic2, ComPic3, ComPic4];
     return (
         props.visibility ?

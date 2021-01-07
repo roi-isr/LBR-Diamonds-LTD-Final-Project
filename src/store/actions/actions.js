@@ -65,7 +65,7 @@ export const update_login_stat = (val) => {
     return dispatch => {
         verify_token(val).then((value) => {
             dispatch(update_login(value));
-        })
+        }).catch(()=>{console.log("Unsuccessful verification")})
     }
 }
 

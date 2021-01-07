@@ -12,8 +12,12 @@ header{
 
 .nav-link{
     margin: 0 50px;
+    font-size: 20px;
 }
 
+.gen-search-btn{
+    margin: auto;
+}
 
 /* Mobile compatibility */
 @media only screen and (max-width: 990px)

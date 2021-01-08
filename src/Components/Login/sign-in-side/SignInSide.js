@@ -15,7 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import RE5 from '../../../Assets/Dmn_pic/RE5.jpg';
 import { connect } from 'react-redux'
-import { save_token } from '../../../store/actions/actions'
+import { save_token } from '../../../store/actions/index'
 import Admin from '../../Admin/Admin'
 
 function Copyright() {

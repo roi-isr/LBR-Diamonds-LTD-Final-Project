@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import SignInSide from '../Components/Login/sign-in-side/SignInSide';
-import { change_visiblity, update_login_stat } from '../store/actions/actions'
+import { change_visiblity, update_login_stat } from '../store/actions/index'
 import { connect } from 'react-redux';
 import Cookies from "universal-cookie";
 

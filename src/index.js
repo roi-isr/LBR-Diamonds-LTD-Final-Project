@@ -15,7 +15,8 @@ const rootReducer = combineReducers({
   navControl: NavControlReducer,
   tokenSaver: Token
 });
-// Middleware
+
+// Adding a middleware, for being able to execute code before each reducer comes on action
 const logger = store => {
   return next => {
     return action => {
@@ -25,8 +26,8 @@ const logger = store => {
     }
   }
 }
-const store = createStore(rootReducer, applyMiddleware(logger, thunk));
 
+const store = createStore(rootReducer, applyMiddleware(logger, thunk));
 
 ReactDOM.render(
   <React.StrictMode>

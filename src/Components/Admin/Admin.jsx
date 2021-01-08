@@ -4,10 +4,17 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux'
 import { change_content, change_visiblity, log_out} from '../../store/actions/index'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+<<<<<<< HEAD
 import {WebCookies} from '../../Entities/Cookies';
 import Stock from "../StockTable/StockTable"
 import BasicTable from '../StockTable/StockTable';
 import DataTable from '../DeliveryCheck/DeliveryFile'
+=======
+import stock from "../Stock-table/stock-table"
+import BasicTable from '../Stock-table/stock-table';
+import DataTable from '../Delivery-check/Delivery-file'
+import {WebCookies} from '../../Entities/Cookies';
+>>>>>>> 25e7041b40f6f31bd4dc9808cfd3a99f6867aebf
 
 
 function Admin(props) {

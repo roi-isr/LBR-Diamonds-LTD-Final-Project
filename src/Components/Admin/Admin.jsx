@@ -5,6 +5,9 @@ import { connect } from 'react-redux'
 import { change_content, change_visiblity, log_out } from '../../store/actions/actions'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import Cookies from "universal-cookie";
+import stock from "../Stock-table/stock-table"
+import BasicTable from '../Stock-table/stock-table';
+import DataTable from '../Delivery-check/Delivery-file'
 
 
 function Admin(props) {
@@ -38,7 +41,7 @@ function Admin(props) {
     return (
         <React.Fragment>
             {props.isLoggedIn ?
-                <div>Admin page</div>
+             <DataTable/>
                 :
                 <div>You're not authorized as admin</div>}
         </React.Fragment>

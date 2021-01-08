@@ -4,7 +4,11 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux'
 import { change_content, change_visiblity, log_out} from '../../store/actions/index'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import stock from "../Stock-table/stock-table"
+import BasicTable from '../Stock-table/stock-table';
+import DataTable from '../Delivery-check/Delivery-file'
 import {WebCookies} from '../../Entities/Cookies';
+
 
 function Admin(props) {
     useEffect(() => {
@@ -37,7 +41,7 @@ function Admin(props) {
     return (
         <React.Fragment>
             {props.isLoggedIn ?
-                <div>Admin page</div>
+             <DataTable/>
                 :
                 <div>You're not authorized as admin</div>}
         </React.Fragment>

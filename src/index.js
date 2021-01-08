@@ -5,12 +5,13 @@ import App from './Containers/js/App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'leaflet/dist/leaflet.css';
+import 'react-circular-progressbar/dist/styles.css';
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from "react-redux";
 import NavControlReducer from "./store/reducers/NavControlReducer";
 import Token from "./store/reducers/TokenReducer";
 import thunk from 'redux-thunk'
-
+//
 const rootReducer = combineReducers({
   navControl: NavControlReducer,
   tokenSaver: Token

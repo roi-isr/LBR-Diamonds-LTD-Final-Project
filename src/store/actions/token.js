@@ -1,10 +1,4 @@
-/* Declaring global state actions (functions) */
-/* Define the actions types for the reduces */
-export const CHANGE_NAV = "CHANGE_NAV"
-export const VIS_NAV = "VIS_NAV"
-export const SAVE_TOKEN = "SAVE_TOKEN"
-export const UPDATE_LOGIN_STAT = "UPDATE_LOGIN_STAT"
-export const LOG_OUT = "log_out"
+import {SAVE_TOKEN, UPDATE_LOGIN_STAT, LOG_OUT} from './actionTypes';
 
 /* Verify token through server, making admin sessions possible, even after page refresh*/
 const verify_token = (token) => {
@@ -30,20 +24,6 @@ const verify_token = (token) => {
             })
             .catch((e) => reject(Error(e.name)))
     });
-}
-/* Change site navbar content */
-export const change_content = (val) => {
-    return {
-        type: CHANGE_NAV,
-        value: val
-    }
-}
-/* Save tokens for continous admin sessions */
-export const change_visiblity = (val) => {
-    return {
-        type: VIS_NAV,
-        value: val
-    }
 }
 
 /* Change site navbar visibility */

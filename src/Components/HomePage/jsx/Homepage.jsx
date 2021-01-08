@@ -1,3 +1,5 @@
+/* Home page component */
+
 import React from 'react';
 import SlideImg from './SlideImg'
 

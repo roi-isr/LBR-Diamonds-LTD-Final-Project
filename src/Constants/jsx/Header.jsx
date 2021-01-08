@@ -67,6 +67,7 @@ export function CostumizedNavItem(props) {
         </Navbar>
     )
 }
+
 // consumer
 const mapStateToProps = (state) => {
     return {

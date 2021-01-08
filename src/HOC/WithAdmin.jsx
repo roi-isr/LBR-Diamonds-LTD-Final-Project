@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { change_visiblity, update_login_stat } from '../store/actions/index'
 import { connect } from 'react-redux';
-import Cookies from "universal-cookie";
+import {WebCookies} from '../Entities/Cookies'
 
 function WithAdmin(props) {
     useEffect(() => {
@@ -12,8 +12,8 @@ function WithAdmin(props) {
 
     /* Get access token from cookies, in case of a page refresh */
     const getTokenFromCookies = () => {
-        const cookies = new Cookies();
-        const token = cookies.get("tokenStr");
+        const cookies = new WebCookies("tokenStr");
+        const token = cookies.createCookies();
         props.updateLoginStat(token);
     }
     return (

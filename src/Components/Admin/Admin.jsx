@@ -4,8 +4,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux'
 import { change_content, change_visiblity, log_out} from '../../store/actions/index'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
-import Cookies from "universal-cookie";
-
+import {WebCookies} from '../../Entities/Cookies';
 
 function Admin(props) {
     useEffect(() => {
@@ -24,8 +23,8 @@ function Admin(props) {
 
     /* Remove access token from browser cookies */
     const removeCookies = () => {
-        const cookies = new Cookies();
-        cookies.set("tokenStr", "", { path: '/' });
+        const cookies = new WebCookies("tokenStr");
+        cookies.removeCookies();
     }
 
     /* Display dedicated navbar options for admin */

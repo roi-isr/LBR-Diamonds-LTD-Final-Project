@@ -18,6 +18,7 @@ import { connect } from 'react-redux'
 import { save_token } from '../../../store/actions/index'
 import Admin from '../../Admin/Admin'
 
+// copyright for using Material-UI code part for login template
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -30,6 +31,7 @@ function Copyright() {
   );
 }
 
+// Apply style on login elements
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '40vh',

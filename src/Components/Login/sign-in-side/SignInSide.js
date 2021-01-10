@@ -23,10 +23,9 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Material-UI
       </Link>{' '}
       {new Date().getFullYear()}
-      {'.'}
     </Typography>
   );
 }
@@ -57,14 +56,15 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.main,
   },
   form: {
-    width: '100%', // Fix IE11 issue.
+    width: '100%', 
     marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
 }));
-// function that returns a login page to the webmaster, including a login form, username and password.
+
+
 function SignInSide(props) {
   const classes = useStyles();
   // Using React Hooks in order to manage component's states
@@ -190,6 +190,7 @@ const mapDispatchToProp = (dispatch) => {
     token_saver: (token) => dispatch(save_token(token))
   }
 }
+
 const mapStateToProp = (state) => {
   return {
     auth_stat: state.tokenSaver.isLoggedIn

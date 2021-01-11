@@ -1,6 +1,6 @@
 /* This component defines the whole admin's sub-platform of our site. */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { connect } from 'react-redux'
 import { change_content, change_visiblity, log_out } from '../../store/actions/index'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
@@ -11,19 +11,15 @@ import DataTable from '../DeliveryCheck/DeliveryFile'
 
 
 function Admin(props) {
-    useEffect(() => {
-        changeNavToAdmin()
-    }, [])
-
     /* Log off as admin and return to home page*/
-    const logout = () => {
+    const logout = useCallback(() => {
         const logOutPrompt = window.confirm("Are you sure that you want to log out?");
         if (!logOutPrompt)
             return;
         removeCookies();
         props.logOut();
-        props.showNav(false)
-    }
+        props.showNav(false);
+    }, [props]);
 
     /* Remove access token from browser cookies */
     const removeCookies = () => {
@@ -32,11 +28,18 @@ function Admin(props) {
     }
 
     /* Display dedicated navbar options for admin */
-    const changeNavToAdmin = () => {
-        const adminNav = [{ name: "Reports", path: "/reports" }, { name: "Logout", click: logout }]
+    const changeNavToAdmin = useCallback(() => {
+        console.log("Hfgh")
+        const adminNav =
+            [{ name: "Reports", path: "/reports" },
+            { name: "Logout", click: logout }];
         props.changeContent(adminNav)
         props.showNav(true)
-    }
+    }, [props, logout]);
+
+    useEffect(() => {
+        changeNavToAdmin()
+    }, [changeNavToAdmin]);
 
     return (
         <React.Fragment>

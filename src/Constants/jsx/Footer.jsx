@@ -22,7 +22,7 @@ function Footer(props) {
                     {line3}
                 </p>
                 <hr />
-                {/* go through all imported images and map them into HTML's img tags */}
+                {/* Render diamonds companies images */}
                 {comp_pics.map(
                     (item, index) =>
                         <img
@@ -42,6 +42,5 @@ const mapStateToProps = (state) => {
         visibility: state.navControl.visible
     }
 }
-
 
 export default connect(mapStateToProps)(Footer);

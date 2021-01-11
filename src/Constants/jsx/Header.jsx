@@ -34,25 +34,19 @@ function Header(props) {
                 // })}
             /> */}
 
-            {props.visibility ? <CostumizedNavItem content={props.content} /> : null}
+            {props.visibility ? <ConnectedNavItem /> : null}
         </header>
     );
 }
 
-export function CostumizedNavItem(props) {
+function CustomizedNavItem(props) {
     return (
         <Navbar bg="light" expand="lg">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav
                     className="mr-auto site-nav-bar"
-                    style={{ width: "70%", justifyContent: 'space-between' }}
-                >
-                    {/* <Nav.Link href="/sign">
-                        <AccountCircleIcon
-                            className="login-btn"
-                            fontSize="default" />
-                    </Nav.Link> */}
+                    style={{ width: "70%", justifyContent: 'space-between' }}>
                     {props.content.map((item, index) =>
                         <Nav.Link
                             key={index}
@@ -79,12 +73,19 @@ export function CostumizedNavItem(props) {
     )
 }
 
-// consumer
-const mapStateToProps = (state) => {
+// Connect Header to Redux's gloal state as a consumer
+const mapStateToPropsHeader = (state) => {
     return {
-        visibility: state.navControl.visible,
+        visibility: state.navControl.visible
+    }
+}
+
+// Connect Nav to Redux's gloal state as a consumer
+const mapStateToPropsNav = (state) => {
+    return {
         content: state.navControl.content
     }
 }
 
-export default connect(mapStateToProps)(Header);
+const ConnectedNavItem = connect(mapStateToPropsNav)(CustomizedNavItem);
+export default connect(mapStateToPropsHeader)(Header);

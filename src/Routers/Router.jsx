@@ -25,14 +25,19 @@ const paths = [
 
 class RouterComponent extends React.Component {
     render() {
-
+        const switchContainer =
+            <Switch>
+                {paths.map((item, index) =>
+                    <Route
+                        key={index}
+                        {...item.attr}>
+                        {item.component}
+                    </Route>
+                )}
+            </Switch>;
         return (
             <Router>
-                <Switch>
-                    {paths.map((item, index) =>
-                        <Route key={index}  {...item.attr}>{item.component}</Route>
-                    )}
-                </Switch>
+                {switchContainer}
             </Router>
         );
     }

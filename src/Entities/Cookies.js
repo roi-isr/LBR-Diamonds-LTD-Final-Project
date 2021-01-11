@@ -11,7 +11,7 @@ export class WebCookies {
         return this.cookies.get(this.cookiesKey);
     }
 
-    /* Remove access token from browser cookies */
+    // Remove access token from browser cookies
     removeCookies() {
         this.cookies.set(this.cookiesKey, "", { path: '/' });
     }

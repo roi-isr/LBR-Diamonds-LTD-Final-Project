@@ -18,7 +18,7 @@ import { connect } from 'react-redux'
 import { save_token } from '../../../store/actions/index'
 import Admin from '../../Admin/Admin'
 
-// copyright for using Material-UI code part for login template
+// copyright for using Material-UI style template
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.main,
   },
   form: {
-    width: '100%', 
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -125,7 +125,7 @@ function SignInSide(props) {
               </Avatar>
               <Typography component="h1" variant="h5">
                 Sign in
-          </Typography>
+              </Typography>
               <form className={classes.form} noValidate>
                 <TextField
                   margin="normal"
@@ -162,12 +162,12 @@ function SignInSide(props) {
                   className={classes.submit}
                 >
                   Sign In
-            </Button>
+                </Button>
                 <Grid container>
                   <Grid item xs>
                     <Link href="#" variant="body2">
                       Forgot password?
-                </Link>
+                    </Link>
                   </Grid>
                   <Grid item>
                     <Link href="#" variant="body2">

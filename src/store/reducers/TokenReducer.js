@@ -7,12 +7,16 @@ const initialState = {
     isLoggedIn: false
 }
 
+const createCookie = (token) => {
+    const cookies = new Cookies();
+    cookies.set('tokenStr', token, { path: '/' });
+}
+
 /* Managing the token reducer (redux's global state)*/
 const token_reducer = (state = initialState, action) => {
     switch (action.type) {
         case SAVE_TOKEN:
-            const cookies = new Cookies();
-            cookies.set('tokenStr', action.value, { path: '/' });
+            createCookie(action.value);
             return updateState(state, { isLoggedIn: true, token_string: action.value });
         case UPDATE_LOGIN_STAT:
             if (action.value)

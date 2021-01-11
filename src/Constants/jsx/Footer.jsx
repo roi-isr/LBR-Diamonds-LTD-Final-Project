@@ -8,18 +8,21 @@ import { connect } from 'react-redux'
 
 function Footer(props) {
     const comp_pics = [ComPic1, ComPic2, ComPic3, ComPic4];
+    const line1 = "LBR DIAMONDS currently operates in Israel and around the world, a company that provides";
+    const line2 = "For shops / individuals / merchants in the world diamonds, rough diamonds, polished and all that goes with it.";
+    const line3 = "The company has over 20 years of experience, and specializes in diamond production.";
     return (
         props.visibility ?
             <footer className="site-footer">
                 <p className="about-para">
-                    LBR DIAMONDS currently operates in Israel and around the world, a company that provides
-            <br />
-            For shops / individuals / merchants in the world diamonds, rough diamonds, polished and all that goes with it.
-            <br />
-            The company has over 20 years of experience, and specializes in diamond production.
-            </p>
+                    {line1}
+                    <br />
+                    {line2}
+                    <br />
+                    {line3}
+                </p>
                 <hr />
-                {/* go through all imported images and map them into HTML's img tags  */}
+                {/* go through all imported images and map them into HTML's img tags */}
                 {comp_pics.map(
                     (item, index) =>
                         <img

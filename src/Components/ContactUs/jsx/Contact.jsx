@@ -6,8 +6,6 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import styled from 'styled-components/macro'
 import L from 'leaflet';
 import icon from 'leaflet/dist/images/marker-icon.png';
-// import iconShadow from 'leaflet/dist/images/marker-shadow.png';
-// import { Button } from 'react-bootstrap';
 
 /* Creating a styled component that wraps the map and gives it a unique style */
 const MapWrapper = styled.div`
@@ -59,7 +57,6 @@ function MapDisplay() {
                     </Marker>
                     <MapFeatures />
                 </MapContainer>
-                {/* <div id="map" style={{width:"500px",height:"415px"}}></div> */}
             </MapWrapper>
             {/* go back to centrelized position button */}
             <button
@@ -79,7 +76,7 @@ function ContactForm() {
     const [phone, setPhone] = useState("")
     const [content, setContent] = useState("")
 
-    //function that send the form data to the server .
+    // Send the form data to the server .
     const submitForm = (event) => {
         event.preventDefault();
         fetch("https://final-project-lbr.herokuapp.com/contact",
@@ -101,7 +98,6 @@ function ContactForm() {
             .catch(() => onSubmitFail())
     }
 
-    // function that runs on a success submittion
     const onSubmitSuccess = () => {
         alert("הודעתך נשלחה בהצלחה!");
         setEmail("");
@@ -110,50 +106,51 @@ function ContactForm() {
         setContent("");
     }
 
-    // function that runs on a failed submittion
     const onSubmitFail = () => {
         alert("בעיה בשליחת ההודעה...");
     }
 
+    const formElements = [
+        {
+            controlId: "exampleForm.ControlInput1", label: "Email address",
+            controlAttr: {
+                type: "email", placeholder: "name@example.com", value: email,
+                onChange: (event) => setEmail(event.target.value)
+            }
+        },
+        {
+            controlId: "name", label: "Name",
+            controlAttr: {
+                type: "textarea", placeholder: "Your name", value: name,
+                onChange: (event) => setName(event.target.value)
+            }
+        },
+        {
+            controlId: "num", label: "Phone Number",
+            controlAttr: {
+                type: "textarea", placeholder: "054-345673", value: phone,
+                onChange: (event) => setPhone(event.target.value)
+            }
+        },
+        {
+            controlId: "exampleForm.ControlTextarea1", label: "Content",
+            controlAttr: {
+                as: "textarea", placeholder: "Add your content", rows: 3, value: content,
+                onChange: (event) => setContent(event.target.value)
+            }
+        },
+    ]
+    
     return (
         <div className="contact-form-div">
             <Form onSubmit={(e) => submitForm(e)}>
-                <Form.Group controlId="exampleForm.ControlInput1">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control
-                        type="email"
-                        placeholder="name@example.com"
-                        value={email}
-                        onChange={(event) => setEmail(event.target.value)}
-                    />
-                </Form.Group>
-                <Form.Group controlId="name">
-                    <Form.Label>Name</Form.Label>
-                    <Form.Control
-                        type="textarea"
-                        placeholder="Your name"
-                        value={name}
-                        onChange={(event) => setName(event.target.value)}
-                    />
-                </Form.Group>
-                <Form.Group controlId="num">
-                    <Form.Label>Phone Number</Form.Label>
-                    <Form.Control
-                        type="Number"
-                        placeholder="054-345673"
-                        value={phone}
-                        onChange={(event) => setPhone(event.target.value)}
-                    />
-                </Form.Group>
-                <Form.Group controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Content</Form.Label>
-                    <Form.Control
-                        as="textarea"
-                        rows={3}
-                        value={content}
-                        onChange={(event) => setContent(event.target.value)}
-                    />
-                </Form.Group>
+                {formElements.map((item, index) =>
+                    <Form.Group key={index} controlId={item.controlId}>
+                        <Form.Label>{item.label}</Form.Label>
+                        <Form.Control
+                            {...item.controlAttr}
+                        />
+                    </Form.Group>)}
                 <Button type='submit'>Contact us!</Button>
             </Form>
         </div>
@@ -161,7 +158,7 @@ function ContactForm() {
 }
 
 /* full page component that binds all page's component together */
-function Contact() {
+function ContactUs() {
     return (
         <div className="contact-div">
             <ContactForm />
@@ -171,4 +168,4 @@ function Contact() {
     );
 }
 
-export default Contact;
+export default ContactUs;

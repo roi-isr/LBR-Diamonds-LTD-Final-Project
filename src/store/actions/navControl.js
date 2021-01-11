@@ -7,6 +7,7 @@ export const change_content = (val) => {
         value: val
     }
 }
+
 /* Save tokens for continous admin sessions */
 export const change_visiblity = (val) => {
     return {

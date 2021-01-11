@@ -2,9 +2,9 @@
 
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux'
-import { change_content, change_visiblity, log_out} from '../../store/actions/index'
+import { change_content, change_visiblity, log_out } from '../../store/actions/index'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
-import {WebCookies} from '../../Entities/Cookies';
+import { WebCookies } from '../../Entities/Cookies';
 import Stock from "../StockTable/StockTable"
 import BasicTable from '../StockTable/StockTable';
 import DataTable from '../DeliveryCheck/DeliveryFile'
@@ -18,11 +18,11 @@ function Admin(props) {
     /* Log off as admin and return to home page*/
     const logout = () => {
         const logOutPrompt = window.confirm("Are you sure that you want to log out?");
-        if (logOutPrompt) {
-            removeCookies();
-            props.logOut();
-            props.showNav(false)
-        }
+        if (!logOutPrompt)
+            return;
+        removeCookies();
+        props.logOut();
+        props.showNav(false)
     }
 
     /* Remove access token from browser cookies */
@@ -41,7 +41,7 @@ function Admin(props) {
     return (
         <React.Fragment>
             {props.isLoggedIn ?
-             <DataTable/>
+                <DataTable />
                 :
                 <div>You're not authorized as admin</div>}
         </React.Fragment>

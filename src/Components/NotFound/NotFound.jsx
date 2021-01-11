@@ -18,7 +18,7 @@ class PageNotFound extends React.Component {
   render() {
     return (
       <div style={{textAlign:'center'}}>
-        <NotFoundMsg>Page Not Found (Error 404) :(</NotFoundMsg>
+        <NotFoundMsg>Error 404 - Page Not Found :(</NotFoundMsg>
         <NotFoundImg src={NotFoundPic} alt="not_found" />
       </div>
     );

@@ -9,7 +9,7 @@ function Header(props) {
     return (
         <header>
             <div className="logo-container">
-                
+
                 <img
                     src={Logo}
                     className="logo"
@@ -53,10 +53,21 @@ export function CostumizedNavItem(props) {
                             className="login-btn"
                             fontSize="default" />
                     </Nav.Link> */}
-                    {props.content.map((item, index) => <Nav.Link key={index} className="nav-link" onClick={item.click || null} href={item.path || null}>{item.name}</Nav.Link>)}
+                    {props.content.map((item, index) =>
+                        <Nav.Link
+                            key={index}
+                            className="nav-link"
+                            onClick={item.click || null}
+                            href={item.path || null}>
+                            {item.name}
+                        </Nav.Link>
+                    )}
                 </Nav>
                 <Form inline>
-                    <FormControl type="text" placeholder="Search" className="mr-sm-2 search-input-nav" />
+                    <FormControl
+                        type="text"
+                        placeholder="Search"
+                        className="mr-sm-2 search-input-nav" />
                     <Button
                         className="gen-search-btn"
                         variant="outline-success">

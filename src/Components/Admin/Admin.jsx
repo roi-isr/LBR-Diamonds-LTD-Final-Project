@@ -4,10 +4,10 @@ import React, { useEffect, useCallback } from 'react';
 import { connect } from 'react-redux'
 import { change_content, change_visiblity, log_out } from '../../store/actions/index'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
-import {WebCookies} from '../../Entities/Cookies';
-import stock from "../Stock-table/stock-table"
-import BasicTable from '../Stock-table/stock-table';
-import DataTable from '../Delivery-check/Delivery-file'
+import { WebCookies } from '../../Entities/Cookies';
+import stock from "../StockTable/StockTable"
+import BasicTable from '../StockTable/StockTable';
+import DataTable from '../DeliveryCheck/DeliveryFile'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 
 
@@ -33,8 +33,8 @@ function Admin(props) {
         console.log("Hfgh")
         const adminNav =
             [{ name: "ניהול מלאי", path: "/reports" },
-                { name: "מכירות", path: "/reports" },
-                { name: "מעקב משלוחים", path: "/reports" },
+            { name: "מכירות", path: "/reports" },
+            { name: "מעקב משלוחים", path: "/reports" },
             { name: "Logout", click: logout }];
         props.changeContent(adminNav)
         props.showNav(true)

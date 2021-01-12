@@ -3,12 +3,14 @@ import '../css/VirtualStore.css';
 import styled from 'styled-components/macro';
 import DiamondIcon from '../../../Assets/virtual_store_icons/diamond.png'
 import PackageIcon from '../../../Assets/virtual_store_icons/package.png'
+import ItemsLayout from './ItemsLayout'
+
 
 const NavBtn = styled.button`
   margin: auto;
   width: 50%;
   height: 50%;
-  font-size: 50px;
+  font-size: 40px;
   background-color:palegreen;
   margin-bottom: 25%;
   @media (max-width: 910px){
@@ -28,8 +30,8 @@ function StoreNav(props) {
   const verticalLine =
     <div className="vertical-line-vs" />
   const navItems = [
-    { name: 'חבילות', icon: PackageIcon },
-    { name: 'אבנים מתועדות', icon: DiamondIcon }
+    { name: 'Packages', icon: PackageIcon },
+    { name: 'Documented Stones', icon: DiamondIcon }
   ];
   return (
     <div className="selection-vs">
@@ -45,20 +47,26 @@ function StoreNav(props) {
   );
 }
 
-
 class VirtualStore extends React.Component {
   constructor() {
     super();
-    this.state ={
+    this.state = {
       layout: ""
     }
   }
-  applyLayout = () => {
+  applyLayout = (index) => {
+    this.setState({ layout: "Packages" });
+  }
 
+  renderContent = () => {
+    if (this.state.layout === "")
+      return <StoreNav applyLayout={this.applyLayout} />;
+    else if (this.state.layout === "Packages")
+      return <ItemsLayout />;
   }
   render() {
     return (
-      <StoreNav />
+      this.renderContent()
     );
   }
 }

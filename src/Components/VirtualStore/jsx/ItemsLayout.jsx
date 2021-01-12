@@ -2,12 +2,12 @@ import React from 'react';
 import styled from 'styled-components/macro';
 
 
-  const VsIcons = styled.img`
+const VsIcons = styled.img`
 
 `;
 
-function ItemLayout(props) {
-  
+function ItemsLayout(props) {
+    return <h1>Packages</h1>;
 }
 
 

@@ -9,7 +9,7 @@ import stock from "../StockTable/StockTable"
 import BasicTable from '../StockTable/StockTable';
 import DataTable from '../DeliveryCheck/DeliveryFile'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
-
+import AdminRouter from '../../Routers/AdminRouter'
 
 function Admin(props) {
     /* Log off as admin and return to home page*/
@@ -32,10 +32,13 @@ function Admin(props) {
     const changeNavToAdmin = useCallback(() => {
         console.log("Hfgh")
         const adminNav =
-            [{ name: "ניהול מלאי", path: "/reports" },
+            
+        [ { name: "התנתק", click: logout },
+        { name: "מעקב משלוחים", path: "/reports" }
+           ,
             { name: "מכירות", path: "/reports" },
-            { name: "מעקב משלוחים", path: "/reports" },
-            { name: "Logout", click: logout }];
+           , { name: "ניהול מלאי", path: "/reports" }
+           ];
         props.changeContent(adminNav)
         props.showNav(true)
     }, [props, logout]);
@@ -46,10 +49,7 @@ function Admin(props) {
 
     return (
         <React.Fragment>
-            {props.isLoggedIn ?
-                <DataTable />
-                :
-                <div>You're not authorized as admin</div>}
+            <AdminRouter/>
         </React.Fragment>
 
     );

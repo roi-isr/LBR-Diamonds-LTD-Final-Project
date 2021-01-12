@@ -9,7 +9,7 @@ function App(props) {
     <React.Fragment>
       <Header />
       <hr className="page-seperator" />
-      <RouterComponent />
+      <RouterComponent routing='User' />
       <hr className="page-seperator" />
       <Footer />
     </React.Fragment>

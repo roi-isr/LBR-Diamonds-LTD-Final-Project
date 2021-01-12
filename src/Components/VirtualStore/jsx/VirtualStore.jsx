@@ -18,13 +18,13 @@ const NavBtn = styled.button`
     margin-bottom: 0%;
     margin-top: 3%;
   }
-  `;
+  `
 
 const VsIcons = styled.img`
   height: 100px;
   width: 100px;
   float: left;
-`;
+`
 
 function StoreNav(props) {
   const verticalLine =

@@ -18,77 +18,80 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(name, weigth, price, sum, model, sell_for, payment) {
+function createData(...data) {
+  const [name, weigth, price, sum, model, sell_for, payment] = data
   return { name, weigth, price, sum, model, sell_for, payment };
 }
 
-
+const englishTitles = ['weigth', 'price', 'sum', 'model', 'sell_for', 'payment'];
 const titles = ["מודל", "משקל ", "מחיר לקראט ", "סה''כ", "קוד", "שם הקונה", "תאריך מכירה ", "תשלום"];
 
 
-
+const rowsData = [
+  createData('R-1/4', 15, 100, 1500, 'R-101', "yossi", "1/1/21", " דיסקונט 60 יום "),
+  createData('R-1/4', 15, 100, 1500, 'R-101', "ybgfssi", "1/2/21", " דיסקונט 60 יום "),
+  createData('R-1/4', 15, 100, 1500, 'R-101', "fgbossi", "1/1/20", " דיסקונט 60 יום "),
+  createData('R-1/4', 15, 100, 1500, 'R-101', "yovdssi", "1/1/21", " דיסקונט 60 יום "),
+  createData('R-1/4', 15, 100, 1500, 'R-101', "yozvdi", "1/2/21", " דיסקונט 60 יום "),
+  createData('R-1/4', 15, 100, 1500, 'R-101', "yvzdssi", "1/1/20", " דיסקונט 60 יום "),
+  createData('R-1/4', 15, 100, 1500, 'R-101', "yozvzvdvzdi", "1/1/21", " דיסקונט 60 יום "),
+  createData('R-1/4', 15, 100, 1500, 'R-101', "yozvddvsi", "1/2/21", " דיסקונט 60 יום "),
+  createData('R-1/4', 15, 100, 1500, 'R-101', "fzsi", "1/1/20", " דיסקונט 60 יום "),
+  createData('R-1/4', 15, 100, 1500, 'R-101', "yossi", "1/1/21", " דיסקונט 60 יום "),
+  createData('R-1/4', 15, 100, 1500, 'R-101', "yossi", "1/2/21", " דיסקונט 60 יום "),
+  createData('R-1/4', 15, 100, 1500, 'R-101', "yossi", "1/1/20", " דיסקונט 60 יום "),
+];
 
 export default function SellTable() {
-  const [rows, setRows] = useState([
-    createData('R-1/4', 15, 100, 1500, 'R-101', "yossi", "1/1/21", " דיסקונט 60 יום "),
-    createData('R-1/4', 15, 100, 1500, 'R-101', "ybgfssi", "1/2/21", " דיסקונט 60 יום "),
-    createData('R-1/4', 15, 100, 1500, 'R-101', "fgbossi", "1/1/20", " דיסקונט 60 יום "),
-    createData('R-1/4', 15, 100, 1500, 'R-101', "yovdssi", "1/1/21", " דיסקונט 60 יום "),
-    createData('R-1/4', 15, 100, 1500, 'R-101', "yozvdi", "1/2/21", " דיסקונט 60 יום "),
-    createData('R-1/4', 15, 100, 1500, 'R-101', "yvzdssi", "1/1/20", " דיסקונט 60 יום "),
-    createData('R-1/4', 15, 100, 1500, 'R-101', "yozvzvdvzdi", "1/1/21", " דיסקונט 60 יום "),
-    createData('R-1/4', 15, 100, 1500, 'R-101', "yozvddvsi", "1/2/21", " דיסקונט 60 יום "),
-    createData('R-1/4', 15, 100, 1500, 'R-101', "fzsi", "1/1/20", " דיסקונט 60 יום "),
-    createData('R-1/4', 15, 100, 1500, 'R-101', "yossi", "1/1/21", " דיסקונט 60 יום "),
-    createData('R-1/4', 15, 100, 1500, 'R-101', "yossi", "1/2/21", " דיסקונט 60 יום "),
-    createData('R-1/4', 15, 100, 1500, 'R-101', "yossi", "1/1/20", " דיסקונט 60 יום "),
-  ]);
+  const classes = useStyles();
 
+  const [rows, setRows] = useState([...rowsData]);
 
-  const del_btn = (ind) => {
+  const deleteBtn = (ind) => {
     const con = window.confirm("Are you sure?");
     if (!con)
       return;
-    setRows(currRow => currRow.filter((item, index) => index !== ind));
+    setRows(currRow =>
+      currRow.filter((item, index) => index !== ind));
   }
-
-  const classes = useStyles();
-
 
   return (
     <React.Fragment>
-
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table" style={{ direction: 'rtl' }}>
           <TableHead>
             <TableRow>
-
               {titles.map((item, index) => (
                 <TableCell key={index} align="left">
                   {item}
                 </TableCell>
               ))}
-
-
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.map((row, index) => (
               <TableRow key={row.name}>
-                <TableCell component="th" scope="row">{row.name}</TableCell>
-                <TableCell align="left">{row.weigth}</TableCell>
-                <TableCell align="left">{row.price}</TableCell>
-                <TableCell align="left">{row.sum}</TableCell>
-                <TableCell align="left">{row.model}</TableCell>
-                <TableCell align="left">{row.sell_for}</TableCell>
-                <TableCell align="left">{row.payment}</TableCell>
+                <TableCell
+                  key={index}
+                  component="th"
+                  scope="row">
+                  {row.name}
+                </TableCell>
+                {Object.keys(row)
+                  // .filter((filItem) => filItem !== 'name')
+                  .map((item, index) =>
+                    <TableCell
+                      key={index}
+                      align="left">
+                      {row[englishTitles[index]]}
+                    </TableCell>
+                  )}
                 <Button
                   variant="contained"
                   color="secondary"
                   className={"delete_btn"}
-                  onClick={() => del_btn(index)}
-                  startIcon={<DeleteIcon />}
-                >
+                  onClick={() => deleteBtn(index)}
+                  startIcon={<DeleteIcon />}>
                   Delete
                 </Button>
               </TableRow>
@@ -96,7 +99,6 @@ export default function SellTable() {
           </TableBody>
         </Table>
       </TableContainer>
-
     </React.Fragment>
   );
 }

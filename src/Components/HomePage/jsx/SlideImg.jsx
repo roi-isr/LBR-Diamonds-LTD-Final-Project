@@ -12,11 +12,14 @@ import RE6 from '../../../Assets/Dmn_pic/RE6.jpg';
 function SlideImg() {
     const slide_interval = 4000;
     const pic_arr = [RE1, RE2, RE3, RE4, RE5, RE6];
+    
     return (
         <Carousel className="img-carousel">
             {/* Go through all imported images and map them into Carousel.Items components */}
             {pic_arr.map((item, index) =>
-                <Carousel.Item key={"pic" + index} interval={slide_interval}>
+                <Carousel.Item
+                    key={"pic" + index}
+                    interval={slide_interval}>
                     <img
                         className="d-block w-100"
                         src={item}
@@ -26,7 +29,7 @@ function SlideImg() {
                 </Carousel.Item>
             )}
         </Carousel>
-    )
+    );
 }
 
 export default SlideImg;

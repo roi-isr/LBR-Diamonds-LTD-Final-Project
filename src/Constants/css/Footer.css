@@ -1,16 +1,16 @@
-.site-footer{
+.site-footer {
     background-color: #eeeeee;
     height: auto;
     text-align: center;
     justify-content: space-between;
     line-height: 30px;
     font-size: 20px;
-    
 }
-.site-footer-img{
+
+.site-footer-img {
     margin-left: 3%;
 }
 
-.about-para{
+.about-para {
     padding: 10px;
 }

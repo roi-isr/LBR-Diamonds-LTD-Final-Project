@@ -9,7 +9,6 @@ function Header(props) {
     return (
         <header>
             <div className="logo-container">
-
                 <img
                     src={Logo}
                     className="logo"

@@ -79,6 +79,16 @@ function ContactForm() {
     // Send the form data to the server .
     const submitForm = (event) => {
         event.preventDefault();
+        content = {
+            email_address: email,
+            name: name,
+            phone: phone,
+            content: content
+        }
+        fetchContact(content);
+    }
+
+    const fetchContact = (content) => {
         fetch("https://final-project-lbr.herokuapp.com/contact",
             {
                 mode: 'no-cors',
@@ -87,12 +97,7 @@ function ContactForm() {
                 {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    email_address: email,
-                    name: name,
-                    phone: phone,
-                    content: content
-                })
+                body: JSON.stringify(content)
             })
             .then(() => onSubmitSuccess())
             .catch(() => onSubmitFail())
@@ -107,10 +112,10 @@ function ContactForm() {
     }
 
     const onSubmitFail = () => {
-        alert("בעיה בשליחת ההודעה...");
+        throw Error("בעיה בשליחת ההודעה...");
     }
 
-    const formElements = [
+    const formElementsAttr = [
         {
             controlId: "exampleForm.ControlInput1", label: "Email address",
             controlAttr: {
@@ -139,19 +144,22 @@ function ContactForm() {
                 onChange: (event) => setContent(event.target.value)
             }
         },
-    ]
-    
+    ];
+
+    const renderFormElements =
+        formElementsAttr.map((item, index) =>
+            <Form.Group key={index} controlId={item.controlId}>
+                <Form.Label>{item.label}</Form.Label>
+                <Form.Control
+                    {...item.controlAttr}
+                />
+            </Form.Group>)
+
     return (
         <div className="contact-form-div">
             <Form onSubmit={(e) => submitForm(e)}>
-                {formElements.map((item, index) =>
-                    <Form.Group key={index} controlId={item.controlId}>
-                        <Form.Label>{item.label}</Form.Label>
-                        <Form.Control
-                            {...item.controlAttr}
-                        />
-                    </Form.Group>)}
-                <Button type='submit'>Contact us!</Button>
+                {renderFormElements}
+                <Button type='submit'>Contact Us!</Button>
             </Form>
         </div>
     );

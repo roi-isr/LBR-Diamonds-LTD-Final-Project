@@ -14,13 +14,17 @@ const NotFoundImg = styled.img`
     height: 400px;
 `
 
+const Wrapper = styled.div`
+    text-align: center;
+`
+
 class PageNotFound extends React.Component {
   render() {
     return (
-      <div style={{textAlign:'center'}}>
+      <Wrapper>
         <NotFoundMsg>Error 404 - Page Not Found :(</NotFoundMsg>
         <NotFoundImg src={NotFoundPic} alt="not_found" />
-      </div>
+      </Wrapper>
     );
   }
 }

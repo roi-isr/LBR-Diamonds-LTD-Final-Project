@@ -2,13 +2,10 @@ import { SAVE_TOKEN, UPDATE_LOGIN_STAT, LOG_OUT } from './actionTypes';
 
 // Verify token through server, making admin sessions possible, even after page refresh
 const verify_token = (token) => {
-
     return new Promise((resolve, reject) => {
-        fetch("http://127.0.0.1:5000/verify-token",
-            {
+        fetch("http://127.0.0.1:5000/verify-token", {
                 method: 'GET',
-                headers:
-                {
+                headers: {
                     'Authorization': `JWT ${token}`,
                 },
             })
@@ -16,8 +13,7 @@ const verify_token = (token) => {
             .then(data => {
                 if (data.auth) {
                     resolve(true);
-                }
-                else {
+                } else {
                     reject(Error('Unverifies user'));
                 }
             })

@@ -1,4 +1,4 @@
-.contact-form-div{
+.contact-form-div {
     width: 50%;
     border: 2px solid #cecece;
     border-radius: 10px;
@@ -6,47 +6,46 @@
     padding: 10px;
 }
 
-.contact-div{
+.contact-div {
     display: flex;
     flex-direction: row;
 }
 
-.map-container-css{
+.map-container-css {
     height: 450px;
     width: 800px;
 }
 
-.home-btn{
+.home-btn {
     height: 30px;
     width: 30px;
-    border-radius:60px;
+    border-radius: 60px;
     position: absolute;
-    right:0;
+    right: 0;
 }
-.home-btn:focus{
+
+.home-btn:focus {
     outline: none;
 }
 
-.div-seperator{
+.div-seperator {
     border: 2px dashed #808080;
 }
 
+
 /* Mobile compatibility */
-@media only screen and (max-width: 990px)
-{
-    .contact-form-div{
+
+@media only screen and (max-width: 990px) {
+    .contact-form-div {
         width: 100%;
     }
-    .contact-div{
+    .contact-div {
         flex-direction: column;
     }
-    .map-container-css{
+    .map-container-css {
         width: 100%;
     }
-    .home-btn{
-        top:673px;
+    .home-btn {
+        top: 673px;
     }
 }
-
-
-

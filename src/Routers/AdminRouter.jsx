@@ -7,10 +7,12 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import BasicTable from '../Components/StockTable/StockTable';
 import DeliveryTable from '../Components/DeliveryCheck/DeliveryFile';
+import SellTable from '../Components/SellTable/SellTable';
 
 const paths = [
     { attr: { path: '/admin/reports' }, component: <BasicTable /> },
     { attr: { path: '/admin/delivery' }, component: <DeliveryTable /> },
+    { attr: { path: '/admin/sell' }, component: <SellTable /> },
 ]
 
 class AdminRouter extends React.Component {

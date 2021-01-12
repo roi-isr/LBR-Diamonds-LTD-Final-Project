@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import { WebCookies } from '../../Entities/Cookies';
 import stock from "../StockTable/StockTable"
 import BasicTable from '../StockTable/StockTable';
+import SellTable from "../SellTable/SellTable";
 import DataTable from '../DeliveryCheck/DeliveryFile'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import AdminRouter from '../../Routers/AdminRouter'
@@ -34,10 +35,10 @@ function Admin(props) {
         const adminNav =
             
         [ { name: "התנתק", click: logout },
-        { name: "מעקב משלוחים", path: "/reports" }
+        { name: "מעקב משלוחים", path: "/admin/delivery" }
            ,
-            { name: "מכירות", path: "/reports" },
-           , { name: "ניהול מלאי", path: "/reports" }
+            { name: "מכירות", path: "/admin/sell" },
+           , { name: "ניהול מלאי", path: "/admin/reports" }
            ];
         props.changeContent(adminNav)
         props.showNav(true)

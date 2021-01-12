@@ -4,10 +4,19 @@ import React, { useEffect, useCallback } from 'react';
 import { connect } from 'react-redux'
 import { change_content, change_visiblity, log_out } from '../../store/actions/index'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+<<<<<<< HEAD
 import DataTable from '../DeliveryCheck/DeliveryFile'
 import { WebCookies } from '../../Entities/Cookies';
 import Stock from "../StockTable/StockTable"
 import BasicTable from '../StockTable/StockTable';
+=======
+import {WebCookies} from '../../Entities/Cookies';
+import stock from "../Stock-table/stock-table"
+import BasicTable from '../Stock-table/stock-table';
+import DataTable from '../Delivery-check/Delivery-file'
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
+
+>>>>>>> design-table
 
 function Admin(props) {
     /* Log off as admin and return to home page*/
@@ -27,11 +36,16 @@ function Admin(props) {
     }
 
     /* Display dedicated navbar options for admin */
+<<<<<<< HEAD
     const changeNavToAdmin = useCallback(() => {
         console.log("Hfgh")
         const adminNav =
             [{ name: "Reports", path: "/reports" },
             { name: "Logout", click: logout }];
+=======
+    const changeNavToAdmin = () => {
+        const adminNav = [{ name: "התנתק", click: logout },{ name: "מעקב משלוחים", path: "/reports" },{ name: "מכירות", path: "/reports" },{ name: "ניהול מלאי", path: "/reports" }]
+>>>>>>> design-table
         props.changeContent(adminNav)
         props.showNav(true)
     }, [props, logout]);
@@ -43,7 +57,11 @@ function Admin(props) {
     return (
         <React.Fragment>
             {props.isLoggedIn ?
+<<<<<<< HEAD
                 <DataTable />
+=======
+             <BasicTable/>
+>>>>>>> design-table
                 :
                 <div>You're not authorized as admin</div>}
         </React.Fragment>

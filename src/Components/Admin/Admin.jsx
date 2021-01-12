@@ -4,15 +4,12 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux'
 import { change_content, change_visiblity, log_out} from '../../store/actions/index'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
-<<<<<<< HEAD
 import {WebCookies} from '../../Entities/Cookies';
-=======
-import Cookies from "universal-cookie";
 import stock from "../Stock-table/stock-table"
 import BasicTable from '../Stock-table/stock-table';
 import DataTable from '../Delivery-check/Delivery-file'
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 
->>>>>>> admin-prototype
 
 function Admin(props) {
     useEffect(() => {
@@ -37,7 +34,7 @@ function Admin(props) {
 
     /* Display dedicated navbar options for admin */
     const changeNavToAdmin = () => {
-        const adminNav = [{ name: "Reports", path: "/reports" }, { name: "Logout", click: logout }]
+        const adminNav = [{ name: "התנתק", click: logout },{ name: "מעקב משלוחים", path: "/reports" },{ name: "מכירות", path: "/reports" },{ name: "ניהול מלאי", path: "/reports" }]
         props.changeContent(adminNav)
         props.showNav(true)
     }
@@ -45,7 +42,7 @@ function Admin(props) {
     return (
         <React.Fragment>
             {props.isLoggedIn ?
-             <DataTable/>
+             <BasicTable/>
                 :
                 <div>You're not authorized as admin</div>}
         </React.Fragment>

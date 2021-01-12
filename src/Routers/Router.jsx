@@ -12,25 +12,32 @@ import Admin from '../Components/Admin/Admin'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import NotFound from '../Components/NotFound/NotFound'
 
+const paths = [
+    { attr: { path: '/', exact: true }, component: <Redirect to="home" /> },
+    { attr: { path: '/home' }, component: <Homepage /> },
+    { attr: { path: '/store' }, component: <Store /> },
+    { attr: { path: '/about' }, component: <About /> },
+    { attr: { path: '/qa' }, component: <QA /> },
+    { attr: { path: '/contact' }, component: <Contact /> },
+    { attr: { path: '/admin' }, component: <WithAdmin><Sign /><Admin /></WithAdmin> },
+    { attr: { path: '' }, component: <NotFound /> },
+]
+
 class RouterComponent extends React.Component {
     render() {
+        const switchContainer =
+            <Switch>
+                {paths.map((item, index) =>
+                    <Route
+                        key={index}
+                        {...item.attr}>
+                        {item.component}
+                    </Route>
+                )}
+            </Switch>;
         return (
             <Router>
-                <Switch>
-                    <Route path="/" exact><Redirect to="home" /></Route>
-                    <Route path="/home"><Homepage /></Route>
-                    <Route path="/store"><Store /></Route>
-                    <Route path="/about"><About /></Route>
-                    <Route path="/qa"><QA /></Route>
-                    <Route path="/contact"><Contact /></Route>
-                    <Route path="/admin">
-                        <WithAdmin>
-                            <Sign />
-                            <Admin />
-                        </WithAdmin>
-                    </Route>
-                    <Route path=""><NotFound /></Route>
-                </Switch>
+                {switchContainer}
             </Router>
         );
     }

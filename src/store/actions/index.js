@@ -4,8 +4,9 @@ export {
     change_content,
     change_visiblity
 } from './navControl';
-export{
+
+export {
     save_token,
     update_login_stat,
     log_out
-} from './token'
+} from './token';

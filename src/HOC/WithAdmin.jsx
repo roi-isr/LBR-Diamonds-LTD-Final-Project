@@ -5,9 +5,9 @@ import {WebCookies} from '../Entities/Cookies'
 
 function WithAdmin(props) {
     useEffect(() => {
-        props.hide_nav()
+        props.hide_nav();
         if (!props.isLoggedIn)
-            getTokenFromCookies()
+            getTokenFromCookies();
     }, [])
 
     /* Get access token from cookies, in case of a page refresh */
@@ -16,6 +16,7 @@ function WithAdmin(props) {
         const token = cookies.createCookies();
         props.updateLoginStat(token);
     }
+
     return (
         <React.Fragment>
             {props.isLoggedIn ?
@@ -32,9 +33,11 @@ const mapDispatchToProp = (dispatch) => {
         updateLoginStat: (token) => dispatch(update_login_stat(token))
     }
 }
+
 const mapStateToProps = (state) => {
     return {
         isLoggedIn: state.tokenSaver.isLoggedIn
     }
 }
+
 export default connect(mapStateToProps, mapDispatchToProp)(WithAdmin);

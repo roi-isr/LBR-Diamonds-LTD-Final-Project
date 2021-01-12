@@ -18,19 +18,20 @@ import { connect } from 'react-redux'
 import { save_token } from '../../../store/actions/index'
 import Admin from '../../Admin/Admin'
 
+// copyright for using Material-UI style template
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Material-UI
       </Link>{' '}
       {new Date().getFullYear()}
-      {'.'}
     </Typography>
   );
 }
 
+// Apply style on login elements
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '40vh',
@@ -57,14 +58,15 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.main,
   },
   form: {
-    width: '100%', // Fix IE11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
 }));
-// function that returns a login page to the webmaster, including a login form, username and password.
+
+
 function SignInSide(props) {
   const classes = useStyles();
   // Using React Hooks in order to manage component's states
@@ -123,7 +125,7 @@ function SignInSide(props) {
               </Avatar>
               <Typography component="h1" variant="h5">
                 Sign in
-          </Typography>
+              </Typography>
               <form className={classes.form} noValidate>
                 <TextField
                   margin="normal"
@@ -160,12 +162,12 @@ function SignInSide(props) {
                   className={classes.submit}
                 >
                   Sign In
-            </Button>
+                </Button>
                 <Grid container>
                   <Grid item xs>
                     <Link href="#" variant="body2">
                       Forgot password?
-                </Link>
+                    </Link>
                   </Grid>
                   <Grid item>
                     <Link href="#" variant="body2">
@@ -190,6 +192,7 @@ const mapDispatchToProp = (dispatch) => {
     token_saver: (token) => dispatch(save_token(token))
   }
 }
+
 const mapStateToProp = (state) => {
   return {
     auth_stat: state.tokenSaver.isLoggedIn

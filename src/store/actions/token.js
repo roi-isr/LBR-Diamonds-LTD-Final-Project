@@ -1,8 +1,8 @@
-import {SAVE_TOKEN, UPDATE_LOGIN_STAT, LOG_OUT} from './actionTypes';
+import { SAVE_TOKEN, UPDATE_LOGIN_STAT, LOG_OUT } from './actionTypes';
 
-/* Verify token through server, making admin sessions possible, even after page refresh*/
+// Verify token through server, making admin sessions possible, even after page refresh
 const verify_token = (token) => {
-    
+
     return new Promise((resolve, reject) => {
         fetch("http://127.0.0.1:5000/verify-token",
             {
@@ -18,15 +18,14 @@ const verify_token = (token) => {
                     resolve(true);
                 }
                 else {
-                    console.log("Unverified token");
-                    resolve(false);
+                    reject(Error('Unverifies user'));
                 }
             })
             .catch((e) => reject(Error(e.name)))
     });
 }
 
-/* Change site navbar visibility */
+// Change site navbar visibility
 export const save_token = (val) => {
     return {
         type: SAVE_TOKEN,
@@ -43,9 +42,11 @@ const update_login = val => {
 
 export const update_login_stat = (val) => {
     return dispatch => {
-        verify_token(val).then((value) => {
-            dispatch(update_login(value));
-        }).catch(()=>{console.log("Unsuccessful verification")})
+        verify_token(val)
+            .then((value) => {
+                dispatch(update_login(value));
+            })
+            .catch((error) => { console.log(error) });
     }
 }
 

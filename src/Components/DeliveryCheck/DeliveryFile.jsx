@@ -41,15 +41,16 @@ const rows = [
   { id: 9, delivery_comany: 'malca amit', from_country: 'Harvey', name: 'daniel' },
 ];
 
-export default function DataTable() {
+export default function DeliveryTable() {
   return (
     <React.Fragment>
-      <div style={{ width: "15%", height: "70%" }}>
-        <label>מסגרת אשראי</label>
-        <CircularProgressbar percentage={10} text={`${10}%`} />
-      </div>
+
       <div style={{ height: 500, width: '100%', direction: 'rtl', }}>
         <DataGrid rows={rows} columns={columns} pnameSize={5} checkboxSelection />
+      </div>
+      <div style={{ width: "10%", height: "10%",margin:"auto" }}>
+        <label>מסגרת אשראי</label>
+        <CircularProgressbar percentage={10} text={`${10}%`} />
       </div>
     </React.Fragment>
   );

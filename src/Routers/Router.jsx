@@ -11,6 +11,8 @@ import WithAdmin from '../HOC/WithAdmin'
 import Admin from '../Components/Admin/Admin'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import NotFound from '../Components/NotFound/NotFound'
+import BasicTable from '../Components/StockTable/StockTable';
+import DeliveryTable from '../Components/DeliveryCheck/DeliveryFile';
 
 const paths = [
     { attr: { path: '/', exact: true }, component: <Redirect to="home" /> },

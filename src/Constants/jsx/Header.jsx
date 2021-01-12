@@ -9,12 +9,31 @@ function Header(props) {
     return (
         <header>
             <div className="logo-container">
+                
                 <img
                     src={Logo}
                     className="logo"
                     alt="logo"
                 />
             </div>
+            {/* <CircularProgressbar
+                value={4}
+                maxValue={5}
+                background={false}
+                text={"מסגרת"}
+                // styles={buildStyles({
+                //     // Rotation of path and trail, in number of turns (0-1)
+                //     rotation: 0.25,
+                //     // Text size
+                //     textSize: '10px',
+                //     // How long animation takes to go from one percentage to another, in seconds
+                //     pathTransitionDuration: 0.5,
+                //     // Colors
+                //     textColor: '#f88',
+                //     trailColor: '#d6d6d6',
+                // })}
+            /> */}
+
             {props.visibility ? <CostumizedNavItem content={props.content} /> : null}
         </header>
     );
@@ -27,7 +46,7 @@ export function CostumizedNavItem(props) {
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav
                     className="mr-auto site-nav-bar"
-                    style={{ width: "70%", justifyContent:'space-between'}}
+                    style={{ width: "70%", justifyContent: 'space-between' }}
                 >
                     {/* <Nav.Link href="/sign">
                         <AccountCircleIcon

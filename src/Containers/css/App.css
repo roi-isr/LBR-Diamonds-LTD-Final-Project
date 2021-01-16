@@ -37,11 +37,11 @@
   }
 } */
 
-.page-seperator{
-  width: 100%;
-  height: 0px;
-  border: 1px solid #000000;
-  background-color: #000000;
-  box-shadow: 1px 1px 1px 1px #000000;
-  margin: 0;
+.page-seperator {
+    width: 100%;
+    height: 0px;
+    border: 1px solid #000000;
+    background-color: #000000;
+    box-shadow: 1px 1px 1px 1px #000000;
+    margin: 0;
 }

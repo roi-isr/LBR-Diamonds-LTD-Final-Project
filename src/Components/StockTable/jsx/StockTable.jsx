@@ -7,6 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import '../css/StockTable.css'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 
 const useStyles = makeStyles({
@@ -15,7 +16,8 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(name, weigth, color, clarity, carbs, protein, seller) {
+function createData(...data) {
+  const [name, weigth, color, clarity, carbs, protein, seller] = data;
   return { name, weigth, clarity, color, carbs, protein, seller };
 }
 
@@ -30,6 +32,8 @@ const rows = [
   createData('R-1/4', 155.2, 120, 130, 'vs', 'D', 'R-108'),
 
 ];
+
+const englishTitles = ['weigth', 'clarity', 'color', 'carbs', 'protein', 'seller'];
 const titles = ["מודל", "משקל ", "עלות", "מכירה", "נקיון ", "צבע", "קוד", "הערות", "מכירות", "מלאי", "תאריך מכירה - תשלום ", "יתרה "];
 
 export default function BasicTable() {
@@ -37,42 +41,53 @@ export default function BasicTable() {
 
   return (
     <React.Fragment>
-   
+
       <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="simple table" style={{ direction: 'rtl' }}>
+        <Table
+          className={classes.table}
+          aria-label="simple table"
+          style={{ direction: 'rtl' }}>
           <TableHead>
             <TableRow>
-
               {titles.map((item, index) => (
-                <TableCell key={index} align="left">
+                <TableCell
+                  key={index}
+                  align="left">
                   {item}
                 </TableCell>
               ))}
-
-
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.map((row) => (
               <TableRow key={row.name}>
-                <TableCell component="th" scope="row">
+                <TableCell
+                  component="th"
+                  scope="row">
                   {row.name}
                 </TableCell>
-                <TableCell align="left">{row.weigth}</TableCell>
-
-                <TableCell align="left">{row.clarity}</TableCell>
-                <TableCell align="left">{row.carbs}</TableCell>
-                <TableCell align="left">{row.protein}</TableCell>
-                <TableCell align="left">{row.seller}</TableCell>
+                {Object.keys(row)
+                  .filter((filArray) => filArray !== 'name')
+                  .map((data, index) =>
+                    <TableCell
+                      key={index}
+                      align="left">
+                      {row[englishTitles[index]]}
+                    </TableCell>
+                  )}
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
 
-      <div style={{ width: "10%", height: "10%",margin:"auto",background:"none" }}>
+      <div className="progress-stock-wrapper">
         <label> ניצול מסגרת האשראי </label>
-        <CircularProgressbar maxValue={100} value={10} percentage={10} text={`${10}%`} />
+        <CircularProgressbar
+          maxValue={100}
+          value={10}
+          percentage={10}
+          text={`${10}%`} />
       </div>
 
 

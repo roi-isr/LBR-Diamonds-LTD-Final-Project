@@ -1,39 +1,39 @@
-.logo{
+.logo {
     width: 18%;
 }
 
-header{
+header {
     text-align: center;
 }
 
-.logo-container{
+.logo-container {
     background-color: #ffffff;
 }
 
-
-.nav-link{
+.nav-link {
     margin: 0 50px;
     font-size: 20px;
 }
 
-.gen-search-btn{
+.gen-search-btn {
     margin: auto;
 }
 
+
 /* Mobile compatibility */
-@media only screen and (max-width: 990px)
-{
-    .logo{
+
+@media only screen and (max-width: 990px) {
+    .logo {
         width: 35%;
     }
-    .gen-search-btn{
+    .gen-search-btn {
         margin: auto;
         margin-top: 5px;
     }
-    .mr-sm-2{
+    .mr-sm-2 {
         margin: auto;
     }
-    .site-nav-bar{
+    .site-nav-bar {
         margin: auto;
     }
 }

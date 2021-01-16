@@ -3,14 +3,13 @@
 import React, { useEffect, useCallback } from 'react';
 import { connect } from 'react-redux'
 import { change_content, change_visiblity, log_out } from '../../store/actions/index'
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import { WebCookies } from '../../Entities/Cookies';
-import stock from "../StockTable/StockTable"
-import BasicTable from '../StockTable/StockTable';
+import Stock from "../StockTable/jsx/StockTable"
+import BasicTable from '../StockTable/jsx/StockTable';
 import SellTable from "../SellTable/SellTable";
-import DataTable from '../DeliveryCheck/DeliveryFile'
+import DataTable from '../DeliveryCheck/jsx/DeliveryFile'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
-import AdminRouter from '../../Routers/AdminRouter'
+import RouterComponent from '../../Routers/Router'
 
 function Admin(props) {
     /* Log off as admin and return to home page*/
@@ -31,15 +30,12 @@ function Admin(props) {
 
     /* Display dedicated navbar options for admin */
     const changeNavToAdmin = useCallback(() => {
-        console.log("Hfgh")
-        const adminNav =
-            
-        [ { name: "התנתק", click: logout },
-        { name: "מעקב משלוחים", path: "/admin/delivery" }
-           ,
+        const adminNav = [
+            { name: "התנתק", click: logout },
+            { name: "מעקב משלוחים", path: "/admin/delivery" },
             { name: "מכירות", path: "/admin/sell" },
-           , { name: "ניהול מלאי", path: "/admin/reports" }
-           ];
+            { name: "ניהול מלאי", path: "/admin/reports" }
+        ];
         props.changeContent(adminNav)
         props.showNav(true)
     }, [props, logout]);
@@ -50,9 +46,8 @@ function Admin(props) {
 
     return (
         <React.Fragment>
-            <AdminRouter/>
+            <RouterComponent routing="Admin" />
         </React.Fragment>
-
     );
 }
 

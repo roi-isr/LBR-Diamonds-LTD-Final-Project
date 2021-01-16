@@ -73,13 +73,17 @@ function SignInSide(props) {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-  const auth_handler = (event) => {
+  const authHandler = (event) => {
     event.preventDefault();
-    const content =
+    const httpContent =
     {
       username: email,
       password: password,
     }
+    fetchAuthRequest(httpContent);
+  }
+
+  const fetchAuthRequest = (httpContent) => {
     fetch("http://127.0.0.1:5000/auth",
       {
         method: 'POST',
@@ -87,7 +91,7 @@ function SignInSide(props) {
         {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(content)
+        body: JSON.stringify(httpContent)
       })
       .then(response => response.json())
       .then(data => {
@@ -95,10 +99,10 @@ function SignInSide(props) {
           onSubmitSuccess(data.access_token)
         }
         else {
-          alert(data.description);
+          onSubmitFailure(data.description);
         }
       })
-      .catch(() => onSubmitFail())
+      .catch((e) => onSubmitFailure(e.name));
   }
 
   // function that runs on a success submittion
@@ -107,23 +111,39 @@ function SignInSide(props) {
   }
 
   // function that runs on a failed submittion
-  const onSubmitFail = () => {
-    alert("בעיה בשליחת ההודעה...");
+  const onSubmitFailure = (response) => {
+    alert(response);
+    throw Error(response);
   }
 
   return (
     <React.Fragment>
       {props.auth_stat ?
         <Admin /> :
-        <Grid container component="main" className={classes.root} onSubmit={(e) => auth_handler(e)}>
+        <Grid
+          container
+          component="main"
+          className={classes.root}
+          onSubmit={(e) => authHandler(e)}>
           <CssBaseline />
-          <Grid item xs={false} sm={4} md={7} className={classes.image} />
-          <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <Grid
+            item xs={false}
+            sm={4} md={7}
+            className={classes.image}
+          />
+          <Grid
+            item
+            xs={12} sm={8} md={5}
+            component={Paper}
+            elevation={6}
+            square>
             <div className={classes.paper}>
               <Avatar className={classes.avatar}>
                 <LockOutlinedIcon />
               </Avatar>
-              <Typography component="h1" variant="h5">
+              <Typography
+                component="h1"
+                variant="h5">
                 Sign in
               </Typography>
               <form className={classes.form} noValidate>
@@ -170,7 +190,9 @@ function SignInSide(props) {
                     </Link>
                   </Grid>
                   <Grid item>
-                    <Link href="#" variant="body2">
+                    <Link
+                      href="#"
+                      variant="body2">
                       {"Don't have an account? Sign Up"}
                     </Link>
                   </Grid>

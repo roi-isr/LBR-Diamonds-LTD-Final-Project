@@ -1,12 +1,11 @@
-.selection-vs{
-text-align: center;
-width: 100%;
+.selection-vs {
+    text-align: center;
+    width: 100%;
 }
 
-@media only screen and (max-width: 910px){
-    .selection-vs{
+@media only screen and (max-width: 910px) {
+    .selection-vs {
         display: flex;
         flex-direction: column;
-        }
+    }
 }
-

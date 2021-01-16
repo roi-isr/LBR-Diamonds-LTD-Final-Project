@@ -1,0 +1,11 @@
+.delivery-table-wrapper {
+    height: 500px;
+    width: 100%;
+    direction: rtl;
+}
+
+.credit-util-div {
+    width: 10%;
+    height: 10%;
+    margin: auto;
+}

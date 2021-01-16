@@ -35,7 +35,7 @@ class QA extends React.Component {
 
         <Button className="qa-search-btn" color="primary" disableElevation>
           SEARCH FOR A DIAMOND NOW
-      </Button>
+        </Button>
       </div >
 
     );

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { change_visiblity, update_login_stat } from '../store/actions/index'
 import { connect } from 'react-redux';
-import {WebCookies} from '../Entities/Cookies'
+import { WebCookies } from '../Entities/Cookies'
 
 function WithAdmin(props) {
     useEffect(() => {

@@ -10,6 +10,9 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
+
+import Fab from '@material-ui/core/Fab';
 
 
 const useStyles = makeStyles({
@@ -57,6 +60,9 @@ export default function SellTable() {
 
   return (
     <React.Fragment>
+            <Fab color="primary" aria-label="add">
+  <AddIcon />
+</Fab>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table" style={{ direction: 'rtl' }}>
           <TableHead>

@@ -17,6 +17,15 @@ import RE5 from '../../../Assets/Dmn_pic/RE5.jpg';
 import { connect } from 'react-redux'
 import { save_token } from '../../../store/actions/index'
 import Admin from '../../Admin/Admin'
+import Loader from 'react-loader-spinner'
+import styled from 'styled-components/macro'
+
+const LoadingDiv = styled.div
+  `
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`
 
 // copyright for using Material-UI style template
 function Copyright() {
@@ -66,15 +75,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 function SignInSide(props) {
   const classes = useStyles();
   // Using React Hooks in order to manage component's states
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [inSignProcess, setInSignProcess] = useState(false)
 
   const authHandler = (event) => {
     event.preventDefault();
+    setInSignProcess(true);
     const httpContent =
     {
       username: email,
@@ -108,12 +118,13 @@ function SignInSide(props) {
   // function that runs on a success submittion
   const onSubmitSuccess = (response) => {
     props.token_saver(response);
+    setInSignProcess(false);
   }
 
   // function that runs on a failed submittion
   const onSubmitFailure = (response) => {
     alert(response);
-    throw Error(response);
+    setInSignProcess(false);
   }
 
   return (
@@ -171,10 +182,18 @@ function SignInSide(props) {
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete="current-password"
                 />
-                <FormControlLabel
-                  control={<Checkbox value="remember" color="primary" />}
-                  label="Remember me"
-                />
+                <LoadingDiv>
+                  <FormControlLabel
+                    control={<Checkbox value="remember" color="primary" />}
+                    label="Remember me"
+                  />
+                  <Loader
+                    type='ThreeDots'
+                    height={40}
+                    width={40}
+                    color="SlateBlue"
+                    visible={inSignProcess} />
+                </LoadingDiv>
                 <Button
                   type="submit"
                   fullWidth

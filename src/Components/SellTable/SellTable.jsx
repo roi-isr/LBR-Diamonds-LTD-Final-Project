@@ -106,7 +106,7 @@ export default function SellTable() {
           </TableBody>
         </Table>
       </TableContainer>
-      <Fab color="primary" aria-label="add" onClick={handleClickOpen} style={{margin:"auto"}}>
+      <Fab color="primary" aria-label="add"  style={{margin:"auto"}}>
   <AddIcon />
 </Fab> 
     </React.Fragment>

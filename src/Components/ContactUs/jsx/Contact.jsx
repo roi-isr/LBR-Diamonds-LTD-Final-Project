@@ -79,17 +79,17 @@ function ContactForm() {
     // Send the form data to the server .
     const submitForm = (event) => {
         event.preventDefault();
-        content = {
+        const contentData = {
             email_address: email,
             name: name,
             phone: phone,
             content: content
         }
-        fetchContact(content);
+        fetchContact(contentData);
     }
 
     const fetchContact = (content) => {
-        fetch("https://final-project-lbr.herokuapp.com/contact",
+        fetch("http://127.0.0.1:5000/contact",
             {
                 mode: 'no-cors',
                 method: 'POST',

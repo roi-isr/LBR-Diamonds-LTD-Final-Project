@@ -21,6 +21,7 @@ function createData(...data) {
   return { name, weigth, clarity, color, carbs, protein, seller };
 }
 
+//Retrieving the columns, in practice the columns are retrieved from the database.
 const rows = [
   createData('R-1/4', 155.2, 120, 130, 'v-vs', 'D', 'R-101'),
   createData('R-1/4', 155.2, 1205, 130, 'v-vs', 'D', 'R-102'),
@@ -39,6 +40,8 @@ const titles = ["מודל", "משקל ", "עלות", "מכירה", "נקיון "
 export default function BasicTable() {
   const classes = useStyles();
 
+  //Returns the table to our requested page, shows us all the company's current inventory.
+  //Another element gives an indication to the business owner, what the status of his credit line at a given moment.
   return (
     <React.Fragment>
 
@@ -80,7 +83,7 @@ export default function BasicTable() {
           </TableBody>
         </Table>
       </TableContainer>
-
+       
       <div className="progress-stock-wrapper">
         <label> ניצול מסגרת האשראי </label>
         <CircularProgressbar

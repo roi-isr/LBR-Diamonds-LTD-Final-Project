@@ -29,7 +29,7 @@ function createData(...data) {
 const englishTitles = ['weigth', 'price', 'sum', 'model', 'sell_for', 'payment'];
 const titles = ["מודל", "משקל ", "מחיר לקראט ", "סה''כ", "קוד", "שם הקונה", "תאריך מכירה ", "תשלום"];
 
-
+//Database, in practice the information is retrieved from a database
 const rowsData = [
   createData('R-1/4', 15, 100, 1500, 'R-101', "yossi", "1/1/21", " דיסקונט 60 יום "),
   createData('R-1/4', 15, 100, 1500, 'R-101', "ybgfssi", "1/2/21", " דיסקונט 60 יום "),
@@ -50,6 +50,7 @@ export default function SellTable() {
 
   const [rows, setRows] = useState([...rowsData]);
 
+  //Function of deleting a row from the table, at the click of a button the row is deleted from the database.
   const deleteBtn = (ind) => {
     const con = window.confirm("Are you sure?");
     if (!con)
@@ -58,11 +59,10 @@ export default function SellTable() {
       currRow.filter((item, index) => index !== ind));
   }
 
+  //Returns the table to our requested page.
   return (
     <React.Fragment>
-            <Fab color="primary" aria-label="add">
-  <AddIcon />
-</Fab>
+
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table" style={{ direction: 'rtl' }}>
           <TableHead>
@@ -92,6 +92,7 @@ export default function SellTable() {
                       {row[englishTitles[index]]}
                     </TableCell>
                   )}
+                
                 <Button
                   variant="contained"
                   color="secondary"
@@ -105,6 +106,9 @@ export default function SellTable() {
           </TableBody>
         </Table>
       </TableContainer>
+      <Fab color="primary" aria-label="add"  style={{margin:"auto"}}>
+  <AddIcon />
+</Fab> 
     </React.Fragment>
   );
 }

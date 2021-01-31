@@ -31,10 +31,11 @@ function Admin(props) {
     /* Display dedicated navbar options for admin */
     const changeNavToAdmin = useCallback(() => {
         const adminNav = [
-            { name: "התנתק", click: logout },
-            { name: "מעקב משלוחים", path: "/admin/delivery" },
-            { name: "מכירות", path: "/admin/sell" },
-            { name: "ניהול מלאי", path: "/admin/reports" }
+           
+            { name: "Delivery", path: "/admin/delivery" },
+            { name: "Sells", path: "/admin/sell" },
+            { name: "Stock management", path: "/admin/reports" },
+            { name: "Logout", click: logout }
         ];
         props.changeContent(adminNav)
         props.showNav(true)

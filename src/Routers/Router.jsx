@@ -1,5 +1,4 @@
 /* using react-router-dom for implementing multi-page application with a router component */
-
 import React from 'react';
 import Homepage from '../Components/HomePage/jsx/Homepage'
 import Store from '../Components/VirtualStore/jsx/VirtualStore'
@@ -57,7 +56,7 @@ class RouterComponent extends React.Component {
             </Switch>;
         return (
             <Router>
-                {switchContainer}
+                { switchContainer}
             </Router>
         );
     }

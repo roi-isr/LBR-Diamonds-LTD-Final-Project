@@ -1,8 +1,8 @@
 import React from 'react';
 import "../css/Header.css"
 import Logo from '../../Assets/logo.jpg'
+import { Link, BrowserRouter as Router } from 'react-router-dom'
 import { Form, FormControl, Button, Nav, Navbar } from 'react-bootstrap';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { connect } from 'react-redux'
 
 function Header(props) {
@@ -40,35 +40,37 @@ function Header(props) {
 
 function CustomizedNavItem(props) {
     return (
-        <Navbar bg="light" expand="lg">
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-                <Nav
-                    className="mr-auto site-nav-bar"
-                    style={{ width: "70%", justifyContent: 'space-between' }}>
-                    {props.content.map((item, index) =>
-                        <Nav.Link
-                            key={index}
-                            className="nav-link"
-                            onClick={item.click || null}
-                            href={item.path || null}>
-                            {item.name}
-                        </Nav.Link>
-                    )}
-                </Nav>
-                <Form inline>
-                    <FormControl
-                        type="text"
-                        placeholder="Search"
-                        className="mr-sm-2 search-input-nav" />
-                    <Button
-                        className="gen-search-btn"
-                        variant="outline-success">
-                        Search
+        <Router>
+            <Navbar bg="light" expand="lg">
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav
+                        className="mr-auto site-nav-bar"
+                        style={{ width: "70%", justifyContent: 'space-between' }}>
+                        {props.content.map((item, index) =>
+                            <Nav.Link
+                                href={item.path || null}
+                                key={index}
+                                className="nav-link"
+                                onClick={item.click || null}>
+                                {item.name}
+                            </Nav.Link>
+                        )}
+                    </Nav>
+                    <Form inline>
+                        <FormControl
+                            type="text"
+                            placeholder="Search"
+                            className="mr-sm-2 search-input-nav" />
+                        <Button
+                            className="gen-search-btn"
+                            variant="outline-success">
+                            Search
                     </Button>
-                </Form>
-            </Navbar.Collapse>
-        </Navbar>
+                    </Form>
+                </Navbar.Collapse>
+            </Navbar>
+        </Router>
     )
 }
 

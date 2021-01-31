@@ -16,9 +16,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
 import Fab from '@material-ui/core/Fab';
-
 import DeleteIcon from '@material-ui/icons/Delete';
 
 
@@ -61,102 +59,102 @@ export default function SellTable() {
       currRow.filter((item, index) => index !== ind));
   }
   const [open, setOpen] = React.useState(false);
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-    const handleClose = () => {
-      setOpen(false);
-    };
-    
-    const add_form = () => {
-      return (
-        <div>
-          <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-            Open form dialog
-        </Button>
-          <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                To subscribe to this website, please enter your email address here. We will send updates
-                occasionally.
-            </DialogContentText>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                label="Email Address"
-                type="email"
-                fullWidth
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose} color="primary">
-                Cancel
-            </Button>
-              <Button onClick={handleClose} color="primary">
-                Subscribe
-            </Button>
-            </DialogActions>
-          </Dialog>
-        </div>
-      );
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-    }
-  
-
-
+  const add_form = () => {
     return (
-      <React.Fragment>
-        <TableContainer component={Paper}>
-          <Table className={classes.table} aria-label="simple table" style={{ direction: 'rtl' }}>
-            <TableHead>
-              <TableRow>
-                {titles.map((item, index) => (
-                  <TableCell key={index} align="left">
-                    {item}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row, index) => (
-                <TableRow key={row.weigth}>
-                  <TableCell
-                    key={index}
-                    component="th"
-                    scope="row">
-                    {row.id}
-                  </TableCell>
-                  {Object.keys(row)
-                    // .filter((filItem) => filItem !== 'name')
-                    .map((item, index) =>
-                      <TableCell
-                        key={index}
-                        align="left">
-                        {row[englishTitles[index]]}
-                      </TableCell>
-                    )}
-
-                  <Button
-                    variant="contained"
-                    size="small"
-                    color="primary"
-                    onClick={deleteBtn}
-                    className={"delete_btn"}
-
-                  >
-                    אישור הגעה
-      </Button>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <Fab color="primary" aria-label="add" onClick={add_form}>
-          <AddIcon />
-        </Fab>
-      </React.Fragment>
+      <div>
+        <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+          Open form dialog
+        </Button>
+        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+          <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              To subscribe to this website, please enter your email address here. We will send updates
+              occasionally.
+            </DialogContentText>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Email Address"
+              type="email"
+              fullWidth
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleClose} color="primary">
+              Subscribe
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     );
+
   }
+
+
+
+  return (
+    <React.Fragment>
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="simple table" style={{ direction: 'rtl' }}>
+          <TableHead>
+            <TableRow>
+              {titles.map((item, index) => (
+                <TableCell key={index} align="left">
+                  {item}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row, index) => (
+              <TableRow key={row.weigth}>
+                <TableCell
+                  key={index}
+                  component="th"
+                  scope="row">
+                  {row.id}
+                </TableCell>
+                {Object.keys(row)
+                  // .filter((filItem) => filItem !== 'name')
+                  .map((item, index) =>
+                    <TableCell
+                      key={index}
+                      align="left">
+                      {row[englishTitles[index]]}
+                    </TableCell>
+                  )}
+
+                <Button
+                  variant="contained"
+                  size="small"
+                  color="primary"
+                  onClick={deleteBtn}
+                  className={"delete_btn"}
+
+                >
+                  אישור הגעה
+      </Button>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Fab color="primary" aria-label="add" onClick={add_form}>
+        <AddIcon />
+      </Fab>
+    </React.Fragment>
+  );
+}

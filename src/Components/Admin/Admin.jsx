@@ -4,10 +4,7 @@ import React, { useEffect, useCallback } from 'react';
 import { connect } from 'react-redux'
 import { change_content, change_visiblity, log_out } from '../../store/actions/index'
 import { WebCookies } from '../../Entities/Cookies';
-import Stock from "../StockTable/jsx/StockTable"
-import BasicTable from '../StockTable/jsx/StockTable';
-import SellTable from "../SellTable/SellTable";
-import DataTable from '../DeliveryCheck/jsx/DeliveryFile'
+import { withRouter } from 'react-router-dom';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import RouterComponent from '../../Routers/Router'
 
@@ -31,7 +28,7 @@ function Admin(props) {
     /* Display dedicated navbar options for admin */
     const changeNavToAdmin = useCallback(() => {
         const adminNav = [
-           
+
             { name: "Delivery", path: "/admin/delivery" },
             { name: "Sells", path: "/admin/sell" },
             { name: "Stock management", path: "/admin/reports" },
@@ -47,7 +44,10 @@ function Admin(props) {
 
     return (
         <React.Fragment>
-            <RouterComponent routing="Admin" />
+            <RouterComponent
+                routing="Admin"
+                relUrl={props.match.url}
+            />
         </React.Fragment>
     );
 }
@@ -66,4 +66,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProp)(Admin);
+export default connect(mapStateToProps, mapDispatchToProp)(withRouter(Admin));

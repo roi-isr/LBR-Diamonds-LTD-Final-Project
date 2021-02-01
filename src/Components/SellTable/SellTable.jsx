@@ -76,7 +76,7 @@ export default function SellTable() {
           </TableHead>
           <TableBody>
             {rows.map((row, index) => (
-              <TableRow key={row.name}>
+              <TableRow key={index}>
                 <TableCell
                   key={index}
                   component="th"
@@ -92,7 +92,7 @@ export default function SellTable() {
                       {row[englishTitles[index]]}
                     </TableCell>
                   )}
-                
+
                 <Button
                   variant="contained"
                   color="secondary"
@@ -106,9 +106,9 @@ export default function SellTable() {
           </TableBody>
         </Table>
       </TableContainer>
-      <Fab color="primary" aria-label="add"  style={{margin:"auto"}}>
-  <AddIcon />
-</Fab> 
+      <Fab color="primary" aria-label="add" style={{ margin: "auto" }}>
+        <AddIcon />
+      </Fab>
     </React.Fragment>
   );
 }

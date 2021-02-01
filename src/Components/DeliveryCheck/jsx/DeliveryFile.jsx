@@ -59,14 +59,10 @@ export default function SellTable() {
     setRows(currRow =>
       currRow.filter((item, index) => index !== ind));
   }
-<<<<<<< HEAD
-  const [open, setOpen] = React.useState(false);
-=======
 
 
 
   const [open, setOpen] = useState(false);
->>>>>>> 5f21b307c40f58312ed434ed1a4405e7477c54b6
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -75,19 +71,12 @@ export default function SellTable() {
     setOpen(false);
   };
 
-<<<<<<< HEAD
   const add_form = () => {
     return (
       <div>
         <Button variant="outlined" color="primary" onClick={handleClickOpen}>
           Open form dialog
         </Button>
-=======
-  // A window that opens for adding a new item to thr table.
-  const AddForm = () => {
-    return (
-      <div>
->>>>>>> 5f21b307c40f58312ed434ed1a4405e7477c54b6
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
           <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
           <DialogContent>
@@ -119,16 +108,10 @@ export default function SellTable() {
   }
 
 
-<<<<<<< HEAD
-
-  return (
-    <React.Fragment>
-=======
   //Returns the table to our requested page.
   return (
     <div style={{textAlign:'center'}}>
-      <AddForm />
->>>>>>> 5f21b307c40f58312ed434ed1a4405e7477c54b6
+      {/* <AddForm /> */}
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table" style={{ direction: 'rtl' }}>
           <TableHead>
@@ -141,23 +124,6 @@ export default function SellTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-<<<<<<< HEAD
-            {rows.map((row, index) => (
-              <TableRow key={row.weigth}>
-                <TableCell
-                  key={index}
-                  component="th"
-                  scope="row">
-                  {row.id}
-                </TableCell>
-                {Object.keys(row)
-                  // .filter((filItem) => filItem !== 'name')
-                  .map((item, index) =>
-                    <TableCell
-                      key={index}
-                      align="left">
-                      {row[englishTitles[index]]}
-=======
             {rows.map((row, index2) => (
               <TableRow key={index2}>
               
@@ -168,7 +134,6 @@ export default function SellTable() {
                       key={index3}
                       align="left">
                       {row[englishTitles[index3]]}
->>>>>>> 5f21b307c40f58312ed434ed1a4405e7477c54b6
                     </TableCell>
                   )}
 
@@ -176,11 +141,7 @@ export default function SellTable() {
                   variant="contained"
                   size="small"
                   color="primary"
-<<<<<<< HEAD
-                  onClick={deleteBtn}
-=======
                   onClick={() => deleteBtn(index2)}
->>>>>>> 5f21b307c40f58312ed434ed1a4405e7477c54b6
                   className={"delete_btn"}
 
                 >
@@ -191,16 +152,9 @@ export default function SellTable() {
           </TableBody>
         </Table>
       </TableContainer>
-<<<<<<< HEAD
-      <Fab color="primary" aria-label="add" onClick={add_form}>
-        <AddIcon />
-      </Fab>
-    </React.Fragment>
-=======
       <Fab color="primary" aria-label="add" style={{margin:"auto"}} >
         <AddIcon />
       </Fab>
     </div>
->>>>>>> 5f21b307c40f58312ed434ed1a4405e7477c54b6
   );
 }

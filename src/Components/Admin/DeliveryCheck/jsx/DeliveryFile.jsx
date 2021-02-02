@@ -18,7 +18,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Fab from '@material-ui/core/Fab';
 import DeleteIcon from '@material-ui/icons/Delete';
-
+import ManagementTable from '../../../ManagementTable/jsx/ManagementTable'
 
 const useStyles = makeStyles({
   table: {
@@ -107,54 +107,60 @@ export default function SellTable() {
 
   }
 
-
+  const headers = ['שם פרטי', 'שם משפחה', 'תעודת זהות'];
+  const content = [
+    ['דניאל', 'ידיד', '34534634'],
+    ['רועי', 'ישראלי', '349845'],
+    ['עמית', 'ליברמן', '6454654'],
+  ];
   //Returns the table to our requested page.
   return (
-    <div style={{textAlign:'center'}}>
-      {/* <AddForm /> */}
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="simple table" style={{ direction: 'rtl' }}>
-          <TableHead>
-            <TableRow>
-              {titles.map((item, index) => (
-                <TableCell key={index} align="left">
-                  {item}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row, index2) => (
-              <TableRow key={index2}>
-              
-                {Object.keys(row)
-                  // .filter((filItem) => filItem !== 'name')
-                  .map((item, index3) =>
-                    <TableCell
-                      key={index3}
-                      align="left">
-                      {row[englishTitles[index3]]}
-                    </TableCell>
-                  )}
+    <ManagementTable headers={headers} content={content} />
+    // <div style={{textAlign:'center'}}>
+    //   {/* <AddForm /> */}
+    //   <TableContainer component={Paper}>
+    //     <Table className={classes.table} aria-label="simple table" style={{ direction: 'rtl' }}>
+    //       <TableHead>
+    //         <TableRow>
+    //           {titles.map((item, index) => (
+    //             <TableCell key={index} align="left">
+    //               {item}
+    //             </TableCell>
+    //           ))}
+    //         </TableRow>
+    //       </TableHead>
+    //       <TableBody>
+    //         {rows.map((row, index2) => (
+    //           <TableRow key={index2}>
 
-                <Button
-                  variant="contained"
-                  size="small"
-                  color="primary"
-                  onClick={() => deleteBtn(index2)}
-                  className={"delete_btn"}
+    //             {Object.keys(row)
+    //               // .filter((filItem) => filItem !== 'name')
+    //               .map((item, index3) =>
+    //                 <TableCell
+    //                   key={index3}
+    //                   align="left">
+    //                   {row[englishTitles[index3]]}
+    //                 </TableCell>
+    //               )}
 
-                >
-                  אישור הגעה
-      </Button>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Fab color="primary" aria-label="add" style={{margin:"auto"}} >
-        <AddIcon />
-      </Fab>
-    </div>
+    //             <Button
+    //               variant="contained"
+    //               size="small"
+    //               color="primary"
+    //               onClick={() => deleteBtn(index2)}
+    //               className={"delete_btn"}
+
+    //             >
+    //               אישור הגעה
+    //   </Button>
+    //           </TableRow>
+    //         ))}
+    //       </TableBody>
+    //     </Table>
+    //   </TableContainer>
+    //   <Fab color="primary" aria-label="add" style={{margin:"auto"}} >
+    //     <AddIcon />
+    //   </Fab>
+    // </div>
   );
 }

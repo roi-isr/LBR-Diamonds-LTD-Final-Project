@@ -10,9 +10,9 @@ import WithAdmin from '../HOC/WithAdmin'
 import Admin from '../Components/Admin/Admin'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import NotFound from '../Components/NotFound/NotFound'
-import BasicTable from '../Components/StockTable/jsx/StockTable';
-import DeliveryTable from '../Components/DeliveryCheck/jsx/DeliveryFile';
-import SellTable from '../Components/SellTable/SellTable';
+import BasicTable from '../Components/Admin/StockTable/jsx/StockTable';
+import DeliveryTable from '../Components/Admin/DeliveryCheck/jsx/DeliveryFile';
+import SellTable from '../Components/Admin/SellTable/SellTable';
 
 const RedirectToHome = () => <Redirect to="home" />;
 

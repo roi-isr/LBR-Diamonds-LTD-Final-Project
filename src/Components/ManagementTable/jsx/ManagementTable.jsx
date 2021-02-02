@@ -12,10 +12,10 @@ function ManagementTable({ headers, content }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {Object.keys(content).map(key =>
+                    {content.map((row, index) =>
                         <tr>
-                            {(content[key]).map((_, ind) =>
-                                <td>{content[key][ind]}</td>
+                            {row.map(item =>
+                                <td>{item}</td>
                             )}
                         </tr>)}
                 </tbody>

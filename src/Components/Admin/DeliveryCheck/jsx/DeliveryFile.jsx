@@ -7,7 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { Button } from '@material-ui/core';
+
 import Icon from '@material-ui/core/Icon';
 import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
@@ -19,18 +19,13 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Fab from '@material-ui/core/Fab';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ManagementTable from '../../../ManagementTable/jsx/ManagementTable'
+import Button from 'react-bootstrap/Button'
 
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
 });
-
-function createData(...data) {
-  const [id, weigth, from_country, delivery_comany, contact_name, date] = data
-  return { id, weigth, from_country, delivery_comany, contact_name, date };
-}
-
 
 const englishTitles = ['id', 'weigth', 'from_country', 'delivery_comany', 'contact_name', 'date'];
 
@@ -41,16 +36,14 @@ const englishTitles = ['id', 'weigth', 'from_country', 'delivery_comany', 'conta
 export default function SellTable() {
   const classes = useStyles();
 
-  const [rows, setRows] = useState([...rowsData]);
-
-  //Function of deleting a row from the table, at the click of a button the row is deleted from the database.
-  const deleteBtn = (ind) => {
-    const con = window.confirm("Are you sure?");
-    if (!con)
-      return;
-    setRows(currRow =>
-      currRow.filter((item, index) => index !== ind));
-  }
+  // //Function of deleting a row from the table, at the click of a button the row is deleted from the database.
+  // const deleteBtn = (ind) => {
+  //   const con = window.confirm("Are you sure?");
+  //   if (!con)
+  //     return;
+  //   setRows(currRow =>
+  //     currRow.filter((item, index) => index !== ind));
+  // }
 
 
 
@@ -98,14 +91,17 @@ export default function SellTable() {
     );
 
   }
+  const delete_btn = <Button name="delete" variant="outline-danger">הסר</Button>;
+
+  const confirm_btn = <Button name="confirm" variant="outline-success">אישור הגעה</Button>;
 
   const headers = ["מספר החבילה", "משקל החבילה", "מהיכן המשלוח", "חברת השילוח", "שם השולח ", "תאריך המשלוח"];
   const content = [
-    ['R-101','15.25','ישראל','625','ADIV','רועי ישראלי',  <Button variant="outline-danger">הסר</Button>],
+    ['R-101', '160.25', 'ישראל', '625', 'ADIV', 'רועי ישראלי', '1/1/21', delete_btn, confirm_btn],
+    ['R-102', '152.25', 'ישראל', '625', 'ADIV', 'רועי ישראלי', '1/1/21', delete_btn, confirm_btn],
+    ['R-103', '158.25', 'ישראל', '625', 'ADIV', 'רועי ישראלי', '1/1/21', delete_btn, confirm_btn],
+    ['R-104', '150.25', 'ישראל', '625', 'ADIV', 'רועי ישראלי', '1/1/21', delete_btn, confirm_btn],
 
-    ['דניאל', 'ידיד', '34534634'],
-    ['רועי', 'ישראלי', '349845'],
-    ['עמית', 'ליברמן', '6454654'],
   ];
   //Returns the table to our requested page.
   return (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -19,22 +19,61 @@ const useStyles = makeStyles({
   },
 });
 
-
-
-const content = [
-  ['R-101','1.25','500','575','vs','D','R','ADIV','1/1/21','60-DAYS','daniel','50,500',<Button variant="outline-danger">הסר</Button>,<Button variant="outline-success">עדכן פריט</Button>],
-  ['R-101','1.25','500','575','vs','D','R','ADIV','1/1/21','60-DAYS','daniel','50,500',<Button variant="outline-danger">הסר</Button>,<Button variant="outline-success">עדכן פריט</Button>],
-  ['R-101','1.25','500','575','vs','D','R','ADIV','1/1/21','60-DAYS','daniel','50,500',<Button variant="outline-danger">הסר</Button>,<Button variant="outline-success">עדכן פריט</Button>],
-  ['R-101','1.25','500','575','vs','D','R','ADIV','1/1/21','60-DAYS','daniel','50,500',<Button variant="outline-danger">הסר</Button>,<Button variant="outline-success">עדכן פריט</Button>],
-  ['R-101','1.25','500','575','vs','D','R','ADIV','1/1/21','60-DAYS','daniel','50,500',<Button variant="outline-danger">הסר</Button>,<Button variant="outline-success">עדכן פריט</Button>]
-
-
+const rows = [
+  ['R-101', '1.25', '500', '575', 'vs', 'D', 'R', 'ADIV', '1/1/20', '60-DAYS', 'daniel', '50,500'],
+  ['R-101', '1.25', '500', '575', 'vs', 'D', 'R', 'ADIV', '1/1/21', '60-DAYS', 'daniel', '50,500'],
+  ['R-101', '1.25', '500', '575', 'vs', 'D', 'R', 'ADIV', '1/1/22', '60-DAYS', 'daniel', '50,500'],
+  ['R-101', '1.25', '500', '575', 'vs', 'D', 'R', 'ADIV', '1/1/23', '60-DAYS', 'daniel', '50,500'],
+  ['R-101', '1.25', '500', '575', 'vs', 'D', 'R', 'ADIV', '1/1/24', '60-DAYS', 'daniel', '50,500']
 ];
-
 
 const headers = ["מודל", "משקל ", "עלות", "מכירה", "נקיון ", "צבע", "קוד", "הערות", "מכירות", "מלאי", "תאריך מכירה - תשלום ", "יתרה "];
 
-export default function BasicTable() {
+
+export default function StockTable() {
+
+  const [content, setContent] = useState({});
+  const contentRef = useRef(content);
+
+  useEffect(async () => {
+    const tempContent = await retrieveDataFromDb();
+    setContent(tempContent);
+  }, []);
+
+  const retrieveDataFromDb = () => {
+    return new Promise(resolve => {
+      let tempContent = new Object();
+
+      rows.forEach((item, index) => {
+
+        const deleteBtn =
+          <Button
+            key={Math.random() * index}
+            onClick={(index) => deleteRow(index)}
+            variant="outline-danger">
+            הסר
+          </Button>;
+
+        const confirmBtn =
+          <Button
+            key={Math.random() * index}
+            variant="outline-success">
+            אישור הגעה
+         </Button>;
+
+        tempContent[index] = [...item, deleteBtn, confirmBtn];
+      });
+      resolve(tempContent);
+    })
+  }
+
+  const deleteRow = (index) => {
+    const tempContent = { ...contentRef.current };
+    console.log(contentRef.current);
+    delete tempContent[index];
+    setContent(tempContent);
+  }
+
   const classes = useStyles();
 
   //Returns the table to our requested page, shows us all the company's current inventory.
@@ -42,7 +81,7 @@ export default function BasicTable() {
   return (
     <React.Fragment>
 
-<ManagementTable headers={headers} content={content}/>
+      <ManagementTable headers={headers} content={content} />
 
       <div className="progress-stock-wrapper">
         <label> ניצול מסגרת האשראי </label>

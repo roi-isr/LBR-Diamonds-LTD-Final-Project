@@ -1,20 +1,21 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import { Table } from 'react-bootstrap';
 import '../css/ManagementTable.css'
+
 function ManagementTable({ headers, content }) {
     return (
         <div className="man-table-wrapper">
             <Table dir="rtl" style={{ textAlign: 'right' }} striped bordered hover>
                 <thead>
                     <tr>
-                        {headers.map((item, index) => <th>{item}</th>)}
+                        {headers.map((item, index) => <th key={Math.random() * index}>{item}</th>)}
                     </tr>
                 </thead>
                 <tbody>
-                    {content.map((row, index) =>
+                    {Object.keys(content).map(key =>
                         <tr>
-                            {row.map((data, index) =>
-                                <td>{data}</td>
+                            {(content[key]).map((_, ind) =>
+                                <td>{content[key][ind]}</td>
                             )}
                         </tr>)}
                 </tbody>

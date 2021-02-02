@@ -112,7 +112,7 @@ function ContactForm() {
     }
 
     const onSubmitFail = () => {
-        throw Error("בעיה בשליחת ההודעה...");
+        console.log("בעיה בשליחת ההודעה...");
     }
 
     const formElementsAttr = [
@@ -151,6 +151,7 @@ function ContactForm() {
             <Form.Group key={index} controlId={item.controlId}>
                 <Form.Label>{item.label}</Form.Label>
                 <Form.Control
+                    required
                     {...item.controlAttr}
                 />
             </Form.Group>)

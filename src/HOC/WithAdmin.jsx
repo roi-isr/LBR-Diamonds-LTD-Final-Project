@@ -2,13 +2,21 @@ import React, { useEffect } from 'react';
 import { change_visiblity, update_login_stat } from '../store/actions/index'
 import { connect } from 'react-redux';
 import { WebCookies } from '../Entities/Cookies'
+import { useHistory } from 'react-router-dom'
 
 function WithAdmin(props) {
+    let history = useHistory();
     useEffect(() => {
         props.hide_nav();
         if (!props.isLoggedIn)
             getTokenFromCookies();
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        if (!props.isLoggedIn) {
+            history.push("/admin");
+        }
+    }, [props.isLoggedIn])
 
     /* Get access token from cookies, in case of a page refresh */
     const getTokenFromCookies = () => {

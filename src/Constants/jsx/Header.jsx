@@ -1,8 +1,8 @@
 import React from 'react';
 import "../css/Header.css"
 import Logo from '../../Assets/logo.jpg'
+import { Link, BrowserRouter as Router } from 'react-router-dom'
 import { Form, FormControl, Button, Nav, Navbar } from 'react-bootstrap';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { connect } from 'react-redux'
 
 function Header(props) {
@@ -48,10 +48,13 @@ function CustomizedNavItem(props) {
                     style={{ width: "70%", justifyContent: 'space-between' }}>
                     {props.content.map((item, index) =>
                         <Nav.Link
-                            key={index}
+                            as={Link}
+                            to={{
+                                pathname: item.path || null
+                            }}
                             className="nav-link"
                             onClick={item.click || null}
-                            href={item.path || null}>
+                            key={index}>
                             {item.name}
                         </Nav.Link>
                     )}

@@ -7,11 +7,11 @@ import RouterComponent from '../../Routers/Router'
 function App(props) {
   return (
     <React.Fragment>
-      <Header />
-      <hr className="page-seperator" />
-      <RouterComponent routing='User' />
-      <hr className="page-seperator" />
-      <Footer />
+        <Header />
+        <hr className="page-seperator" />
+        <RouterComponent routing='User' />
+        <hr className="page-seperator" />
+        <Footer />
     </React.Fragment>
   );
 }

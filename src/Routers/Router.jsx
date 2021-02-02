@@ -1,5 +1,4 @@
 /* using react-router-dom for implementing multi-page application with a router component */
-
 import React from 'react';
 import Homepage from '../Components/HomePage/jsx/Homepage'
 import Store from '../Components/VirtualStore/jsx/VirtualStore'
@@ -15,52 +14,50 @@ import BasicTable from '../Components/StockTable/jsx/StockTable';
 import DeliveryTable from '../Components/DeliveryCheck/jsx/DeliveryFile';
 import SellTable from '../Components/SellTable/SellTable';
 
-const regPaths = [
-    { attr: { path: '/', exact: true }, component: <Redirect to="home" /> },
-    { attr: { path: '/home' }, component: <Homepage /> },
-    { attr: { path: '/store' }, component: <Store /> },
-    { attr: { path: '/about' }, component: <About /> },
-    { attr: { path: '/qa' }, component: <QA /> },
-    { attr: { path: '/contact' }, component: <Contact /> },
-    { attr: { path: '/admin' }, component: <WithAdmin><Sign /><Admin /></WithAdmin> },
-    { attr: { path: '' }, component: <NotFound /> },
-];
+const RedirectToHome = () => <Redirect to="home" />;
 
-const adminPaths = [
-    { attr: { path: '/admin/reports' }, component: <BasicTable /> },
-    { attr: { path: '/admin/delivery' }, component: <DeliveryTable /> },
-    { attr: { path: '/admin/sell' }, component: <SellTable /> },
-];
+const SignAdmin = () => <WithAdmin><Sign /><Admin /></WithAdmin>;
 
-class RouterComponent extends React.Component {
-    render() {
-        var path;
-        switch (this.props.routing) {
-            case 'Admin':
-                path = adminPaths;
-                break;
-            case 'User':
-                path = regPaths;
-                break;
-            default:
-                throw Error("Unknown path for router");
-        }
-        const switchContainer =
-            <Switch>
-                {path.map((item, index) =>
-                    <Route
-                        key={index}
-                        {...item.attr}>
-                        {item.component}
-                    </Route>
-                )}
-            </Switch>;
-        return (
-            <Router>
-                {switchContainer}
-            </Router>
-        );
+
+function RouterComponent({ routing, relUrl }) {
+
+    const regPaths = [
+        { path: '/', exact: true, component: RedirectToHome },
+        { path: '/home', component: Homepage },
+        { path: '/store', component: Store },
+        { path: '/about', component: About },
+        { path: '/qa', component: QA },
+        { path: '/contact', component: Contact },
+        { path: '/admin', component: SignAdmin },
+        { path: '', component: NotFound },
+    ];
+
+    const adminPaths = [
+        { path: relUrl + '/reports', component: BasicTable },
+        { path: relUrl + '/delivery', component: DeliveryTable },
+        { path: relUrl + '/sell', component: SellTable },
+    ];
+
+    var path;
+    switch (routing) {
+        case 'Admin':
+            path = adminPaths;
+            break;
+        case 'User':
+            path = regPaths;
+            break;
+        default:
+            throw Error("Unknown path for router");
     }
+    const switchContainer =
+        <Switch>
+            {path.map((item, index) =>
+                <Route
+                    key={index}
+                    {...item} />
+            )}
+        </Switch>;
+    return switchContainer;
 }
 
 export default RouterComponent;

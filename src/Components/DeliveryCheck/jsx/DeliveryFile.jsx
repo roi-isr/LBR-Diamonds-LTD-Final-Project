@@ -16,9 +16,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
 import Fab from '@material-ui/core/Fab';
-
 import DeleteIcon from '@material-ui/icons/Delete';
 
 
@@ -73,10 +71,12 @@ export default function SellTable() {
     setOpen(false);
   };
 
-  // A window that opens for adding a new item to thr table.
-  const AddForm = () => {
+  const add_form = () => {
     return (
       <div>
+        <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+          Open form dialog
+        </Button>
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
           <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
           <DialogContent>
@@ -111,7 +111,7 @@ export default function SellTable() {
   //Returns the table to our requested page.
   return (
     <div style={{textAlign:'center'}}>
-      <AddForm />
+      {/* <AddForm /> */}
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table" style={{ direction: 'rtl' }}>
           <TableHead>

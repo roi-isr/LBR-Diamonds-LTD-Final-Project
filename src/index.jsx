@@ -11,6 +11,7 @@ import { Provider } from "react-redux";
 import NavControlReducer from "./store/reducers/NavControlReducer";
 import Token from "./store/reducers/TokenReducer";
 import thunk from 'redux-thunk'
+import { BrowserRouter } from 'react-router-dom'
 
 const rootReducer = combineReducers({
   navControl: NavControlReducer,
@@ -32,7 +33,11 @@ const store = createStore(rootReducer, applyMiddleware(logger, thunk));
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}><App /></Provider>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

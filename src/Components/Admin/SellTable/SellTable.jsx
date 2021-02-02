@@ -52,10 +52,8 @@ export default function SellTable() {
   return (
     <React.Fragment>
       <ManagementTable headers={headers} content={content}/>
-
-      <Fab color="primary" aria-label="add" style={{ margin: "auto" }}>
-        <AddIcon />
-      </Fab>
+      <button type="button" class="btn btn-primary btn-lg btn-block">הוספת מכירה חדשה</button>
+   
     </React.Fragment>
   );
 }

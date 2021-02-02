@@ -1,25 +1,12 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-
-import Icon from '@material-ui/core/Icon';
-import AddIcon from '@material-ui/icons/Add';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Fab from '@material-ui/core/Fab';
-import DeleteIcon from '@material-ui/icons/Delete';
 import ManagementTable from '../../../ManagementTable/jsx/ManagementTable'
 import Button from 'react-bootstrap/Button'
+import Input from '@material-ui/core/Input';
+import TextField from '@material-ui/core/TextField';
+
+import Modal from 'react-bootstrap/Modal'
+
 
 const useStyles = makeStyles({
   table: {
@@ -30,8 +17,57 @@ const useStyles = makeStyles({
 const englishTitles = ['id', 'weigth', 'from_country', 'delivery_comany', 'contact_name', 'date'];
 
 
+const AddForm = function () {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  return (
+    <React.Fragment>
+    
+    <button type="button" className="btn btn-primary btn-lg btn-block" onClick={handleShow}>הוספת משלוח</button>
 
 
+      <Modal show={show} onHide={handleClose} animation={false}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+       
+        <TextField
+    id="outlined-secondary"
+    label="מספר החבילה"
+    variant="outlined"
+    color="secondary"
+  />
+    <TextField
+    id="outlined-secondary"
+    label="משקל החבילה"
+    variant="outlined"
+    color="secondary"
+  />
+    <TextField
+    id="outlined-secondary"
+    label="מהיכן המשלוח"
+    variant="outlined"
+    color="secondary"
+  />
+       
+
+
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+        </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+        </Button>
+        </Modal.Footer>
+      </Modal>
+    </React.Fragment>
+  );
+
+}
 
 export default function SellTable() {
   const classes = useStyles();
@@ -45,52 +81,8 @@ export default function SellTable() {
   //     currRow.filter((item, index) => index !== ind));
   // }
 
+ 
 
-
-  const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const add_form = () => {
-    return (
-      <div>
-        <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-          Open form dialog
-        </Button>
-        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-          <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              To subscribe to this website, please enter your email address here. We will send updates
-              occasionally.
-            </DialogContentText>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="Email Address"
-              type="email"
-              fullWidth
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={handleClose} color="primary">
-              Subscribe
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
-    );
-
-  }
   const delete_btn = <Button name="delete" variant="outline-danger">הסר</Button>;
 
   const confirm_btn = <Button name="confirm" variant="outline-success">אישור הגעה</Button>;
@@ -105,52 +97,11 @@ export default function SellTable() {
   ];
   //Returns the table to our requested page.
   return (
-    <ManagementTable headers={headers} content={content} />
-    // <div style={{textAlign:'center'}}>
-    //   {/* <AddForm /> */}
-    //   <TableContainer component={Paper}>
-    //     <Table className={classes.table} aria-label="simple table" style={{ direction: 'rtl' }}>
-    //       <TableHead>
-    //         <TableRow>
-    //           {titles.map((item, index) => (
-    //             <TableCell key={index} align="left">
-    //               {item}
-    //             </TableCell>
-    //           ))}
-    //         </TableRow>
-    //       </TableHead>
-    //       <TableBody>
-    //         {rows.map((row, index2) => (
-    //           <TableRow key={index2}>
+    <React.Fragment>
+      <ManagementTable headers={headers} content={content} />
 
-    //             {Object.keys(row)
-    //               // .filter((filItem) => filItem !== 'name')
-    //               .map((item, index3) =>
-    //                 <TableCell
-    //                   key={index3}
-    //                   align="left">
-    //                   {row[englishTitles[index3]]}
-    //                 </TableCell>
-    //               )}
+      <AddForm />
+    </React.Fragment>
 
-    //             <Button
-    //               variant="contained"
-    //               size="small"
-    //               color="primary"
-    //               onClick={() => deleteBtn(index2)}
-    //               className={"delete_btn"}
-
-    //             >
-    //               אישור הגעה
-    //   </Button>
-    //           </TableRow>
-    //         ))}
-    //       </TableBody>
-    //     </Table>
-    //   </TableContainer>
-    //   <Fab color="primary" aria-label="add" style={{margin:"auto"}} >
-    //     <AddIcon />
-    //   </Fab>
-    // </div>
   );
 }

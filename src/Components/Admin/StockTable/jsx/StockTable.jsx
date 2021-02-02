@@ -33,7 +33,6 @@ const headers = ["מודל", "משקל ", "עלות", "מכירה", "נקיון 
 export default function StockTable() {
 
   const [content, setContent] = useState({});
-  const contentRef = useRef(content);
 
   useEffect(async () => {
     const tempContent = await retrieveDataFromDb();
@@ -49,7 +48,7 @@ export default function StockTable() {
         const deleteBtn =
           <Button
             key={Math.random() * index}
-            onClick={(index) => deleteRow(index)}
+     
             variant="outline-danger">
             הסר
           </Button>;
@@ -67,13 +66,6 @@ export default function StockTable() {
     })
   }
 
-  const deleteRow = (index) => {
-    const tempContent = { ...contentRef.current };
-    console.log(contentRef.current);
-    delete tempContent[index];
-    setContent(tempContent);
-  }
-
   const classes = useStyles();
 
   //Returns the table to our requested page, shows us all the company's current inventory.
@@ -82,7 +74,7 @@ export default function StockTable() {
     <React.Fragment>
 
       <ManagementTable headers={headers} content={content} />
-
+      <button type="button" class="btn btn-primary btn-lg btn-block">הוספת פריט חדש</button>
       <div className="progress-stock-wrapper">
         <label> ניצול מסגרת האשראי </label>
         <CircularProgressbar

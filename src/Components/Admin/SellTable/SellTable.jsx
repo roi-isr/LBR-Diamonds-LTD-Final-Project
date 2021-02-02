@@ -46,6 +46,10 @@ export default function SellTable() {
   }, [content])
 
   const deleteRow = (index) => {
+    const con = window.confirm("Are you sure that you want to delete the item?");
+    if (!con) {
+      return
+    }
     setContent(prevContent => prevContent.filter((item, i) => index != i));
   }
 

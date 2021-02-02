@@ -9,7 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import ManagementTable from '../../../ManagementTable/jsx/ManagementTable'
 import Button from 'react-bootstrap/Button'
 import Input from '@material-ui/core/Input';
-
+import '../css/DeliveryFile.css'
 import Modal from 'react-bootstrap/Modal'
 
 
@@ -38,25 +38,46 @@ const AddForm = function () {
         <Modal.Body>
 
           <TextField
-            id="outlined-secondary"
+            style={{ display: 'block', textAlign: 'right' }}
+            fullWidth
             label="מספר החבילה"
             variant="outlined"
             color="secondary"
           />
           <TextField
-            id="outlined-secondary"
+            style={{ display: 'block', textAlign: 'right' }}
+            fullWidth
+            className="delivery-input"
             label="משקל החבילה"
             variant="outlined"
             color="secondary"
           />
           <TextField
-            id="outlined-secondary"
-            label="מהיכן המשלוח"
+            style={{ display: 'block', textAlign: 'right' }}
+            fullWidth
+            className="delivery-input"
+            label="חברת השילוח"
             variant="outlined"
             color="secondary"
           />
-
-
+              <TextField
+            style={{ display: 'block', textAlign: 'right' }}
+            fullWidth
+            className="delivery-input"
+            label="שם השולח"
+            variant="outlined"
+            color="secondary"
+          />
+              <TextField
+            style={{ display: 'block', textAlign: 'right' }}
+            fullWidth
+            type='date'
+            className="delivery-input"
+            label="תאריך המשלוח"
+            variant="outlined"
+            color="secondary"
+          />
+     
 
         </Modal.Body>
         <Modal.Footer>

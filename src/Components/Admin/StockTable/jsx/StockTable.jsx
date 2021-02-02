@@ -54,7 +54,7 @@ export default function StockTable() {
     <React.Fragment>
 
       <ManagementTable headers={headers} content={tableRender} />
-
+      <button type="button" class="btn btn-primary btn-lg btn-block">הוספת פריט חדש</button>
       <div className="progress-stock-wrapper">
         <label> ניצול מסגרת האשראי </label>
         <CircularProgressbar

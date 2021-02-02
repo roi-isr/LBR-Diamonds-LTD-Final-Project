@@ -8,6 +8,10 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import ManagementTable from '../../../ManagementTable/jsx/ManagementTable'
 import Button from 'react-bootstrap/Button'
+import Input from '@material-ui/core/Input';
+
+import Modal from 'react-bootstrap/Modal'
+
 
 const headers = ["מספר החבילה", "משקל החבילה", "מהיכן המשלוח", "חברת השילוח", "שם השולח ", "תאריך המשלוח"];
 const rows = [
@@ -15,55 +19,61 @@ const rows = [
   ['R-102', '152.25', 'ישראל', '625', 'ADIV', 'רועי ישראלי', '1/1/21'],
   ['R-103', '158.25', 'ישראל', '625', 'ADIV', 'רועי ישראלי', '1/1/21'],
   ['R-104', '150.25', 'ישראל', '625', 'ADIV', 'רועי ישראלי', '1/1/21'],
+]
 
-];
+const AddForm = function () {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  return (
+    <React.Fragment>
+
+      <button type="button" className="btn btn-primary btn-lg btn-block" onClick={handleShow}>הוספת משלוח</button>
+
+
+      <Modal show={show} onHide={handleClose} animation={false}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+
+          <TextField
+            id="outlined-secondary"
+            label="מספר החבילה"
+            variant="outlined"
+            color="secondary"
+          />
+          <TextField
+            id="outlined-secondary"
+            label="משקל החבילה"
+            variant="outlined"
+            color="secondary"
+          />
+          <TextField
+            id="outlined-secondary"
+            label="מהיכן המשלוח"
+            variant="outlined"
+            color="secondary"
+          />
+
+
+
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+        </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+        </Button>
+        </Modal.Footer>
+      </Modal>
+    </React.Fragment>
+  );
+
+}
 
 export default function DeliveryTable() {
-
-  const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const add_form = () => {
-    return (
-      <div>
-        <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-          Open form dialog
-        </Button>
-        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-          <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              To subscribe to this website, please enter your email address here. We will send updates
-              occasionally.
-            </DialogContentText>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="Email Address"
-              type="email"
-              fullWidth
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={handleClose} color="primary">
-              Subscribe
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
-    );
-
-  }
   const [content, setContent] = useState(rows);
   const [tableRender, setTableRender] = useState([]);
   // Fecth data from DB
@@ -95,6 +105,11 @@ export default function DeliveryTable() {
   }
   //Returns the table to our requested page.
   return (
-    <ManagementTable headers={headers} content={tableRender} />
+    <React.Fragment>
+      <ManagementTable headers={headers} content={tableRender} />
+
+      <AddForm />
+    </React.Fragment>
+
   );
 }

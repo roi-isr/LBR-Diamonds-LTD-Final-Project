@@ -53,11 +53,9 @@ export default function SellTable() {
   //Returns the table to our requested page.
   return (
     <React.Fragment>
-      <ManagementTable headers={headers} content={tableRender} />
-
-      <Fab color="primary" aria-label="add" style={{ margin: "auto" }}>
-        <AddIcon />
-      </Fab>
+      <ManagementTable headers={headers} content={tableRender}/>
+      <button type="button" class="btn btn-primary btn-lg btn-block">הוספת מכירה חדשה</button>
+   
     </React.Fragment>
   );
 }

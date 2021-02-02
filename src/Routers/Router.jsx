@@ -13,6 +13,7 @@ import NotFound from '../Components/NotFound/NotFound'
 import BasicTable from '../Components/Admin/StockTable/jsx/StockTable';
 import DeliveryTable from '../Components/Admin/DeliveryCheck/jsx/DeliveryFile';
 import SellTable from '../Components/Admin/SellTable/SellTable';
+import AdminContact from '../Components/Admin/ContactData/jsx/ContactData'
 
 const RedirectToHome = () => <Redirect to="home" />;
 
@@ -36,6 +37,7 @@ function RouterComponent({ routing, relUrl }) {
         { path: relUrl + '/reports', component: BasicTable },
         { path: relUrl + '/delivery', component: DeliveryTable },
         { path: relUrl + '/sell', component: SellTable },
+        { path: relUrl + '/contact', component: AdminContact },
     ];
 
     var path;

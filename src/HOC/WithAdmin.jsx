@@ -21,7 +21,7 @@ function WithAdmin(props) {
     /* Get access token from cookies, in case of a page refresh */
     const getTokenFromCookies = () => {
         const cookies = new WebCookies("tokenStr");
-        const token = cookies.createCookies();
+        const token = cookies.getCookies();
         props.updateLoginStat(token);
     }
 

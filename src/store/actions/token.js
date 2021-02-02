@@ -17,7 +17,7 @@ const verify_token = (token) => {
                     reject(Error('Unverifies user'));
                 }
             })
-            .catch((e) => reject(Error(e.name)))
+            // .catch((e) => reject(Error(e.name)))
     });
 }
 

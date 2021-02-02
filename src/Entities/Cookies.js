@@ -8,7 +8,7 @@ export class WebCookies {
         this.cookiesKey = cookiesKey;
     }
 
-    createCookies() {
+    getCookies() {
         return this.cookies.get(this.cookiesKey);
     }
 

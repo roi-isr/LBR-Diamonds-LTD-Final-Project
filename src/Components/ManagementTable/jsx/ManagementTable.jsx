@@ -5,7 +5,7 @@ import '../css/ManagementTable.css'
 function ManagementTable({ headers, content }) {
     return (
         <div className="man-table-wrapper">
-            <Table dir="rtl" style={{ textAlign: 'right' }} striped bordered hover>
+            <Table dir="rtl" style={{ textAlign: 'right', fontSize: '1.2rem' }} striped bordered hover>
                 <thead>
                     <tr>
                         {headers.map((item, index) => <th key={Math.random() * index}>{item}</th>)}

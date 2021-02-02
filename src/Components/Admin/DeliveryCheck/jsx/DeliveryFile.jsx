@@ -9,8 +9,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import ManagementTable from '../../../ManagementTable/jsx/ManagementTable'
 import Button from 'react-bootstrap/Button'
 
-const englishTitles = ['id', 'weigth', 'from_country', 'delivery_comany', 'contact_name', 'date'];
-
 const headers = ["מספר החבילה", "משקל החבילה", "מהיכן המשלוח", "חברת השילוח", "שם השולח ", "תאריך המשלוח"];
 const rows = [
   ['R-101', '160.25', 'ישראל', '625', 'ADIV', 'רועי ישראלי', '1/1/21'],
@@ -66,8 +64,6 @@ export default function DeliveryTable() {
     );
 
   }
-
-
   const [content, setContent] = useState(rows);
   const [tableRender, setTableRender] = useState([]);
   // Fecth data from DB

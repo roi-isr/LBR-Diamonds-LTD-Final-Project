@@ -22,11 +22,12 @@ const useStyles = makeStyles({
 
 
 const content = [
-  ['R-101','1.25','500','575','vs','D','R','ADIV','1/1/21','60-DAYS','daniel','50,500',<Button variant="outline-danger">הסר</Button>],
-  ['R-101','1.25','500','625','R','ADIV','1/1/21','90-DAYS'],
-  ['R-101','1.25','500','625','R','ADIV','1/1/21','30-DAYS'],
-  ['R-101','1.25','500','625','R','ADIV','1/1/21','90-DAYS'],
-  ['R-101','1.25','500','625','R','ADIV','1/1/21','CASH']
+  ['R-101','1.25','500','575','vs','D','R','ADIV','1/1/21','60-DAYS','daniel','50,500',<Button variant="outline-danger">הסר</Button>,<Button variant="outline-success">עדכן פריט</Button>],
+  ['R-101','1.25','500','575','vs','D','R','ADIV','1/1/21','60-DAYS','daniel','50,500',<Button variant="outline-danger">הסר</Button>,<Button variant="outline-success">עדכן פריט</Button>],
+  ['R-101','1.25','500','575','vs','D','R','ADIV','1/1/21','60-DAYS','daniel','50,500',<Button variant="outline-danger">הסר</Button>,<Button variant="outline-success">עדכן פריט</Button>],
+  ['R-101','1.25','500','575','vs','D','R','ADIV','1/1/21','60-DAYS','daniel','50,500',<Button variant="outline-danger">הסר</Button>,<Button variant="outline-success">עדכן פריט</Button>],
+  ['R-101','1.25','500','575','vs','D','R','ADIV','1/1/21','60-DAYS','daniel','50,500',<Button variant="outline-danger">הסר</Button>,<Button variant="outline-success">עדכן פריט</Button>]
+
 
 ];
 

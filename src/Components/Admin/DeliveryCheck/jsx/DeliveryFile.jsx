@@ -33,18 +33,10 @@ function createData(...data) {
 
 
 const englishTitles = ['id', 'weigth', 'from_country', 'delivery_comany', 'contact_name', 'date'];
-const titles = ["מספר החבילה", "משקל החבילה", "מהיכן המשלוח", "חברת השילוח", "שם השולח ", "תאריך המשלוח"];
 
 
-const rowsData = [
-  createData("R101", 15, 'ISRAEL', 'Fedex', 'דניאל', '1.1.21'),
-
-  createData("R101", 15, 'ISRAEL', 'Fedex', 'דניאל', '1.1.21'),
-
-  createData("R101", 15, 'ISRAEL', 'Fedex', 'דניאל', '1.1.21'),
 
 
-];
 
 export default function SellTable() {
   const classes = useStyles();
@@ -107,8 +99,10 @@ export default function SellTable() {
 
   }
 
-  const headers = ['שם פרטי', 'שם משפחה', 'תעודת זהות'];
+  const headers = ["מספר החבילה", "משקל החבילה", "מהיכן המשלוח", "חברת השילוח", "שם השולח ", "תאריך המשלוח"];
   const content = [
+    ['R-101','15.25','ישראל','625','ADIV','רועי ישראלי',  <Button variant="outline-danger">הסר</Button>],
+
     ['דניאל', 'ידיד', '34534634'],
     ['רועי', 'ישראלי', '349845'],
     ['עמית', 'ליברמן', '6454654'],

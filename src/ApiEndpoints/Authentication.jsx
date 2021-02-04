@@ -2,7 +2,7 @@ import {ServerUrl} from './ServerUrl'
 
 export async function fetchAuthRequest(httpContent, onSuccess, onFailure) {
     return new Promise((resolve, reject) => {
-        fetch(`${DeploymentUrl}/auth`,
+        fetch(`${ServerUrl}/auth`,
             {
                 method: 'POST',
                 headers:

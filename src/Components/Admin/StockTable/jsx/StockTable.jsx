@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../css/StockTable.css'
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
+import { CircularProgressbar } from 'react-circular-progressbar'
 import ManagementTable from '../../../ManagementTable/jsx/ManagementTable'
 import Fab from '@material-ui/core/Fab';
 import Button from 'react-bootstrap/Button'
@@ -57,8 +57,15 @@ export default function StockTable() {
   return (
     <React.Fragment>
 
-      <ManagementTable headers={headers} content={tableRender} />
-      <button type="button" class="btn btn-primary btn-lg btn-block">הוספת פריט חדש</button>
+      <ManagementTable
+        headers={headers}
+        content={tableRender}
+      />
+      <button
+        type="button"
+        className="btn btn-primary btn-lg btn-block">
+        הוספת פריט חדש
+          </button>
       <div className="progress-stock-wrapper">
         <label> ניצול מסגרת האשראי </label>
         <CircularProgressbar

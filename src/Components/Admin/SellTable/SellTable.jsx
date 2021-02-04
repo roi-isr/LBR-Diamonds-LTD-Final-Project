@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import ManagementTable from '../../ManagementTable/jsx/ManagementTable'
 import Fab from '@material-ui/core/Fab';
@@ -54,12 +53,18 @@ export default function SellTable() {
   }
 
 
-  //Returns the table to our requested page.
+  // Returns the table to our requested page.
   return (
     <React.Fragment>
-      <ManagementTable headers={headers} content={tableRender}/>
-      <button type="button" class="btn btn-primary btn-lg btn-block">הוספת מכירה חדשה</button>
-   
+      <ManagementTable
+        headers={headers}
+        content={tableRender}
+      />
+      <button
+        type="button"
+        className="btn btn-primary btn-lg btn-block">
+        הוספת מכירה חדשה
+         </button>
     </React.Fragment>
   );
 }

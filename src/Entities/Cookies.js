@@ -3,17 +3,29 @@
 import Cookies from "universal-cookie";
 
 export class WebCookies {
-    constructor(cookiesKey) {
+    constructor() {
         this.cookies = new Cookies;
-        this.cookiesKey = cookiesKey;
     }
 
-    getCookies() {
-        return this.cookies.get(this.cookiesKey);
+    getCookies(cookiesKey) {
+        return this.cookies.get(cookiesKey);
+    }
+
+    setCookies(cookiesKey, cookiesValue) {
+        this.cookies.set(cookiesKey, cookiesValue);
+    }
+
+    setAuth(cookiesValue) {
+        this.cookies.set('tokenStr', cookiesValue, { path: '/' });
     }
 
     // Remove access token from browser cookies
-    removeCookies() {
-        this.cookies.set(this.cookiesKey, "", { path: '/' });
+    removeCookies(cookiesKey) {
+        this.cookies.remove(cookiesKey);
+    }
+
+    saveUsernameAndPasswordCookie = (email, password) => {
+        this.cookies.set("username", email);
+        this.cookies.set("password", password);
     }
 }

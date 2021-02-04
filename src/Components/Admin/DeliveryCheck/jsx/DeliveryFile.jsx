@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -13,7 +12,7 @@ import '../css/DeliveryFile.css'
 import Modal from 'react-bootstrap/Modal'
 
 
-const headers = ["מספר החבילה", "משקל החבילה", "מהיכן המשלוח", "חברת השילוח", "שם השולח ", "תאריך המשלוח","",""];
+const headers = ["מספר החבילה", "משקל החבילה", "מהיכן המשלוח", "חברת השילוח", "שם השולח ", "תאריך המשלוח", "", ""];
 const rows = [
   ['R-101', '160.25', 'ישראל', 'ADIV', 'רועי ישראלי', '1/1/21'],
   ['R-102', '152.25', 'ישראל', 'ADIV', 'רועי ישראלי', '1/1/21'],
@@ -27,9 +26,12 @@ const AddForm = function () {
   const handleShow = () => setShow(true);
   return (
     <React.Fragment>
-
-      <button type="button" className="btn btn-primary btn-lg btn-block" onClick={handleShow}>הוספת משלוח</button>
-
+      <button
+        type="button"
+        className="btn btn-primary btn-lg btn-block"
+        onClick={handleShow}>
+        הוספת משלוח
+         </button>
 
       <Modal show={show} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
@@ -60,7 +62,7 @@ const AddForm = function () {
             variant="outlined"
             color="secondary"
           />
-              <TextField
+          <TextField
             style={{ display: 'block', textAlign: 'right' }}
             fullWidth
             className="delivery-input"
@@ -68,7 +70,7 @@ const AddForm = function () {
             variant="outlined"
             color="secondary"
           />
-              <TextField
+          <TextField
             style={{ display: 'block', textAlign: 'right' }}
             fullWidth
             type='date'
@@ -77,21 +79,21 @@ const AddForm = function () {
             variant="outlined"
             color="secondary"
           />
-     
 
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
         </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button
+            variant="primary"
+            onClick={handleClose}>
             Save Changes
         </Button>
         </Modal.Footer>
       </Modal>
     </React.Fragment>
   );
-
 }
 
 export default function DeliveryTable() {
@@ -131,7 +133,10 @@ export default function DeliveryTable() {
   //Returns the table to our requested page.
   return (
     <React.Fragment>
-      <ManagementTable headers={headers} content={tableRender} />
+      <ManagementTable
+        headers={headers}
+        content={tableRender}
+      />
 
       <AddForm />
     </React.Fragment>

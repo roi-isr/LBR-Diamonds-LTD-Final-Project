@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useState } from 'react'
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -18,7 +17,9 @@ import { connect } from 'react-redux'
 import { save_token } from '../../../store/actions/index'
 import Admin from '../../Admin/Admin'
 import Loader from 'react-loader-spinner'
-import styled from 'styled-components/macro'
+import styled from 'styled-components/macro';
+import { WebCookies } from '../../../Entities/Cookies'
+import { fetchAuthRequest } from '../../../ApiEndpoints/Authentication';
 
 const LoadingDiv = styled.div
   `
@@ -82,7 +83,7 @@ function SignInSide(props) {
   const [password, setPassword] = useState("")
   const [inSignProcess, setInSignProcess] = useState(false)
 
-  const authHandler = (event) => {
+  const authHandler = async (event) => {
     event.preventDefault();
     setInSignProcess(true);
     const httpContent =
@@ -90,42 +91,24 @@ function SignInSide(props) {
       username: email,
       password: password,
     }
-    fetchAuthRequest(httpContent);
+
+    // function that runs on a success submittion
+    const onSubmitSuccess = (response) => {
+      const cookie = new WebCookies();
+      cookie.saveUsernameAndPasswordCookie(httpContent.username, httpContent.password);
+      props.token_saver(response);
+      setInSignProcess(false);
+    }
+
+    // function that runs on a failed submittion
+    const onSubmitFailure = (response) => {
+      alert(response);
+      setInSignProcess(false);
+    }
+
+    await fetchAuthRequest(httpContent, onSubmitSuccess, onSubmitFailure);
   }
 
-  const fetchAuthRequest = (httpContent) => {
-    fetch("http://127.0.0.1:5000/auth",
-      {
-        method: 'POST',
-        headers:
-        {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(httpContent)
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.access_token) {
-          onSubmitSuccess(data.access_token)
-        }
-        else {
-          onSubmitFailure(data.description);
-        }
-      })
-      .catch((e) => onSubmitFailure(e.name));
-  }
-
-  // function that runs on a success submittion
-  const onSubmitSuccess = (response) => {
-    props.token_saver(response);
-    setInSignProcess(false);
-  }
-
-  // function that runs on a failed submittion
-  const onSubmitFailure = (response) => {
-    alert(response);
-    setInSignProcess(false);
-  }
 
   return (
     <React.Fragment>
@@ -192,7 +175,8 @@ function SignInSide(props) {
                     height={40}
                     width={40}
                     color="SlateBlue"
-                    visible={inSignProcess} />
+                    visible={inSignProcess}
+                  />
                 </LoadingDiv>
                 <Button
                   type="submit"

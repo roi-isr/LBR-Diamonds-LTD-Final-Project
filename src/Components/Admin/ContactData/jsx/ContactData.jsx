@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Button from 'react-bootstrap/Button'
-import ManagementTable from '../../../ManagementTable/jsx/ManagementTable'
-import { WebCookies } from '../../../../Entities/Cookies'
-import Loader from 'react-loader-spinner'
-import '../css/ContactData.css'
+import Button from 'react-bootstrap/Button';
+import ManagementTable from '../../../ManagementTable/jsx/ManagementTable';
+import { WebCookies } from '../../../../Entities/Cookies';
+import Loader from 'react-loader-spinner';
+import '../css/ContactData.css';
+import { sorter } from '../../../ManagementTable/Utility';
 
 const headers = ["שם השולח", "מייל", "טלפון", "זמן יצירת קשר", "", ""];
 
@@ -11,11 +12,10 @@ function ContactData() {
     const [content, setContent] = useState([]);
     const [tableRender, setTableRender] = useState([]);
     const [loading, setLoading] = useState(false);
-
     // Fecth data from DB
     useEffect(() => {
-        const cookie_token = new WebCookies().getCookies("tokenStr");
-        fetchContact(cookie_token);
+        window.cookie_token = new WebCookies().getCookies("tokenStr");
+        fetchContact(window.cookie_token);
     }, []);
 
     useEffect(() => {
@@ -33,10 +33,11 @@ function ContactData() {
                 <Button
                     key={Math.random() * index}
                     variant="outline-success">
-                    אישור הגעה
+                    צפה בפרטי הפנייה
                       </Button>;
-
-            tempContent.push([...item, deleteBtn, confirmBtn]);
+            const pushArr = item.slice(0, -1);
+            pushArr.push(confirmBtn, deleteBtn);
+            tempContent.push([...pushArr]);
         })
         setTableRender(tempContent)
     }, [content])
@@ -63,7 +64,6 @@ function ContactData() {
         const onSubmitFail = () => {
             console.log("Failed to fetch contact data from DB");
         }
-
     }
 
     // Convert the data fetch for DB into renderable data
@@ -74,7 +74,8 @@ function ContactData() {
             const create_at = contactValues['create_at'];
             subTempContent.push(
                 contactValues['name'], contactValues['email'],
-                contactValues['phone'], create_at.slice(0, create_at.length - 4)
+                contactValues['phone'], create_at.slice(0, create_at.length - 4),
+                contactValues['id']
             );
             tempContent.push(subTempContent);
         });
@@ -85,16 +86,35 @@ function ContactData() {
         setContent(prevContent => prevContent.filter((item, i) => index != i));
     }
 
-    const deleteFromDatabase=()=>{
+    const deleteFromDatabase = (deleteId) => {
+        fetch(`http://127.0.0.1:5000/contact/${deleteId}`,
+            {
+                method: 'DELETE',
+                headers:
+                {
+                    'Authorization': `JWT ${window.cookie_token}`
+                }
+            })
+            .then(response => response.json())
+            .then(data => onSubmitSuccess(data.message))
+            .catch(() => onSubmitFail())
 
+        const onSubmitSuccess = (msg) => {
+            console.log(msg);
+        }
+        const onSubmitFail = () => {
+            console.log("Failed to delete contact data from DB");
+        }
     }
-    
+
     const deleteRow = (index) => {
         const con = window.confirm("Are you sure that you want to delete the item?");
         if (!con) {
             return
         }
-        deleteFromUI(index)
+        deleteFromUI(index);
+        const deleteId = content[index][4];
+        deleteFromDatabase(deleteId);
     }
 
     // Returns the table to our requested page.
@@ -111,6 +131,11 @@ function ContactData() {
                 <ManagementTable
                     headers={headers}
                     content={tableRender}
+                    sorter={{
+                        sorter,
+                        content,
+                        setContent
+                    }}
                 />
             }
         </div>

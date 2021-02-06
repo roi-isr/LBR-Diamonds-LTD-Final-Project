@@ -4,7 +4,7 @@ import AddIcon from '@material-ui/icons/Add';
 import ManagementTable from '../../ManagementTable/jsx/ManagementTable'
 import Fab from '@material-ui/core/Fab';
 import Button from 'react-bootstrap/Button'
-
+import {sorter} from '../../ManagementTable/Utility'
 
 const headers = ["מודל", "משקל ", "מחיר לקראט ", "סה''כ", "קוד", "שם הקונה", "תאריך מכירה ", "תשלום"];
 
@@ -59,6 +59,11 @@ export default function SellTable() {
       <ManagementTable
         headers={headers}
         content={tableRender}
+        sorter={{
+          sorter,
+          content,
+          setContent
+        }}
       />
       <button
         type="button"

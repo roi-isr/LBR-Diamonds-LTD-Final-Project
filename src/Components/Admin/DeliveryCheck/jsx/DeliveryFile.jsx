@@ -8,8 +8,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import ManagementTable from '../../../ManagementTable/jsx/ManagementTable'
 import Button from 'react-bootstrap/Button'
 import Input from '@material-ui/core/Input';
-import '../css/DeliveryFile.css'
-import Modal from 'react-bootstrap/Modal'
+import '../css/DeliveryFile.css';
+import Modal from 'react-bootstrap/Modal';
+import {} from '../../../ManagementTable/Utility'
 
 
 const headers = ["מספר החבילה", "משקל החבילה", "מהיכן המשלוח", "חברת השילוח", "שם השולח ", "תאריך המשלוח", "", ""];
@@ -99,6 +100,7 @@ const AddForm = function () {
 export default function DeliveryTable() {
   const [content, setContent] = useState(rows);
   const [tableRender, setTableRender] = useState([]);
+
   // Fecth data from DB
   useEffect(() => {
     let tempContent = [];
@@ -130,12 +132,32 @@ export default function DeliveryTable() {
     }
     setContent(prevContent => prevContent.filter((item, i) => index != i));
   }
+
+  const sorter = (index, order) => {
+    const tempContent = [...content];
+    switch (order) {
+      case 'ASC':
+        tempContent.sort((a, b) => a[index] - b[index]);
+        break;
+      case 'DESC':
+        tempContent.sort((a, b) => b[index] - a[index]);
+        break;
+      default:
+        break;
+    }
+    setContent(tempContent);
+  }
   //Returns the table to our requested page.
   return (
     <React.Fragment>
       <ManagementTable
         headers={headers}
         content={tableRender}
+        sorter={{
+          sorter,
+          content,
+          setContent
+        }}
       />
 
       <AddForm />

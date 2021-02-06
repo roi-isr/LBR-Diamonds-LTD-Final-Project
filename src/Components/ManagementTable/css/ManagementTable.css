@@ -21,3 +21,14 @@
 .man-table-wrapper::-webkit-scrollbar-thumb:hover{
     background: rgb(2, 160, 160)
 }
+
+.div-th-man-table{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    align-items: center;
+}
+
+.sort-icon-mui:active{
+transform: scaleY(-1);
+}

@@ -35,6 +35,8 @@ function Admin(props) {
             { name: "Sells", path: "/admin/sell" },
             { name: "Stock management", path: "/admin/reports" },
             { name: "Contact", path: "/admin/contact" },
+            { name: "Predict price", path: "/admin/ml-price" },
+            
             { name: "Logout", click: logout, path: "/admin" }
         ];
         props.changeContent(adminNav)

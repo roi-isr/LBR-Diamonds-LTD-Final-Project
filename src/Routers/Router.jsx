@@ -14,6 +14,7 @@ import BasicTable from '../Components/Admin/StockTable/jsx/StockTable';
 import DeliveryTable from '../Components/Admin/DeliveryCheck/jsx/DeliveryFile';
 import SellTable from '../Components/Admin/SellTable/SellTable';
 import AdminContact from '../Components/Admin/ContactData/jsx/ContactData'
+import PredictForm from '../Components/Admin/PredictPrice/PredictPrice'
 
 const RedirectToHome = () => <Redirect to="home" />;
 
@@ -38,6 +39,8 @@ function RouterComponent({ routing, relUrl }) {
         { path: relUrl + '/delivery', component: DeliveryTable },
         { path: relUrl + '/sell', component: SellTable },
         { path: relUrl + '/contact', component: AdminContact },
+        { path: relUrl + '/ml-price', component: PredictForm},
+    
     ];
 
     var path;

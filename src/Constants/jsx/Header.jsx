@@ -1,7 +1,7 @@
 import React from 'react';
 import "../css/Header.css"
 import Logo from '../../Assets/logo.jpg'
-import { Link, BrowserRouter as Router } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Form, FormControl, Button, Nav, Navbar } from 'react-bootstrap';
 import { connect } from 'react-redux'
 

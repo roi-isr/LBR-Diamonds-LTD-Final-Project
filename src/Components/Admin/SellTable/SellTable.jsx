@@ -4,7 +4,8 @@ import AddIcon from '@material-ui/icons/Add';
 import ManagementTable from '../../ManagementTable/jsx/ManagementTable'
 import Fab from '@material-ui/core/Fab';
 import Button from 'react-bootstrap/Button'
-import {sorter} from '../../ManagementTable/Utility'
+import { sorter } from '../../ManagementTable/Utility'
+import FormModal from '../../UI-Elements/Modal/Modal'
 
 const headers = ["מודל", "משקל ", "מחיר לקראט ", "סה''כ", "קוד", "שם הקונה", "תאריך מכירה ", "תשלום"];
 
@@ -16,6 +17,13 @@ const rows = [
   ['R-101', '1.25', '500', '625', 'R', 'ADIV', '1/1/21', 'CASH']
 
 ];
+
+const inputFields = [
+  { name: "מספר החבילה", type: 'text' },
+  { name: "משקל החבילה", type: 'text' },
+  { name: "חברת השילוח", type: 'text' },
+  { name: "שם השולח", type: 'text' },
+  { name: "תאריך המשלוח", type: 'date' }];
 
 export default function SellTable() {
   const [content, setContent] = useState(rows);
@@ -65,11 +73,12 @@ export default function SellTable() {
           setContent
         }}
       />
-      <button
+      {/* <button
         type="button"
         className="btn btn-primary btn-lg btn-block">
         הוספת מכירה חדשה
-         </button>
+         </button> */}
+      <FormModal inputFields={inputFields} />
     </React.Fragment>
   );
 }

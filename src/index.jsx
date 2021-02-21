@@ -32,13 +32,13 @@ const logger = store => {
 const store = createStore(rootReducer, applyMiddleware(logger, thunk));
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>,
+  // </React.StrictMode>
   document.getElementById('root')
 );
 

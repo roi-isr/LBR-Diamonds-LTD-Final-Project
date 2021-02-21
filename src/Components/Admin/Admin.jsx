@@ -33,9 +33,9 @@ function Admin(props) {
         const adminNav = [
             { name: "Delivery", path: "/admin/delivery" },
             { name: "Sells", path: "/admin/sell" },
-            { name: "Stock management", path: "/admin/reports" },
+            { name: "Stock Management", path: "/admin/reports" },
             { name: "Contact", path: "/admin/contact" },
-            { name: "Predict price", path: "/admin/ml-price" },
+            { name: "Predict Price", path: "/admin/ml-price" },
             
             { name: "Logout", click: logout, path: "/admin" }
         ];

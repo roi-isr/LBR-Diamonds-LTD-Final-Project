@@ -78,7 +78,11 @@ export default function SellTable() {
         className="btn btn-primary btn-lg btn-block">
         הוספת מכירה חדשה
          </button> */}
-      <FormModal inputFields={inputFields} />
+      <FormModal
+        fields={inputFields}
+        modalType="input-form"
+
+      />
     </React.Fragment>
   );
 }

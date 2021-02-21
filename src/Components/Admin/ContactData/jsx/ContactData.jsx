@@ -5,13 +5,17 @@ import { WebCookies } from '../../../../Entities/Cookies';
 import Loader from 'react-loader-spinner';
 import '../css/ContactData.css';
 import { sorter } from '../../../ManagementTable/Utility';
+import FormModal from '../../../UI-Elements/Modal/Modal'
 
 const headers = ["שם השולח", "מייל", "טלפון", "זמן יצירת קשר", "", ""];
+
+const showDetailsFieldsMap = new Map();
 
 function ContactData() {
     const [content, setContent] = useState([]);
     const [tableRender, setTableRender] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [itemDetailsIndex, setitemDetailsIndex] = useState(false);
     // Fecth data from DB
     useEffect(() => {
         window.cookie_token = new WebCookies().getCookies("tokenStr");
@@ -32,7 +36,8 @@ function ContactData() {
             const confirmBtn =
                 <Button
                     key={Math.random() * index}
-                    variant="outline-success">
+                    variant="outline-success"
+                    onClick={() => setitemDetailsIndex(item[4])}>
                     צפה בפרטי הפנייה
                       </Button>;
             const pushArr = item.slice(0, -1);
@@ -78,12 +83,20 @@ function ContactData() {
                 contactValues['id']
             );
             tempContent.push(subTempContent);
+            showDetailsFieldsMap[contactValues['id']] = [
+                { name: "שם השולח", content: contactValues['name'] },
+                { name: "מייל", content: contactValues['email'] },
+                { name: "טלפון", content: contactValues['phone'] },
+                { name: "זמן יצירת קשר", content: create_at.slice(0, create_at.length - 4) },
+                { name: "תוכן ההודעה", content: contactValues['content'] }
+            ];
+            console.log(showDetailsFieldsMap)
         });
         setContent(tempContent);
     }
 
     const deleteFromUI = (index) => {
-        setContent(prevContent => prevContent.filter((item, i) => index != i));
+        setContent(prevContent => prevContent.filter((item, i) => index !== i));
     }
 
     const deleteFromDatabase = (deleteId) => {
@@ -107,6 +120,7 @@ function ContactData() {
         }
     }
 
+    // Delete a row from contact table
     const deleteRow = (index) => {
         const con = window.confirm("Are you sure that you want to delete the item?");
         if (!con) {
@@ -138,6 +152,15 @@ function ContactData() {
                     }}
                 />
             }
+            {!loading && itemDetailsIndex &&
+                <FormModal
+                    fields={showDetailsFieldsMap[itemDetailsIndex]}
+                    modalType="info-form"
+                    autoShow={true}
+                    closeForm={() => setitemDetailsIndex(false)}
+                />
+            }
+
         </div>
     );
 }

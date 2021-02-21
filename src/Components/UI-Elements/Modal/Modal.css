@@ -1,11 +1,4 @@
-.modal-div{
-    position: fixed;
-    z-index: 1;
-    width: 60%;
-    border: 2px solid #cdc;
-    box-shadow: 1px 1px 1px #000;
-    padding: 13px;
-    left: 15%;
-    top: 30%;
-    
+.input-del-div, .info-del-div {
+    text-align: right;
+    margin: 5px 0;
 }

@@ -86,7 +86,11 @@ export default function DeliveryTable() {
         }}
       />
 
-      <FormModal inputFields={inputFields} />
+      <FormModal
+        fields={inputFields}
+        modalType="input-form"
+      />
+
     </React.Fragment>
 
   );

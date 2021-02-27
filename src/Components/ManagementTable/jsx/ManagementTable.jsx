@@ -45,8 +45,9 @@ function ManagementTable({ headers, content, sorter }) {
                                     {
                                         item &&
                                         <SortIcon
-                                        className="sort-icon-mui"
-                                            onClick={() => sortTable(index)} />
+                                            className="sort-icon-mui"
+                                            onClick={() => sortTable(index)}
+                                        />
                                     }
                                 </div>
                             </th>

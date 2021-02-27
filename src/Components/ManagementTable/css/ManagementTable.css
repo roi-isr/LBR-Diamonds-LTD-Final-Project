@@ -1,34 +1,38 @@
-.man-table-wrapper{
+.man-table-wrapper {
     overflow: scroll;
     margin-top: 3px;
 }
 
-.man-table-wrapper::-webkit-scrollbar{
+.man-table-wrapper::-webkit-scrollbar {
     width: 8px;
     height: 5px;
 }
 
-.man-table-wrapper::-webkit-scrollbar-thumb{
-    background:teal;
+.man-table-wrapper::-webkit-scrollbar-thumb {
+    background: teal;
     border-radius: 10px;
 }
 
-.man-table-wrapper::-webkit-scrollbar-track{
+.man-table-wrapper::-webkit-scrollbar-track {
     box-shadow: inset 0 0 7px gray;
     border-radius: 20px;
 }
 
-.man-table-wrapper::-webkit-scrollbar-thumb:hover{
+.man-table-wrapper::-webkit-scrollbar-thumb:hover {
     background: rgb(2, 160, 160)
 }
 
-.div-th-man-table{
+.div-th-man-table {
     display: flex;
     flex-direction: row;
-    justify-content:space-between;
+    justify-content: space-between;
     align-items: center;
 }
 
-.sort-icon-mui:active{
-transform: scaleY(-1);
+.sort-icon-mui {
+    cursor: pointer;
+}
+
+.sort-icon-mui:active {
+    transform: scaleY(-1);
 }

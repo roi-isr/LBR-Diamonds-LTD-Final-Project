@@ -1,4 +1,25 @@
-.input-del-div, .info-del-div {
-    text-align: right;
+.input-del-div, .info-del-div, .info-del-div-time {
+    text-align: center;
     margin: 5px 0;
+}
+
+.info-del-div-time, .info-del-div-content{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: auto;
+}
+
+.info-del-div-time{
+    width: 350px;
+}
+
+.info-del-div-content{
+    margin-top: 20px;
+    width: 100%;
+}
+
+.info-del-div{
+    display: inline-block;
+    width: 33.33%;
 }

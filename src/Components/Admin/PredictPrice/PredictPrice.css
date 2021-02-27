@@ -1,0 +1,16 @@
+.predict-main-div{
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.predict-dmn-img{
+    margin-top: 10px;
+  margin: left;
+  display: block;
+}
+
+.predict-form{
+    text-align: right;
+    width: 60%;
+    margin-top:100px;
+}

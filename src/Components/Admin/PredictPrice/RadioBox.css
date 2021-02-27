@@ -1,0 +1,13 @@
+.predict-form-option{
+    display: flex;
+    flex-direction: row;
+}
+
+.predict-option-btn{
+    margin: 0 5px;
+    font-size: 12px;
+    font-style:oblique;
+    font: fantasy;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: width 0.3s, height 0.3s;
+}

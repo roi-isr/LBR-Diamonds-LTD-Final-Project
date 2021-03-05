@@ -14,7 +14,7 @@ function RadioBox({ optionArray }) {
                 <button
                 className="predict-option-btn" 
                 key={index}
-                    style={{ backgroundColor: selectedOption === item ? 'blue' : 'white' , color: selectedOption === item ? 'white' : 'blue', width:  selectedOption === item ? '70px' : '55px',  height:  selectedOption === item ? '70px' : '55px'}}
+                    style={{ backgroundColor: selectedOption === item ? 'blue' : 'white' , color: selectedOption === item ? 'white' : 'blue', width:  selectedOption === item ? '70px' : '55px',  height:  selectedOption === item ? '40px' : '25px'}}
                     onClick={(e) => clickHandler(e, item)}
                 >
                     {item}

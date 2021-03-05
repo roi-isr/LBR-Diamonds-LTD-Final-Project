@@ -90,6 +90,7 @@ export default function DeliveryTable() {
         fields={inputFields}
         modalType="input-form"
         popUpTitle="הוספת משלוח"
+        postPath = "delivery"
       />
 
     </React.Fragment>

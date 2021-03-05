@@ -3,10 +3,9 @@ import './Modal.css'
 import Modal from 'react-bootstrap/Modal';
 import TextField from '@material-ui/core/TextField';
 import FormLabel from '@material-ui/core/FormLabel';
-import Input from '@material-ui/core/Input';
 import Button from 'react-bootstrap/Button'
 
-function ModalForm({ modalType, fields, autoShow, closeForm }) {
+function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle }) {
     const [show, setShow] = useState(false);
     const handleShow = () => setShow(true);
     const handleClose = () => {
@@ -38,25 +37,50 @@ function ModalForm({ modalType, fields, autoShow, closeForm }) {
         );
     }
 
-    else if (modalType === 'info-form') {
+    else if (modalType === 'contact-info-form') {
         renderForm = fields.map((item, index) =>
+            index < 3 &&
             <div
                 className='info-del-div'
                 key={'item-info' + index}>
                 <FormLabel>{item.name}</FormLabel>
                 <TextField
-                rowsMax={5}
+                    inputProps={{ style: { textAlign: 'center', height: '1px' } }}
                     value={item.content}
                     disabled
-                    dir='rtl'
                     type={item.type}
-                    placeholder={item.name}
-                    fullWidth
                     variant="outlined"
                     color="secondary">
                 </TextField>
             </div>
-        );
+        ).reverse();
+        renderForm.unshift(
+            <div
+                className='info-del-div-time'>
+                <FormLabel>{fields[3].name}</FormLabel>
+                <TextField
+                    inputProps={{ style: { textAlign: 'center', height: '1px' } }}
+                    value={fields[3].content}
+                    disabled
+                    type={fields[3].type}
+                    variant="outlined"
+                    color="secondary">
+                </TextField>
+            </div>)
+        renderForm.push(
+            <div
+                className='info-del-div-content'>
+                <FormLabel>{fields[4].name}</FormLabel>
+                <textarea
+                    dir='auto'
+                    style={{ height: '250px', fontSize: '1.3rem', overflow: 'auto', resize: 'none' }}
+                    value={fields[4].content}
+                    disabled
+                    type={fields[4].type}
+                >
+                </textarea>
+            </div>
+        )
     }
 
     return (
@@ -66,13 +90,13 @@ function ModalForm({ modalType, fields, autoShow, closeForm }) {
                     type="button"
                     className="btn btn-primary btn-lg btn-block"
                     onClick={handleShow}>
-                    הוספת משלוח
-               </button>
+                    {popUpTitle}
+                </button>
             }
             <Modal show={show || autoShow} onHide={handleClose} animation={false}>
                 <form onSubmit={handleClose}>
                     <Modal.Header closeButton>
-                        <Modal.Title style={{ marginLeft: '160px' }}>הוספת משלוח</Modal.Title>
+                        <Modal.Title style={{ marginLeft: '160px' }}>{popUpTitle}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         {renderForm}
@@ -81,11 +105,13 @@ function ModalForm({ modalType, fields, autoShow, closeForm }) {
                         <Button variant="secondary" onClick={handleClose}>
                             סגור
                             </Button>
-                        <Button
-                            variant="primary"
-                            type='submit'>
-                            שמור שינויים
-                            </Button>
+                        {modalType === 'input-form' &&
+                            <Button
+                                variant="primary"
+                                type='submit'>
+                                שמור שינויים
+                                </Button>
+                        }
                     </Modal.Footer>
                 </form>
             </Modal>

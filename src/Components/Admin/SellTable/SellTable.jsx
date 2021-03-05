@@ -19,11 +19,15 @@ const rows = [
 ];
 
 const inputFields = [
-  { name: "מספר החבילה", type: 'text' },
-  { name: "משקל החבילה", type: 'text' },
-  { name: "חברת השילוח", type: 'text' },
-  { name: "שם השולח", type: 'text' },
-  { name: "תאריך המשלוח", type: 'date' }];
+  { name: "מודל", type: 'text' },
+  { name: "משקל", type: 'text' },
+  { name: "מחיר לקראט", type: 'text' },
+  { name: "סה\"כ", type: 'text' },
+  { name: "קוד", type: 'text' },
+  { name: "שם הקונה", type: 'text' },
+  { name: "תאריך מכירה", type: 'date' },
+  { name: "תשלום", type: 'text' },
+];
 
 export default function SellTable() {
   const [content, setContent] = useState(rows);
@@ -81,7 +85,7 @@ export default function SellTable() {
       <FormModal
         fields={inputFields}
         modalType="input-form"
-
+        popUpTitle="הוספת מכירה"
       />
     </React.Fragment>
   );

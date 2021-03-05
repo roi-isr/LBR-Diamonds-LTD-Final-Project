@@ -5,7 +5,18 @@ import ManagementTable from '../../../ManagementTable/jsx/ManagementTable'
 import Fab from '@material-ui/core/Fab';
 import Button from 'react-bootstrap/Button';
 import { sorter } from '../../../ManagementTable/Utility';
+import FormModal from '../../../UI-Elements/Modal/Modal'
 
+const inputFields = [
+  { name: "מודל", type: 'text' },
+  { name: "משקל החבילה", type: 'text' },
+  { name: "עלות", type: 'text' },
+  { name: "ניקיון", type: 'text' },
+  { name: "צבע", type: 'text' },
+  { name: "קוד", type: 'text' },
+  { name: "הערות", type: 'text' },
+  { name: "מלאי", type: 'text' },
+];
 
 const rows = [
   ['R-101', '1.25', '500', '5275', 'vs', 'D', 'R', 'ADIV', '1/1/20', '60-DAYS', 'daniel', '50500'],
@@ -66,11 +77,12 @@ export default function StockTable() {
           setContent
         }}
       />
-      <button
-        type="button"
-        className="btn btn-primary btn-lg btn-block">
-        הוספת פריט חדש
-          </button>
+      <FormModal
+        fields={inputFields}
+        modalType="input-form"
+        popUpTitle="הוספת מלאי"
+      />
+
       <div className="progress-stock-wrapper">
         <label> ניצול מסגרת האשראי </label>
         <CircularProgressbar

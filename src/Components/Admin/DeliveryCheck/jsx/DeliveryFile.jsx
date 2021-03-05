@@ -89,6 +89,7 @@ export default function DeliveryTable() {
       <FormModal
         fields={inputFields}
         modalType="input-form"
+        popUpTitle="הוספת משלוח"
       />
 
     </React.Fragment>

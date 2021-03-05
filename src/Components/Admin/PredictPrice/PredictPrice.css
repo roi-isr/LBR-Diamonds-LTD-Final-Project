@@ -1,8 +1,19 @@
 .predict-main-div{
     display: flex;
     flex-direction: row-reverse;
+    text-align: center;
 }
 
+@media only screen and (max-width: 1410px) {
+    .predict-main-div {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+}
+
+.predict-form{
+    margin: auto;
+}
 .predict-dmn-img{
     margin-top: 10px;
   margin: left;

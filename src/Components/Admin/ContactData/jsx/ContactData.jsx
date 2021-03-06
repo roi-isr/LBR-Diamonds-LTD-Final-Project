@@ -50,9 +50,9 @@ function ContactData() {
     const fetchContact = async () => {
         setLoading(true);
         try {
-            const fetchedData = await fetchGet('contacts');
-            renderData();
-            setLoading(false);
+        const fetchedData = await fetchGet('contacts');
+        renderData(fetchedData);
+        setLoading(false);
         } catch {
             console.log("Failed to fetch contact data from DB");
         }

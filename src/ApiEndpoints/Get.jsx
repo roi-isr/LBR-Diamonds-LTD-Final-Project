@@ -11,7 +11,7 @@ export default async function fetchGet(path) {
                 headers:
                 {
                     'Content-Type': 'application/json',
-                    'Authorization': `BEARER ${token}`,
+                    'Authorization': `Bearer ${token}`,
                 },
             })
             .then(response => response.json())

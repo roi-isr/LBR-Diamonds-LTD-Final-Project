@@ -4,8 +4,8 @@ import ManagementTable from '../../../ManagementTable/jsx/ManagementTable';
 import { WebCookies } from '../../../../Entities/Cookies';
 import Loader from 'react-loader-spinner';
 import '../css/ContactData.css';
-import { sorter } from '../../../ManagementTable/Utility';
-import FormModal from '../../../UI-Elements/Modal/Modal'
+import FormModal from '../../../UI-Elements/Modal/Modal';
+import fetchGet from '../../../../ApiEndpoints/Get';
 
 const headers = ["שם השולח", "מייל", "טלפון", "זמן יצירת קשר", "", ""];
 
@@ -16,10 +16,9 @@ function ContactData() {
     const [tableRender, setTableRender] = useState([]);
     const [loading, setLoading] = useState(false);
     const [itemDetailsIndex, setitemDetailsIndex] = useState(false);
-    // Fecth data from DB
+
     useEffect(() => {
-        window.cookie_token = new WebCookies().getCookies("tokenStr");
-        fetchContact(window.cookie_token);
+        fetchContact();
     }, []);
 
     useEffect(() => {
@@ -47,26 +46,14 @@ function ContactData() {
         setTableRender(tempContent)
     }, [content])
 
-    const fetchContact = (token) => {
+    // Fecth data from DB
+    const fetchContact = async () => {
         setLoading(true);
-        fetch("http://127.0.0.1:5000/contacts",
-            {
-                method: 'GET',
-                headers:
-                {
-                    'Content-Type': 'application/json',
-                    'Authorization': `JWT ${token}`
-                }
-            })
-            .then(response => response.json())
-            .then(data => onSubmitSuccess(data))
-            .catch(() => onSubmitFail())
-
-        const onSubmitSuccess = (data) => {
-            renderData(data);
+        try {
+            const fetchedData = await fetchGet('contacts');
+            renderData();
             setLoading(false);
-        }
-        const onSubmitFail = () => {
+        } catch {
             console.log("Failed to fetch contact data from DB");
         }
     }
@@ -82,7 +69,10 @@ function ContactData() {
                 contactValues['phone'], create_at.slice(0, create_at.length - 4),
                 contactValues['id']
             );
+
             tempContent.push(subTempContent);
+
+            // saving content for later individual display
             showDetailsFieldsMap[contactValues['id']] = [
                 { name: "שם השולח", content: contactValues['name'] },
                 { name: "מייל", content: contactValues['email'] },
@@ -90,7 +80,6 @@ function ContactData() {
                 { name: "זמן יצירת קשר", content: create_at.slice(0, create_at.length - 4) },
                 { name: "תוכן ההודעה", content: contactValues['content'] }
             ];
-            console.log(showDetailsFieldsMap)
         });
         setContent(tempContent);
     }
@@ -105,7 +94,7 @@ function ContactData() {
                 method: 'DELETE',
                 headers:
                 {
-                    'Authorization': `JWT ${window.cookie_token}`
+                    'Authorization': `Bearer ${window.cookie_token}`
                 }
             })
             .then(response => response.json())
@@ -145,8 +134,7 @@ function ContactData() {
                 <ManagementTable
                     headers={headers}
                     content={tableRender}
-                    sorter={{
-                        sorter,
+                    sorterUtility={{
                         content,
                         setContent
                     }}

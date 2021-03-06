@@ -1,6 +1,6 @@
-import {ServerUrl} from './ServerUrl'
+import { ServerUrl } from './ServerUrl'
 
-export async function fetchAuthRequest(httpContent, onSuccess, onFailure) {
+export async function fetchAuthRequest(httpContent) {
     return new Promise((resolve, reject) => {
         fetch(`${ServerUrl}/auth`,
             {
@@ -13,13 +13,16 @@ export async function fetchAuthRequest(httpContent, onSuccess, onFailure) {
             })
             .then(response => response.json())
             .then(data => {
-                if (data.access_token) {
-                    resolve(onSuccess(data.access_token));
+                if (data.access_token || data.refresh_token) {
+                    resolve({
+                        'accessToken': data.access_token,
+                        'refreshToken': data.refresh_token
+                    });
                 }
                 else {
-                    reject(onFailure(data.description));
+                    reject(data.description);
                 }
             })
-            .catch((e) => onFailure(e.name));
+            .catch((e) => reject(e.name));
     })
 }

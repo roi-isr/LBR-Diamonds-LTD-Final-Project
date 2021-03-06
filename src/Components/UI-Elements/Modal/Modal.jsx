@@ -4,9 +4,11 @@ import Modal from 'react-bootstrap/Modal';
 import TextField from '@material-ui/core/TextField';
 import FormLabel from '@material-ui/core/FormLabel';
 import Button from 'react-bootstrap/Button'
+import fetchPost from '../../../ApiEndpoints/Post';
 
-function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle }) {
+function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPath }) {
     const [show, setShow] = useState(false);
+    const [inputData, setInputData] = useState({});
     const handleShow = () => setShow(true);
     const handleClose = () => {
         setShow(false);
@@ -16,7 +18,11 @@ function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle }) {
 
     }
     let renderForm = null;
-
+    function handleSubmit(e) {
+        e.preventDefault();
+        fetchPost(postPath, inputData);
+        
+    }
     // Determine if a input form or a info form
     if (modalType === 'input-form') {
         renderForm = fields.map((item, index) =>
@@ -32,6 +38,8 @@ function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle }) {
                     fullWidth
                     variant="outlined"
                     color="secondary"
+                    value = {inputData[index]}
+                    onChange={(e)=>setInputData(prevState=> {return {...prevState, [index]: e.target.value}})}
                 />
             </div>
         );
@@ -94,7 +102,7 @@ function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle }) {
                 </button>
             }
             <Modal show={show || autoShow} onHide={handleClose} animation={false}>
-                <form onSubmit={handleClose}>
+                <form onSubmit={handleSubmit}>
                     <Modal.Header closeButton>
                         <Modal.Title style={{ marginLeft: '160px' }}>{popUpTitle}</Modal.Title>
                     </Modal.Header>

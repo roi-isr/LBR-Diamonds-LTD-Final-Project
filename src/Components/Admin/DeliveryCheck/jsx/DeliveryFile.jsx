@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-
 import ManagementTable from '../../../ManagementTable/jsx/ManagementTable'
 import Button from 'react-bootstrap/Button'
 import '../css/DeliveryFile.css';
-import { } from '../../../ManagementTable/Utility'
-import FormModal from '../../../UI-Elements/Modal/Modal'
+import FormModal from '../../../UI-Elements/Modal/Modal';
+import fetchGet from '../../../../ApiEndpoints/Get';
 
 const headers = ["מספר החבילה", "משקל החבילה", "מהיכן המשלוח", "חברת השילוח", "שם השולח ", "תאריך המשלוח", "", ""];
 
@@ -18,6 +17,7 @@ const rows = [
 const inputFields = [
   { name: "מספר החבילה", type: 'text' },
   { name: "משקל החבילה", type: 'text' },
+  { name: " מהיכן המשלוח", type: 'text' },
   { name: "חברת השילוח", type: 'text' },
   { name: "שם השולח", type: 'text' },
   { name: "תאריך המשלוח", type: 'date' }];
@@ -28,6 +28,10 @@ export default function DeliveryTable() {
   const [tableRender, setTableRender] = useState([]);
 
   // Fecth data from DB
+  useEffect(()=>{
+    fetchData();
+  },[]);
+
   useEffect(() => {
     let tempContent = [];
     content.forEach((item, index) => {
@@ -51,36 +55,34 @@ export default function DeliveryTable() {
     setTableRender(tempContent)
   }, [content])
 
+  const fetchData=async ()=>{
+    // setLoading(true);
+    try {
+        const fetchedData = await fetchGet('deliveries');
+        console.log(fetchedData)
+        // renderData(fetchedData);
+        // setLoading(false);
+    } catch {
+        console.log("Failed to fetch contact data from DB");
+    }
+  }
+
   const deleteRow = (index) => {
     const con = window.confirm("Are you sure that you want to delete the item?");
     if (!con) {
       return
     }
-    setContent(prevContent => prevContent.filter((item, i) => index != i));
+    setContent(prevContent => prevContent.filter((item, i) => index !== i));
   }
 
-  const sorter = (index, order) => {
-    const tempContent = [...content];
-    switch (order) {
-      case 'ASC':
-        tempContent.sort((a, b) => a[index] - b[index]);
-        break;
-      case 'DESC':
-        tempContent.sort((a, b) => b[index] - a[index]);
-        break;
-      default:
-        break;
-    }
-    setContent(tempContent);
-  }
+
   //Returns the table to our requested page.
   return (
     <React.Fragment>
       <ManagementTable
         headers={headers}
         content={tableRender}
-        sorter={{
-          sorter,
+        sorterUtility={{
           content,
           setContent
         }}
@@ -90,6 +92,7 @@ export default function DeliveryTable() {
         fields={inputFields}
         modalType="input-form"
         popUpTitle="הוספת משלוח"
+        postPath = "delivery"
       />
 
     </React.Fragment>

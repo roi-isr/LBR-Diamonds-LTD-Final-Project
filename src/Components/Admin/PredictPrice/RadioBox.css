@@ -1,13 +1,21 @@
-.predict-form-option{
+.predict-form-option {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    row-gap: 5px;
 }
 
-.predict-option-btn{
+.predict-option-btn {
     margin: 0 5px;
     font-size: 12px;
-    font-style:oblique;
+    font-style: oblique;
+    box-shadow: 1px 1px 4px #000;
+    border-radius: 10px;
     font: fantasy;
     font-family: Arial, Helvetica, sans-serif;
     transition: width 0.3s, height 0.3s;
+}
+
+.predict-option-btn:focus {
+    outline: none;
 }

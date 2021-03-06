@@ -6,15 +6,18 @@ import { WebCookies } from '../Entities/Cookies'
 function WithAdmin(props) {
     useEffect(() => {
         props.hide_nav();
-        if (!props.isLoggedIn)
+        if (!props.isLoggedIn) {
             getTokenFromCookies();
+        }
     }, []);
 
     /* Get access token from cookies, in case of a page refresh */
     const getTokenFromCookies = () => {
         const cookies = new WebCookies();
-        const token = cookies.getCookies('tokenStr');
-        props.updateLoginStat(token);
+        const refreshToken = cookies.getCookies('refreshTokenStr');
+        if (refreshToken) {
+            props.refreshToken(refreshToken);
+        }
     }
 
     return (
@@ -30,7 +33,7 @@ function WithAdmin(props) {
 const mapDispatchToProp = (dispatch) => {
     return {
         hide_nav: () => dispatch(change_visiblity(false)),
-        updateLoginStat: (token) => dispatch(update_login_stat(token))
+        refreshToken: (refreshToken) => dispatch(update_login_stat(refreshToken))
     }
 }
 

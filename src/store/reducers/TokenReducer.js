@@ -7,9 +7,10 @@ const initialState = {
     isLoggedIn: false
 }
 
-const createCookie = (token) => {
+const createCookie = (tokens) => {
     const cookies = new Cookies();
-    cookies.set('tokenStr', token, { path: '/' });
+    cookies.set('tokenStr', tokens['accessToken'], { path: '/' });
+    cookies.set('refreshTokenStr', tokens['refreshToken'], { path: '/' });
 }
 
 /* Managing the token reducer (redux's global state)*/

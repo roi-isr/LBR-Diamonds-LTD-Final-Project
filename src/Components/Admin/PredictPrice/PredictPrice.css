@@ -1,7 +1,12 @@
-.predict-main-div{
+.predict-main-div {
     display: flex;
     flex-direction: row-reverse;
     text-align: center;
+}
+
+.predict-dmn-img{
+    margin: 0px auto;
+    width: 50%;
 }
 
 @media only screen and (max-width: 1410px) {
@@ -9,19 +14,23 @@
         display: flex;
         flex-direction: column-reverse;
     }
+
+    .predict-dmn-img{
+        margin: 0px auto;
+        width: 100%;
+    }
 }
 
-.predict-form{
-    margin: auto;
-}
-.predict-dmn-img{
-    margin-top: 10px;
-  margin: left;
-  display: block;
-}
-
-.predict-form{
+.predict-form {
+    margin: 50px auto;
     text-align: right;
-    width: 60%;
-    margin-top:100px;
+}
+
+
+
+.pred-title-div{
+    text-align: center;
+    font-weight: bold;
+    font-family: URW Chancery L, cursive;
+    margin-top: 5px;
 }

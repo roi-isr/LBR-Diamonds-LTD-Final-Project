@@ -1,8 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import AddIcon from '@material-ui/icons/Add';
 import ManagementTable from '../../ManagementTable/jsx/ManagementTable'
-import Fab from '@material-ui/core/Fab';
 import Button from 'react-bootstrap/Button'
 import { sorter } from '../../ManagementTable/Utility'
 import FormModal from '../../UI-Elements/Modal/Modal'
@@ -71,8 +69,7 @@ export default function SellTable() {
       <ManagementTable
         headers={headers}
         content={tableRender}
-        sorter={{
-          sorter,
+        sorterUtility={{
           content,
           setContent
         }}

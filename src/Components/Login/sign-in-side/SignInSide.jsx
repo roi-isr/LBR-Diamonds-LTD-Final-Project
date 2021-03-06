@@ -90,23 +90,18 @@ function SignInSide(props) {
     {
       username: email,
       password: password,
-    }
+    };
 
-    // function that runs on a success submittion
-    const onSubmitSuccess = (response) => {
+    try {
+      const tokens = await fetchAuthRequest(httpContent);
       const cookie = new WebCookies();
-      cookie.saveUsernameAndPasswordCookie(httpContent.username, httpContent.password);
-      props.token_saver(response);
+      // cookie.saveUsernameAndPasswordCookie(httpContent.username, httpContent.password);
+      props.token_saver(tokens);
       setInSignProcess(false);
-    }
-
-    // function that runs on a failed submittion
-    const onSubmitFailure = (response) => {
+    } catch {
       alert(response);
       setInSignProcess(false);
     }
-
-    await fetchAuthRequest(httpContent, onSubmitSuccess, onSubmitFailure);
   }
 
 
@@ -214,7 +209,7 @@ function SignInSide(props) {
 
 const mapDispatchToProp = (dispatch) => {
   return {
-    token_saver: (token) => dispatch(save_token(token))
+    token_saver: (tokens) => dispatch(save_token(tokens))
   }
 }
 

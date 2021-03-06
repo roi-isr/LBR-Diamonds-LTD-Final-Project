@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import SortIcon from '@material-ui/icons/Sort';
 import { Table } from 'react-bootstrap';
 import '../css/ManagementTable.css'
+import { sorter as sorterFunc } from '../Utility'
 
-function ManagementTable({ headers, content, sorter }) {
-    const { sorter: sorterFunc, content: pureContent, setContent } = sorter;
+function ManagementTable({ headers, content, sorterUtility }) {
+    const { content: pureContent, setContent } = sorterUtility;
     const [orderColumn, setOrderColumn] = useState("");
 
     // Sort table in ASC or DESC order
@@ -24,7 +25,6 @@ function ManagementTable({ headers, content, sorter }) {
                 order = 'ASC';
                 setOrderColumn(`${index}-ASC`);
             }
-
         }
         sorterFunc(index, order, pureContent, setContent)
     }

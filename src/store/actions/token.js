@@ -3,20 +3,22 @@ import { WebCookies } from '../../Entities/Cookies';
 import { fetchAuthRequest } from '../../ApiEndpoints/Authentication';
 
 // Verify token through server, making admin sessions possible, even after page refresh
-const verify_token = (token) => {
+const refreshToken = (token) => {
     return new Promise((resolve, reject) => {
-        fetch("http://127.0.0.1:5000/verify-token", {
-            method: 'GET',
+        fetch("http://127.0.0.1:5000/refresh", {
+            method: 'POST',
             headers: {
-                'Authorization': `JWT ${token}`,
+                'Authorization': `Bearer ${token}`,
             },
+            body: JSON.stringify({})
         })
             .then(response => response.json())
             .then(data => {
-                if (data.auth) {
-                    resolve(true);
+                if (data.access_token) {
+                    resolve(data.access_token);
                 } else {
-                    reject(Error('Unverifies user'));
+                    console.log(data)
+                    reject(Error('Unverified user'));
                 }
             })
             .catch((e) => reject(Error(e.name)))
@@ -38,60 +40,13 @@ const update_login = val => {
     }
 }
 
-const tryToLoginAgain = () => {
-    return new Promise(async (resolve, reject) => {
-        const cookies = new WebCookies();
-        const username = cookies.getCookies("username");
-        const password = cookies.getCookies("password");
-
-        if (!username || !password) {
-            reject("User not authorized yet");
-        }
-
-        const httpRequest = {
-            username,
-            password
-        }
-
-        const onAuthSuccess = (token) => {
-            if (token) {
-                const cookie = new WebCookies();
-                cookie.setAuth(token);
-                cookie.saveUsernameAndPasswordCookie(httpRequest.username, httpRequest.password);
-                console.log("Resigned successfully");
-                return token;
-            }
-            else {
-                return ("Error");
-            }
-        }
-
-        const onAuthFail = (errorMsg) => {
-            return (errorMsg);
-        }
-        try {
-            const accessToken = await fetchAuthRequest(httpRequest, onAuthSuccess, onAuthFail)
-            resolve(accessToken);
-        }
-        catch {
-            reject("User not authorized yet")
-        }
-    })
-}
-
-export const update_login_stat = (val) => {
+export const update_login_stat = (token) => {
     return dispatch => {
-        verify_token(val)
+        refreshToken(token)
             .then((value) => {
                 dispatch(update_login(value));
             })
-            .catch(() => {
-                tryToLoginAgain()
-                    .then((access_token) =>
-                        dispatch(update_login(access_token))
-                    )
-                    .catch((e) => console.log(e));
-            });
+            .catch((e) => console.log(e));
     }
 }
 

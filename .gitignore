@@ -23,5 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 # ingore cache and log files
-*.eslintcatch
+.eslintcatch
 /debug.log

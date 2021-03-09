@@ -140,7 +140,7 @@ function ContactForm() {
         {
             controlId: "exampleForm.ControlTextarea1", label: "Content",
             controlAttr: {
-                as: "textarea", placeholder: "Add your content", rows: 3, value: content,
+                as: "textarea", className:"contact-txt-area", placeholder: "Add your content", rows: 3, value: content,
                 onChange: (event) => setContent(event.target.value)
             }
         },

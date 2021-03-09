@@ -6,6 +6,7 @@ import { change_content, change_visiblity, log_out } from '../../store/actions/i
 import { WebCookies } from '../../Entities/Cookies';
 import { withRouter, useHistory } from 'react-router-dom';
 import RouterComponent from '../../Routers/Router'
+import './Admin.css';
 
 function Admin(props) {
     const history = useHistory();
@@ -30,8 +31,8 @@ function Admin(props) {
     const changeNavToAdmin = useCallback(() => {
         const adminNav = [
             { name: "Delivery", path: "/admin/delivery" },
-            { name: "Sells", path: "/admin/sell" },
             { name: "Stock Management", path: "/admin/reports" },
+            { name: "Sells", path: "/admin/sell" },
             { name: "Contact", path: "/admin/contact" },
             { name: "Predict Price", path: "/admin/ml-price" },
             { name: "Logout", click: logout, path: "/admin" }

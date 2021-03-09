@@ -5,14 +5,19 @@ import TextField from '@material-ui/core/TextField';
 import FormLabel from '@material-ui/core/FormLabel';
 import Button from 'react-bootstrap/Button'
 import fetchPost from '../../../ApiEndpoints/Post';
+import Loader from 'react-loader-spinner';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
-function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPath, updatePostUi }) {
+function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPath, updatePostUiFunc }) {
     const [show, setShow] = useState(false);
     const [inputData, setInputData] = useState({});
-    const handleShow = () => setShow(true);
+    const [isFetching, setIsFetching] = useState(false);
+
     let renderForm = null;
 
     const handleClose = () => {
+        setInputData({});
+        setIsFetching(false);
         setShow(false);
         if (closeForm) {
             closeForm();
@@ -21,13 +26,15 @@ function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPat
 
     async function handleSubmit(e) {
         e.preventDefault();
-        try{
-        await fetchPost(postPath, inputData);
-        updatePostUi(Object.values(inputData));
-        handleClose();
-
-        } catch{
+        try {
+            setIsFetching(true);
+            await fetchPost(postPath, inputData);
+            updatePostUiFunc(Object.values(inputData));
+            setIsFetching('Success');
+            setTimeout(handleClose, 3000);
+        } catch {
             alert('error')
+            setIsFetching('Fail');
         }
     }
     // Determine if a input form or a info form
@@ -105,10 +112,11 @@ function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPat
                 <button
                     type="button"
                     className="btn btn-primary btn-lg btn-block"
-                    onClick={handleShow}>
+                    onClick={() => setShow(true)}>
                     {popUpTitle}
                 </button>
             }
+
             <Modal show={show || autoShow} onHide={handleClose} animation={false}>
                 <form onSubmit={handleSubmit}>
                     <Modal.Header closeButton>
@@ -117,7 +125,20 @@ function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPat
                     <Modal.Body>
                         {renderForm}
                     </Modal.Body>
-                    <Modal.Footer>
+                    <Modal.Footer style={{ margin: 'auto' }}>
+                        {isFetching === true &&
+                            <Loader
+                                style={{ margin: '0 auto 0 0' }}
+                                type='Bars'
+                                height={40}
+                                width={40}
+                                color="SlateBlue"
+                            />
+                        }
+                        {isFetching === 'Success' &&
+                            <CheckCircleIcon
+                                style={{ fill: 'green', width: '40px', height: '40px', margin: '0 auto 0 0' }}
+                            />}
                         <Button variant="secondary" onClick={handleClose}>
                             סגור
                             </Button>
@@ -126,11 +147,11 @@ function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPat
                                 variant="primary"
                                 type='submit'>
                                 שמור שינויים
-                            </Button>
-                        }
+                            </Button>}
                     </Modal.Footer>
                 </form>
             </Modal>
+
         </React.Fragment>
     );
 }

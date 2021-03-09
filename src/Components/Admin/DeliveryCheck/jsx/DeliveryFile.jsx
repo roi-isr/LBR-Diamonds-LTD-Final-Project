@@ -47,7 +47,7 @@ export default function DeliveryTable() {
           אישור הגעה
             </Button>;
 
-      tempContent.push([...item.slice(1), deleteBtn, confirmBtn]);
+      tempContent.push([...item.length === 6 ? item : item.slice(1), deleteBtn, confirmBtn]);
     })
     setTableRender(tempContent);
   }, [content])
@@ -91,7 +91,6 @@ export default function DeliveryTable() {
         contactValues['delivery_from_country'], contactValues['delivery_company'],
         contactValues['seller'], contactValues['send_date']
       );
-
       tempContent.push(subTempContent);
     });
     setContent(tempContent);
@@ -110,7 +109,7 @@ export default function DeliveryTable() {
         <ManagementTable
           headers={headers}
           content={tableRender}
-          startIdx = {1}
+          startIdx={1}
           sorterUtility={{
             content,
             setContent
@@ -122,7 +121,7 @@ export default function DeliveryTable() {
         modalType="input-form"
         popUpTitle="הוספת משלוח"
         postPath="delivery"
-        updatePostUi={updatePostUi}
+        updatePostUiFunc={updatePostUi}
       />
 
     </div>

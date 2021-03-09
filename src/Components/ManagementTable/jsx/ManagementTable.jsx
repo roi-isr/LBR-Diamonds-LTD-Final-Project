@@ -4,12 +4,13 @@ import { Table } from 'react-bootstrap';
 import '../css/ManagementTable.css'
 import { sorter as sorterFunc } from '../Utility'
 
-function ManagementTable({ headers, content, sorterUtility }) {
+function ManagementTable({ headers, content, sorterUtility, startIdx }) {
     const { content: pureContent, setContent } = sorterUtility;
     const [orderColumn, setOrderColumn] = useState("");
 
     // Sort table in ASC or DESC order
-    const sortTable = (index) => {
+    const sortTable = (ind) => {
+        const index = ind + (startIdx || 0);
         let order;
         if (orderColumn === "") {
             order = 'ASC';

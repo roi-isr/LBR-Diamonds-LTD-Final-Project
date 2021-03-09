@@ -11,9 +11,13 @@
     flex-direction: row;
 }
 
+.contact-txt-area {
+    resize: none;
+}
+
 .map-container-css {
     position: relative;
-    height: 450px;
+    height: 65vh;
     width: 50vw;
 }
 

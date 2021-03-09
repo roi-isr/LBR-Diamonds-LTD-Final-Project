@@ -4,15 +4,11 @@ import Button from 'react-bootstrap/Button'
 import '../css/DeliveryFile.css';
 import FormModal from '../../../UI-Elements/Modal/Modal';
 import fetchGet from '../../../../ApiEndpoints/Get';
+import fetchDelete from '../../../../ApiEndpoints/Delete';
+import Loader from 'react-loader-spinner';
 
 const headers = ["מספר החבילה", "משקל החבילה", "מהיכן המשלוח", "חברת השילוח", "שם השולח ", "תאריך המשלוח", "", ""];
 
-const rows = [
-  ['R-101', '160.25', 'ישראל', 'ADIV', 'רועי ישראלי', '1/1/21'],
-  ['R-102', '152.25', 'ישראל', 'ADIV', 'רועי ישראלי', '1/1/21'],
-  ['R-103', '158.25', 'ישראל', 'ADIV', 'רועי ישראלי', '1/1/21'],
-  ['R-104', '150.25', 'ישראל', 'ADIV', 'רועי ישראלי', '1/1/21'],
-];
 
 const inputFields = [
   { name: "מספר החבילה", type: 'text' },
@@ -24,13 +20,14 @@ const inputFields = [
 
 
 export default function DeliveryTable() {
-  const [content, setContent] = useState(rows);
+  const [content, setContent] = useState([[]]);
   const [tableRender, setTableRender] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   // Fecth data from DB
-  useEffect(()=>{
+  useEffect(() => {
     fetchData();
-  },[]);
+  }, []);
 
   useEffect(() => {
     let tempContent = [];
@@ -50,52 +47,85 @@ export default function DeliveryTable() {
           אישור הגעה
             </Button>;
 
-      tempContent.push([...item, deleteBtn, confirmBtn]);
+      tempContent.push([...item.slice(1), deleteBtn, confirmBtn]);
     })
-    setTableRender(tempContent)
+    setTableRender(tempContent);
   }, [content])
 
-  const fetchData=async ()=>{
-    // setLoading(true);
+  const updatePostUi = (newDelivery) => {
+    setContent(prevContent => [...prevContent, newDelivery]);
+  }
+
+  const fetchData = async () => {
+    setLoading(true);
     try {
-        const fetchedData = await fetchGet('deliveries');
-        console.log(fetchedData)
-        // renderData(fetchedData);
-        // setLoading(false);
+      const fetchedData = await fetchGet('deliveries');
+      console.log(fetchedData)
+      renderData(fetchedData);
+
     } catch {
-        console.log("Failed to fetch contact data from DB");
+      console.log("Failed to fetch contact data from DB");
+    } finally {
+      setLoading(false);
     }
   }
 
-  const deleteRow = (index) => {
+  const deleteRow = async (index) => {
     const con = window.confirm("Are you sure that you want to delete the item?");
     if (!con) {
       return
     }
+    // Delete from DB
+    await fetchDelete(`delivery/${content[index][0]}`);
+    // Delete from UI
     setContent(prevContent => prevContent.filter((item, i) => index !== i));
   }
 
+  // Convert the data fetch for DB into renderable data
+  const renderData = (data) => {
+    const tempContent = []
+    Object.values(data).forEach(contactValues => {
+      const subTempContent = [];
+      subTempContent.push(
+        contactValues['delivery_id'], contactValues['package_code'], contactValues['package_weight'],
+        contactValues['delivery_from_country'], contactValues['delivery_company'],
+        contactValues['seller'], contactValues['send_date']
+      );
+
+      tempContent.push(subTempContent);
+    });
+    setContent(tempContent);
+  }
 
   //Returns the table to our requested page.
   return (
-    <React.Fragment>
-      <ManagementTable
-        headers={headers}
-        content={tableRender}
-        sorterUtility={{
-          content,
-          setContent
-        }}
-      />
-
+    <div style={{ textAlign: 'center' }}>
+      {loading ?
+        <Loader style={{ margin: 'auto' }}
+          type='Bars'
+          height={300}
+          width={300}
+          color="SlateBlue"
+        /> :
+        <ManagementTable
+          headers={headers}
+          content={tableRender}
+          startIdx = {1}
+          sorterUtility={{
+            content,
+            setContent
+          }}
+        />
+      }
       <FormModal
         fields={inputFields}
         modalType="input-form"
         popUpTitle="הוספת משלוח"
-        postPath = "delivery"
+        postPath="delivery"
+        updatePostUi={updatePostUi}
       />
 
-    </React.Fragment>
+    </div>
 
   );
 }

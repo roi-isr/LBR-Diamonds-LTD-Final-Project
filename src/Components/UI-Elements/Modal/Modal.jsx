@@ -1,27 +1,34 @@
 import React, { useState } from 'react';
-import './Modal.css'
+import './Modal.css';
 import Modal from 'react-bootstrap/Modal';
 import TextField from '@material-ui/core/TextField';
 import FormLabel from '@material-ui/core/FormLabel';
 import Button from 'react-bootstrap/Button'
 import fetchPost from '../../../ApiEndpoints/Post';
 
-function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPath }) {
+function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPath, updatePostUi }) {
     const [show, setShow] = useState(false);
     const [inputData, setInputData] = useState({});
     const handleShow = () => setShow(true);
+    let renderForm = null;
+
     const handleClose = () => {
         setShow(false);
         if (closeForm) {
             closeForm();
         }
-
     }
-    let renderForm = null;
-    function handleSubmit(e) {
+
+    async function handleSubmit(e) {
         e.preventDefault();
-        fetchPost(postPath, inputData);
-        
+        try{
+        await fetchPost(postPath, inputData);
+        updatePostUi(Object.values(inputData));
+        handleClose();
+
+        } catch{
+            alert('error')
+        }
     }
     // Determine if a input form or a info form
     if (modalType === 'input-form') {
@@ -38,8 +45,8 @@ function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPat
                     fullWidth
                     variant="outlined"
                     color="secondary"
-                    value = {inputData[index]}
-                    onChange={(e)=>setInputData(prevState=> {return {...prevState, [index]: e.target.value}})}
+                    value={inputData[index]}
+                    onChange={(e) => setInputData(prevState => { return { ...prevState, [index]: e.target.value } })}
                 />
             </div>
         );
@@ -91,6 +98,7 @@ function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPat
         )
     }
 
+
     return (
         <React.Fragment>
             {modalType === 'input-form' &&
@@ -118,7 +126,7 @@ function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPat
                                 variant="primary"
                                 type='submit'>
                                 שמור שינויים
-                                </Button>
+                            </Button>
                         }
                     </Modal.Footer>
                 </form>

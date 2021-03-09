@@ -1,35 +1,28 @@
 import { ServerUrl } from './ServerUrl'
 import { getValidToken } from './Authentication'
 
-
-export default function fetchPost(path, data) {
+export default function fetchDelete(path) {
     return new Promise(async (resolve, reject) => {
         const token = await getValidToken();
-        fetch(`${ServerUrl}/${path}`,
+        fetch(`http://127.0.0.1:5000/${path}`,
             {
-                method: 'POST',
+                method: 'DELETE',
                 headers:
                 {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
-                body: JSON.stringify(data)
+                    'Authorization': `Bearer ${token}`
+                }
             })
             .then(response => response.json())
             .then(data => {
                 if (data.message || data.message.includes("Success") || data.message.includes("success")) {
-                    alert("Data added successfully");
+                    alert("Data deleted successfully");
                     resolve();
                 }
                 else {
-                    alert("Your submittion failed");
+                    alert("Your deletion failed");
                     reject();
                 }
             })
-            .catch(() => {
-                alert("Your submittion failed");
-                reject();
-
-            });
+            
     })
 }

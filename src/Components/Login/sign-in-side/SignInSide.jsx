@@ -49,13 +49,7 @@ const useStyles = makeStyles((theme) => ({
   image: {
     backgroundImage: `url(${RE5})`,
     backgroundRepeat: 'no-repeat',
-    borderRadius: '2px',
-    backgroundColor:
-      theme.palette.mode === 'light'
-        ? theme.palette.grey[50]
-        : theme.palette.grey[900],
     backgroundSize: 'cover',
-    backgroundPosition: 'center',
   },
   paper: {
     margin: theme.spacing(8, 4),
@@ -64,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   avatar: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(1.5),
     backgroundColor: theme.palette.primary.main,
   },
   form: {
@@ -72,6 +66,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   submit: {
+    backgroundColor: theme.palette.primary.main,
+    color: "#fff",
+    "&:hover":{
+      backgroundColor: theme.palette.primary.light
+    },
     margin: theme.spacing(3, 0, 2),
   },
 }));
@@ -93,115 +92,109 @@ function SignInSide(props) {
     };
 
     try {
+      // Authenticate admin
       const tokens = await fetchAuthRequest(httpContent);
       const cookie = new WebCookies();
-      // cookie.saveUsernameAndPasswordCookie(httpContent.username, httpContent.password);
       props.token_saver(tokens);
-      setInSignProcess(false);
-    } catch {
-      alert(response);
+    } catch (error) {
+      alert(error);
+    } finally {
       setInSignProcess(false);
     }
   }
-
+  const SignInForm =
+    <Grid
+      container
+      component="main"
+      className={classes.root}
+      onSubmit={(e) => authHandler(e)}>
+      <CssBaseline />
+      <Grid
+        item xs={false}
+        sm={4} md={7}
+        className={classes.image}
+      />
+      <Grid
+        item
+        xs={12} sm={8} md={5}
+        component={Paper}
+        elevation={6}
+        square>
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography
+            component="h1"
+            variant="h5">
+            Sign in
+    </Typography>
+          <form className={classes.form} noValidate>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              autoComplete="current-password"
+            />
+            <LoadingDiv>
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+              <Loader
+                type='ThreeDots'
+                height={40}
+                width={40}
+                color="SlateBlue"
+                visible={inSignProcess}
+              />
+            </LoadingDiv>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              className={classes.submit}
+            >
+              Sign In
+      </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
+          </Link>
+              </Grid>
+            </Grid>
+            <Box sx={{ mt: 5 }}>
+              <Copyright />
+            </Box>
+          </form>
+        </div>
+      </Grid>
+    </Grid>
 
   return (
     <React.Fragment>
       {props.auth_stat ?
         <Admin /> :
-        <Grid
-          container
-          component="main"
-          className={classes.root}
-          onSubmit={(e) => authHandler(e)}>
-          <CssBaseline />
-          <Grid
-            item xs={false}
-            sm={4} md={7}
-            className={classes.image}
-          />
-          <Grid
-            item
-            xs={12} sm={8} md={5}
-            component={Paper}
-            elevation={6}
-            square>
-            <div className={classes.paper}>
-              <Avatar className={classes.avatar}>
-                <LockOutlinedIcon />
-              </Avatar>
-              <Typography
-                component="h1"
-                variant="h5">
-                Sign in
-              </Typography>
-              <form className={classes.form} noValidate>
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  autoFocus
-                />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  autoComplete="current-password"
-                />
-                <LoadingDiv>
-                  <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" />}
-                    label="Remember me"
-                  />
-                  <Loader
-                    type='ThreeDots'
-                    height={40}
-                    width={40}
-                    color="SlateBlue"
-                    visible={inSignProcess}
-                  />
-                </LoadingDiv>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  className={classes.submit}
-                >
-                  Sign In
-                </Button>
-                <Grid container>
-                  <Grid item xs>
-                    <Link href="#" variant="body2">
-                      Forgot password?
-                    </Link>
-                  </Grid>
-                  <Grid item>
-                    <Link
-                      href="#"
-                      variant="body2">
-                      {"Don't have an account? Sign Up"}
-                    </Link>
-                  </Grid>
-                </Grid>
-                <Box sx={{ mt: 5 }}>
-                  <Copyright />
-                </Box>
-              </form>
-            </div>
-          </Grid>
-        </Grid>
+        SignInForm
       }
     </React.Fragment>
   );

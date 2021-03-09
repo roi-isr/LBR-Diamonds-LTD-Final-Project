@@ -12,8 +12,9 @@
 }
 
 .map-container-css {
+    position: relative;
     height: 450px;
-    width: 800px;
+    width: 50vw;
 }
 
 .home-btn {
@@ -21,7 +22,9 @@
     width: 30px;
     border-radius: 60px;
     position: absolute;
-    right: 0;
+    z-index: 1000;
+    top: 7px;
+    right: 7px;
 }
 
 .home-btn:focus {
@@ -43,9 +46,6 @@
         flex-direction: column;
     }
     .map-container-css {
-        width: 100%;
-    }
-    .home-btn {
-        top: 673px;
+        width: 100vw;
     }
 }

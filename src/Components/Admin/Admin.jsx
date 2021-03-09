@@ -23,9 +23,7 @@ function Admin(props) {
 
     /* Remove access token from browser cookies */
     const removeCookies = () => {
-        const cookies = new WebCookies();
-        const cookiesKeys = ["tokenStr", "username", "password"];
-        cookiesKeys.forEach(key => cookies.removeCookies(key));
+        const cookies = new WebCookies().removeCookies();
     }
 
     /* Display dedicated navbar options for admin */

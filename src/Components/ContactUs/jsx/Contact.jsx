@@ -43,8 +43,8 @@ function MapDisplay() {
         return null;
     }
     return (
-        <React.Fragment>
-            <MapWrapper>
+        <div>
+            <MapWrapper style={{position:'relative'}}>
                 <MapContainer className="map-container-css" center={position} zoom={15} scrollWheelZoom={false}>
                     <TileLayer
                         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -57,14 +57,14 @@ function MapDisplay() {
                     </Marker>
                     <MapFeatures />
                 </MapContainer>
-            </MapWrapper>
-            {/* go back to centrelized position button */}
             <button
                 className="home-btn"
                 onClick={getBackToCenter}>
                 H
               </button>
-        </React.Fragment>
+            </MapWrapper>
+            {/* go back to centrelized position button */}
+        </div>
     );
 
 }

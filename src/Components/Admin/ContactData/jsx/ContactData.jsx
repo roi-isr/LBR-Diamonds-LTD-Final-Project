@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Button from 'react-bootstrap/Button';
 import ManagementTable from '../../../ManagementTable/jsx/ManagementTable';
-import { WebCookies } from '../../../../Entities/Cookies';
+import { getValidToken } from '../../../../ApiEndpoints/Authentication';
 import Loader from 'react-loader-spinner';
 import '../css/ContactData.css';
 import FormModal from '../../../UI-Elements/Modal/Modal';
@@ -50,9 +50,9 @@ function ContactData() {
     const fetchContact = async () => {
         setLoading(true);
         try {
-        const fetchedData = await fetchGet('contacts');
-        renderData(fetchedData);
-        setLoading(false);
+            const fetchedData = await fetchGet('contacts');
+            renderData(fetchedData);
+            setLoading(false);
         } catch {
             console.log("Failed to fetch contact data from DB");
         }
@@ -89,12 +89,13 @@ function ContactData() {
     }
 
     const deleteFromDatabase = (deleteId) => {
+        const token = getValidToken();
         fetch(`http://127.0.0.1:5000/contact/${deleteId}`,
             {
                 method: 'DELETE',
                 headers:
                 {
-                    'Authorization': `Bearer ${window.cookie_token}`
+                    'Authorization': `Bearer ${token}`
                 }
             })
             .then(response => response.json())

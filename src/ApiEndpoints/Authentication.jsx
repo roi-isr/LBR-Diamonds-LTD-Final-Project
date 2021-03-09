@@ -1,6 +1,7 @@
 import { ServerUrl } from './ServerUrl'
+import { WebCookies } from '../Entities/Cookies';
 
-export async function fetchAuthRequest(httpContent) {
+export function fetchAuthRequest(httpContent) {
     return new Promise((resolve, reject) => {
         fetch(`${ServerUrl}/auth`,
             {
@@ -20,9 +21,43 @@ export async function fetchAuthRequest(httpContent) {
                     });
                 }
                 else {
-                    reject(data.description);
+                    reject(data.message);
                 }
             })
             .catch((e) => reject(e.name));
     })
+}
+
+// Refresh the current access token
+export function refreshToken(token) {
+    return new Promise((resolve, reject) => {
+        fetch("http://127.0.0.1:5000/refresh", {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.access_token) {
+                    resolve(data.access_token);
+                } else {
+                    console.log(data)
+                    reject(Error('Unverified user'));
+                }
+            })
+            .catch((e) => reject(Error(e.name)))
+    });
+}
+
+export async function getValidToken() {
+    const cookie = new WebCookies();
+    let token;
+    if (cookie.isAccessTokenExpired()) {
+        token = await refreshToken(cookie.getRefreshToken());
+        cookie.setAccessToken(token);
+    } else {
+        token = cookie.getAccessToken();
+    }
+    return token;
 }

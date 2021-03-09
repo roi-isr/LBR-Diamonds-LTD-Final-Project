@@ -9,7 +9,7 @@
     width: 50%;
 }
 
-@media only screen and (max-width: 1410px) {
+@media only screen and (max-width: 1320px) {
     .predict-main-div {
         display: flex;
         flex-direction: column-reverse;

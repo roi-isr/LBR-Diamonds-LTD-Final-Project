@@ -1,5 +1,5 @@
 import { SAVE_TOKEN, UPDATE_LOGIN_STAT, LOG_OUT } from "../actions/actionTypes";
-import Cookies from "universal-cookie";
+import { WebCookies } from '../../Entities/Cookies'
 import { updateState } from '../utility'
 
 const initialState = {
@@ -7,21 +7,30 @@ const initialState = {
     isLoggedIn: false
 }
 
-const createCookie = (tokens) => {
-    const cookies = new Cookies();
-    cookies.set('tokenStr', tokens['accessToken'], { path: '/' });
-    cookies.set('refreshTokenStr', tokens['refreshToken'], { path: '/' });
+const createCookies = (tokens) => {
+    const cookies = new WebCookies();
+    const { accessToken, refreshToken } = tokens;
+    cookies.setAccessToken(accessToken);
+    cookies.setRefreshToken(refreshToken);
+}
+
+const updateAccessTokenCookie = (token) => {
+    const cookies = new WebCookies();
+    cookies.setAccessToken(token);
+
 }
 
 /* Managing the token reducer (redux's global state)*/
 const token_reducer = (state = initialState, action) => {
     switch (action.type) {
         case SAVE_TOKEN:
-            createCookie(action.value);
+            createCookies(action.value);
             return updateState(state, { isLoggedIn: true, token_string: action.value });
         case UPDATE_LOGIN_STAT:
-            if (action.value)
+            if (action.value) {
+                updateAccessTokenCookie(action.value);
                 return updateState(state, { isLoggedIn: true, token_string: action.value });
+            }
             return updateState(state, { isLoggedIn: false });
         case LOG_OUT:
             return updateState(state, { isLoggedIn: false })

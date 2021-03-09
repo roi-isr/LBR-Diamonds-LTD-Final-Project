@@ -31,7 +31,7 @@ function ManagementTable({ headers, content, sorterUtility }) {
     return (
         <div className="man-table-wrapper">
             <Table dir="rtl"
-                style={{ textAlign: 'right', fontSize: '1.2rem', textAlign: 'center' }}
+                style={{ textAlign: 'right', fontSize: '1.2rem', textAlign: 'center'}}
                 striped bordered hover
             >
                 <thead>

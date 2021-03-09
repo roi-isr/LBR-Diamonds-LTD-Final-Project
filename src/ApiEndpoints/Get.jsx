@@ -1,10 +1,9 @@
-import { WebCookies } from '../Entities/Cookies';
 import { ServerUrl } from './ServerUrl'
+import { getValidToken } from './Authentication'
 
-
-export default async function fetchGet(path) {
-    return new Promise((resolve, reject) => {
-        const token = (new WebCookies()).getCookies("tokenStr");
+export default function fetchGet(path) {
+    return new Promise(async (resolve, reject) => {
+        const token = await getValidToken();
         fetch(`${ServerUrl}/${path}`,
             {
                 method: 'GET',

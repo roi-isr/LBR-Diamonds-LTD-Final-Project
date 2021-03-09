@@ -1,29 +1,5 @@
 import { SAVE_TOKEN, UPDATE_LOGIN_STAT, LOG_OUT } from './actionTypes';
-import { WebCookies } from '../../Entities/Cookies';
-import { fetchAuthRequest } from '../../ApiEndpoints/Authentication';
-
-// Verify token through server, making admin sessions possible, even after page refresh
-const refreshToken = (token) => {
-    return new Promise((resolve, reject) => {
-        fetch("http://127.0.0.1:5000/refresh", {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-            },
-            body: JSON.stringify({})
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.access_token) {
-                    resolve(data.access_token);
-                } else {
-                    console.log(data)
-                    reject(Error('Unverified user'));
-                }
-            })
-            .catch((e) => reject(Error(e.name)))
-    });
-}
+import { refreshToken } from '../../ApiEndpoints/Authentication'
 
 // Change site navbar visibility
 export const save_token = (val) => {

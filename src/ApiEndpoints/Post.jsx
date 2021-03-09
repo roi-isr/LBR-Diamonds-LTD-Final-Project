@@ -1,11 +1,10 @@
-import { WebCookies } from '../Entities/Cookies';
 import { ServerUrl } from './ServerUrl'
+import { getValidToken } from './Authentication'
 
 
-export default async function fetchPost(path, data) {
+export default function fetchPost(path, data) {
     return new Promise((resolve, reject) => {
-        console.log(data);
-        const token = (new WebCookies()).getCookies("tokenStr");
+        const token = getValidToken();
         fetch(`${ServerUrl}/${path}`,
             {
                 method: 'POST',
@@ -27,6 +26,6 @@ export default async function fetchPost(path, data) {
                     reject()
                 }
             })
-        .catch(() => alert("Your submittion failed"));
+            .catch(() => alert("Your submittion failed"));
     })
 }

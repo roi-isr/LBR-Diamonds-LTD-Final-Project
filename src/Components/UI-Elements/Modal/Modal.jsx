@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button'
 import fetchPost from '../../../ApiEndpoints/Post';
 import Loader from 'react-loader-spinner';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import MenuItem from '@material-ui/core/MenuItem'
 
 function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPath, updatePostUiFunc }) {
     const [show, setShow] = useState(false);
@@ -28,8 +29,8 @@ function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPat
         e.preventDefault();
         try {
             setIsFetching(true);
-            await fetchPost(postPath, inputData);
-            updatePostUiFunc(Object.values(inputData));
+            const itemId = await fetchPost(postPath, inputData);
+            updatePostUiFunc([itemId, ...Object.values(inputData)]);
             setIsFetching('Success');
             setTimeout(handleClose, 3000);
         } catch {
@@ -45,16 +46,25 @@ function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPat
                 key={'item-input' + index}>
                 <FormLabel>{item.name}</FormLabel>
                 <TextField
+                    {...item}
                     required
                     dir='rtl'
-                    type={item.type}
-                    placeholder={item.name}
                     fullWidth
                     variant="outlined"
                     color="secondary"
                     value={inputData[index]}
                     onChange={(e) => setInputData(prevState => { return { ...prevState, [index]: e.target.value } })}
-                />
+                >
+                    {/* for combobox inputs */}
+                    {item.options && item.options.map(option =>
+                        <MenuItem 
+                        key={option.value} 
+                        value={option.value}
+                        style={{direction:'rtl'}}>
+                            {option.label}
+                        </MenuItem>
+                    )}
+                </TextField>
             </div>
         );
     }

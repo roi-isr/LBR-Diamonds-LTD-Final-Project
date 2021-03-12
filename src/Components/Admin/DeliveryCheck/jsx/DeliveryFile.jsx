@@ -47,7 +47,7 @@ export default function DeliveryTable() {
           אישור הגעה
             </Button>;
 
-      tempContent.push([...item.length === 6 ? item : item.slice(1), deleteBtn, confirmBtn]);
+      tempContent.push([...item.slice(1), deleteBtn, confirmBtn]);
     })
     setTableRender(tempContent);
   }, [content])

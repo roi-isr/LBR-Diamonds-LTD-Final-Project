@@ -9,11 +9,10 @@ import Loader from 'react-loader-spinner';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import MenuItem from '@material-ui/core/MenuItem'
 
-function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPath, updatePostUiFunc,directionInput }) {
+function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPath, updatePostUiFunc, directionInput }) {
     const [show, setShow] = useState(false);
     const [inputData, setInputData] = useState({});
-    const handleShow = () => setShow(true);
-
+    const [isFetching, setIsFetching] = useState(false);
     let renderForm = null;
 
     const handleClose = () => {
@@ -48,7 +47,7 @@ function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPat
                 <TextField
                     {...item}
                     required
-                    dir={directionInput||'rtl'}
+                    dir={directionInput || 'rtl'}
                     type={item.type}
                     placeholder={item.name}
                     fullWidth
@@ -59,10 +58,10 @@ function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPat
                 >
                     {/* for combobox inputs */}
                     {item.options && item.options.map(option =>
-                        <MenuItem 
-                        key={option.value} 
-                        value={option.value}
-                        style={{direction:'rtl'}}>
+                        <MenuItem
+                            key={option.value}
+                            value={option.value}
+                            style={{ direction: 'rtl' }}>
                             {option.label}
                         </MenuItem>
                     )}
@@ -116,7 +115,6 @@ function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPat
             </div>
         )
     }
-
 
     return (
         <React.Fragment>

@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import fetchGet from '../../../../ApiEndpoints/Get';
 import fetchDelete from '../../../../ApiEndpoints/Delete';
 import FormModal from '../../../UI-Elements/Modal/Modal'
+import Loader from 'react-loader-spinner';
 
 const inputFields = [
   { name: "מודל", type: 'text' },
@@ -22,18 +23,10 @@ const inputFields = [
   },
 ];
 
-const rows = [
-  ['R-101', '1.25', '500', 'vs', 'D', 'R', 'ADIV', '0', '1/1/20'],
-  ['R-101', '1.25', '500', 'vs', 'D', 'R', 'sxd', '21', '1/1/21',],
-  ['R-101', '1.25', '500', 'vs', 'D', 'R', 'ADIV', '2', '1/3/20'],
-  ['R-109', '1.25', '500', 'ls', 'D', 'R', 'jhb', '23', '2/5/20'],
-  ['R-101', '1.25', '500', 'vs', 'D', 'R', 'ADIV', '24', '1/12/19']
-];
-
-const headers = ["מודל", "משקל", "עלות", "נקיון", "צבע", "קוד", "הערות", "מלאי", "תאריך קנייה - תשלום"];
+const headers = ["מודל", "משקל", "עלות", "נקיון", "צבע", "קוד", , "תאריך קנייה - תשלום", "הערות", "סטטוס", "מלאי", "", ""];
 
 export default function StockTable() {
-  const [content, setContent] = useState(rows);
+  const [content, setContent] = useState([[]]);
   const [tableRender, setTableRender] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -59,8 +52,8 @@ export default function StockTable() {
           variant="outline-success">
           אישור הגעה
             </Button>;
-
-      tempContent.push([...item, deleteBtn, confirmBtn]);
+      const renderItems = item.slice(1);
+      tempContent.push([...renderItems, renderItems[1] * renderItems[2], deleteBtn, confirmBtn]);
     })
     setTableRender(tempContent)
   }, [content])
@@ -79,19 +72,25 @@ export default function StockTable() {
     }
   }
 
+  
+  const updatePostUi = (newDelivery) => {
+    setContent(prevContent => [...prevContent, newDelivery]);
+  }
+
   const renderData = (data) => {
-    const tempContent = []
-    Object.values(data).forEach(contactValues => {
-      const subTempContent = [];
-      subTempContent.push(
-        contactValues['package_model'], contactValues['weight_in_karat'], contactValues['cost_per_karat'],
-        contactValues['clearance'], contactValues['color'],
-        contactValues['code'], contactValues['comments'],
-        contactValues['sell_date'], contactValues['status'],
+    const tempStock = []
+    Object.values(data).forEach(stockValues => {
+      const subTempStock = [];
+      subTempStock.push(
+        stockValues['stock_id'], stockValues['package_model'],
+        stockValues['weight_in_karat'], stockValues['cost_per_karat'],
+        stockValues['clearance'], stockValues['color'],
+        stockValues['code'], stockValues['sell_date'],
+        stockValues['comments'], stockValues['status'],
       );
-      tempContent.push(subTempContent);
+      tempStock.push(subTempStock);
     });
-    setContent(tempContent);
+    setContent(tempStock);
   }
 
   const deleteRow = (index) => {
@@ -105,20 +104,30 @@ export default function StockTable() {
   //Returns the table to our requested page, shows us all the company's current inventory.
   //Another element gives an indication to the business owner, what the status of his credit line at a given moment.
   return (
-    <React.Fragment>
-
-      <ManagementTable
-        headers={headers}
-        content={tableRender}
-        contentController={{
-          content,
-          setContent
-        }}
-      />
+    <div className="stock-main-div">
+      {loading ?
+        <Loader style={{ margin: 'auto' }}
+          type='Bars'
+          height={300}
+          width={300}
+          color="SlateBlue"
+        /> :
+        <ManagementTable
+          headers={headers}
+          content={tableRender}
+          startIdx={1}
+          contentController={{
+            content,
+            setContent
+          }}
+        />
+      }
       <FormModal
         fields={inputFields}
         modalType="input-form"
         popUpTitle="הוספת מלאי"
+        postPath="stock"
+        updatePostUiFunc={updatePostUi}
       />
 
       <div className="progress-stock-wrapper">
@@ -129,7 +138,7 @@ export default function StockTable() {
           percentage={10}
           text={`${10}%`} />
       </div>
-    </React.Fragment >
+    </div >
   );
 
 }

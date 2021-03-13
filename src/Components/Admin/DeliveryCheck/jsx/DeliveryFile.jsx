@@ -9,7 +9,6 @@ import Loader from 'react-loader-spinner';
 
 const headers = ["מספר החבילה", "משקל החבילה", "מהיכן המשלוח", "חברת השילוח", "שם השולח ", "תאריך המשלוח", "", ""];
 
-
 const inputFields = [
   { name: "מספר החבילה", type: 'text' },
   { name: "משקל החבילה", type: 'text' },
@@ -83,22 +82,22 @@ export default function DeliveryTable() {
 
   // Convert the data fetch for DB into renderable data
   const renderData = (data) => {
-    const tempContent = []
-    Object.values(data).forEach(contactValues => {
-      const subTempContent = [];
-      subTempContent.push(
-        contactValues['delivery_id'], contactValues['package_code'], contactValues['package_weight'],
-        contactValues['delivery_from_country'], contactValues['delivery_company'],
-        contactValues['seller'], contactValues['send_date']
+    const tempDelivery = []
+    Object.values(data).forEach(deliveryValues => {
+      const subTempDelivery = [];
+      subTempDelivery.push(
+        deliveryValues['delivery_id'], deliveryValues['package_code'], deliveryValues['package_weight'],
+        deliveryValues['delivery_from_country'], deliveryValues['delivery_company'],
+        deliveryValues['seller'], deliveryValues['send_date']
       );
-      tempContent.push(subTempContent);
+      tempDelivery.push(subTempDelivery);
     });
-    setContent(tempContent);
+    setContent(tempDelivery);
   }
 
   //Returns the table to our requested page.
   return (
-    <div style={{ textAlign: 'center' }}>
+    <div className="delivery-main-div">
       {loading ?
         <Loader style={{ margin: 'auto' }}
           type='Bars'
@@ -109,13 +108,8 @@ export default function DeliveryTable() {
         <ManagementTable
           headers={headers}
           content={tableRender}
-<<<<<<< HEAD
           startIdx = {1}
           contentController={{
-=======
-          startIdx={1}
-          sorterUtility={{
->>>>>>> a2931b2aa769ddde40ffcf156f50801ade060bfe
             content,
             setContent
           }}

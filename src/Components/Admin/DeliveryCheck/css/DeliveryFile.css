@@ -10,7 +10,10 @@
     margin: auto;
 }
 
-.delivery-input{
+.delivery-input {
     display: block;
 }
 
+.delivery-main-div {
+    text-align: center;
+}

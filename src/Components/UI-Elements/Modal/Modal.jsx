@@ -9,17 +9,10 @@ import Loader from 'react-loader-spinner';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import MenuItem from '@material-ui/core/MenuItem'
 
-<<<<<<< HEAD
-function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPath, updatePostUi,directionInput }) {
+function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPath, updatePostUiFunc,directionInput }) {
     const [show, setShow] = useState(false);
     const [inputData, setInputData] = useState({});
     const handleShow = () => setShow(true);
-=======
-function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPath, updatePostUiFunc }) {
-    const [show, setShow] = useState(false);
-    const [inputData, setInputData] = useState({});
-    const [isFetching, setIsFetching] = useState(false);
->>>>>>> a2931b2aa769ddde40ffcf156f50801ade060bfe
 
     let renderForm = null;
 
@@ -55,13 +48,9 @@ function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPat
                 <TextField
                     {...item}
                     required
-<<<<<<< HEAD
                     dir={directionInput||'rtl'}
                     type={item.type}
                     placeholder={item.name}
-=======
-                    dir='rtl'
->>>>>>> a2931b2aa769ddde40ffcf156f50801ade060bfe
                     fullWidth
                     variant="outlined"
                     color="secondary"

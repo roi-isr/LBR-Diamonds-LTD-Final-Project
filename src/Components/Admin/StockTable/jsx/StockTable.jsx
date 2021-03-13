@@ -23,7 +23,7 @@ const inputFields = [
   },
 ];
 
-const headers = ["מודל", "משקל", "עלות", "נקיון", "צבע", "קוד", , "תאריך קנייה - תשלום", "הערות", "סטטוס", "מלאי", "", ""];
+const headers = ["מודל", "משקל", "עלות", "נקיון", "צבע", "קוד", "תאריך קנייה - תשלום", "הערות", "סטטוס", "מלאי", "", ""];
 
 export default function StockTable() {
   const [content, setContent] = useState([[]]);
@@ -37,23 +37,33 @@ export default function StockTable() {
 
   useEffect(() => {
     let tempContent = [];
+    console.log(content)
     content.forEach((item, index) => {
+      const confirmBtn =
+        <Button
+          key={Math.random() * index}
+          variant={content[index][9] === 'בחנות' ? "outline-danger" : "outline-success"}
+          onClick={() => moveInOutStoreHandler(index)}>
+          {content[index][9] === 'בחנות' ? 'הוצא מהחנות' : 'העבר לחנות'}
+        </Button>;
+
+      const updateBtn =
+        <Button
+          key={Math.random() * index}
+          variant="outline-warning">
+          עדכן
+        </Button>;
+
       const deleteBtn =
         <Button
           key={Math.random() * index}
           onClick={() => deleteRow(index)}
           variant="outline-danger">
           הסר
-      </Button>;
+       </Button>;
 
-      const confirmBtn =
-        <Button
-          key={Math.random() * index}
-          variant="outline-success">
-          אישור הגעה
-            </Button>;
       const renderItems = item.slice(1);
-      tempContent.push([...renderItems, renderItems[1] * renderItems[2], deleteBtn, confirmBtn]);
+      tempContent.push([...renderItems, confirmBtn, updateBtn, deleteBtn]);
     })
     setTableRender(tempContent)
   }, [content])
@@ -72,7 +82,6 @@ export default function StockTable() {
     }
   }
 
-  
   const updatePostUi = (newDelivery) => {
     setContent(prevContent => [...prevContent, newDelivery]);
   }
@@ -87,18 +96,30 @@ export default function StockTable() {
         stockValues['clearance'], stockValues['color'],
         stockValues['code'], stockValues['sell_date'],
         stockValues['comments'], stockValues['status'],
+        stockValues['weight_in_karat'] * stockValues['cost_per_karat'],
       );
       tempStock.push(subTempStock);
     });
     setContent(tempStock);
   }
 
-  const deleteRow = (index) => {
+  const deleteRow = async (index) => {
     const con = window.confirm("Are you sure that you want to delete the item?");
     if (!con) {
       return
     }
-    setContent(prevContent => prevContent.filter((item, i) => index != i));
+    try {
+      await fetchDelete(`stock/${content[index][0]}`);
+      setContent(prevContent => prevContent.filter((item, i) => index != i));
+    } catch {
+      alert('Error in deletion...')
+    }
+  }
+
+  const moveInOutStoreHandler = (index) => {
+    const tempContent = [...content];
+    tempContent[index][9] = tempContent[index][9] === 'בחנות' ? 'לא בחנות' : 'בחנות';
+    setContent(tempContent)
   }
 
   //Returns the table to our requested page, shows us all the company's current inventory.

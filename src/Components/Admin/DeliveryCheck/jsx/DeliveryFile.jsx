@@ -31,22 +31,32 @@ export default function DeliveryTable() {
   useEffect(() => {
     let tempContent = [];
     content.forEach((item, index) => {
-      const deleteBtn =
-        <Button
-          key={Math.random() * index}
-          onClick={() => deleteRow(index)}
-          variant="outline-danger">
-          הסר
-      </Button>;
 
       const confirmBtn =
         <Button
           key={Math.random() * index}
           variant="outline-success">
           אישור הגעה
-            </Button>;
+          </Button>;
 
-      tempContent.push([...item.slice(1), deleteBtn, confirmBtn]);
+      const updateBtn =
+        <Button
+          key={Math.random() * index}
+          variant="outline-warning">
+          עדכן
+        </Button>;
+
+      const deleteBtn =
+        <Button
+          key={Math.random() * index}
+          onClick={() => deleteRow(index)}
+          variant="outline-danger">
+          הסר
+       </Button>;
+
+      const renderItems = item.slice(1);
+
+      tempContent.push([...renderItems, confirmBtn, updateBtn, deleteBtn]);
     })
     setTableRender(tempContent);
   }, [content])
@@ -74,10 +84,14 @@ export default function DeliveryTable() {
     if (!con) {
       return
     }
-    // Delete from DB
-    await fetchDelete(`delivery/${content[index][0]}`);
-    // Delete from UI
-    setContent(prevContent => prevContent.filter((item, i) => index !== i));
+    try {
+      // Delete from DB
+      await fetchDelete(`delivery/${content[index][0]}`);
+      // Delete from UI
+      setContent(prevContent => prevContent.filter((item, i) => index !== i));
+    } catch {
+      alert('Error in deletion...')
+    }
   }
 
   // Convert the data fetch for DB into renderable data
@@ -86,9 +100,9 @@ export default function DeliveryTable() {
     Object.values(data).forEach(deliveryValues => {
       const subTempDelivery = [];
       subTempDelivery.push(
-        deliveryValues['delivery_id'], deliveryValues['package_code'], deliveryValues['package_weight'],
-        deliveryValues['delivery_from_country'], deliveryValues['delivery_company'],
-        deliveryValues['seller'], deliveryValues['send_date']
+        deliveryValues['delivery_id'], deliveryValues['package_code'],
+        deliveryValues['package_weight'], deliveryValues['delivery_from_country'],
+        deliveryValues['delivery_company'], deliveryValues['seller'], deliveryValues['send_date']
       );
       tempDelivery.push(subTempDelivery);
     });
@@ -108,7 +122,7 @@ export default function DeliveryTable() {
         <ManagementTable
           headers={headers}
           content={tableRender}
-          startIdx = {1}
+          startIdx={1}
           contentController={{
             content,
             setContent

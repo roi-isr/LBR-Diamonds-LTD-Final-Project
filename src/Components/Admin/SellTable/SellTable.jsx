@@ -69,7 +69,7 @@ export default function SellTable() {
       <ManagementTable
         headers={headers}
         content={tableRender}
-        sorterUtility={{
+        contentController={{
           content,
           setContent
         }}

@@ -31,7 +31,7 @@ function StoreNav(props) {
     <div className="vertical-line-vs" />
   const navItems = [
     { name: 'Packages', icon: PackageIcon },
-    { name: 'Documented Stones', icon: DiamondIcon }
+  
   ];
   return (
     <div className="selection-vs">

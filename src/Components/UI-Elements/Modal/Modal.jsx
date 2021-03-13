@@ -6,10 +6,11 @@ import FormLabel from '@material-ui/core/FormLabel';
 import Button from 'react-bootstrap/Button'
 import fetchPost from '../../../ApiEndpoints/Post';
 
-function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPath, updatePostUi }) {
+function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPath, updatePostUi,directionInput }) {
     const [show, setShow] = useState(false);
     const [inputData, setInputData] = useState({});
     const handleShow = () => setShow(true);
+
     let renderForm = null;
 
     const handleClose = () => {
@@ -39,7 +40,7 @@ function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPat
                 <FormLabel>{item.name}</FormLabel>
                 <TextField
                     required
-                    dir='rtl'
+                    dir={directionInput||'rtl'}
                     type={item.type}
                     placeholder={item.name}
                     fullWidth

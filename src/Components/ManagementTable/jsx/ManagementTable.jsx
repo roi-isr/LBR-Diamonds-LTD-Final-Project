@@ -4,8 +4,9 @@ import { Table } from 'react-bootstrap';
 import '../css/ManagementTable.css'
 import { sorter as sorterFunc } from '../Utility'
 
-function ManagementTable({ headers, content, sorterUtility, startIdx }) {
-    const { content: pureContent, setContent } = sorterUtility;
+
+function ManagementTable({ headers, content, contentController, startIdx }) {
+    const { content: pureContent, setContent } = contentController;
     const [orderColumn, setOrderColumn] = useState("");
 
     // Sort table in ASC or DESC order

@@ -135,7 +135,7 @@ function ContactData() {
                 <ManagementTable
                     headers={headers}
                     content={tableRender}
-                    sorterUtility={{
+                    contentController={{
                         content,
                         setContent
                     }}

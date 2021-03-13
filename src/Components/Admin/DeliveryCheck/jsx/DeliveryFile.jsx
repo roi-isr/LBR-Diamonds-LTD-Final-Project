@@ -111,7 +111,7 @@ export default function DeliveryTable() {
           headers={headers}
           content={tableRender}
           startIdx = {1}
-          sorterUtility={{
+          contentController={{
             content,
             setContent
           }}

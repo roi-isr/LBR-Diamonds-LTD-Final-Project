@@ -70,7 +70,7 @@ export default function StockTable() {
       <ManagementTable
         headers={headers}
         content={tableRender}
-        sorterUtility={{
+        contentController={{
           content,
           setContent
         }}

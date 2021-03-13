@@ -91,7 +91,6 @@ export default function DeliveryTable() {
         contactValues['delivery_from_country'], contactValues['delivery_company'],
         contactValues['seller'], contactValues['send_date']
       );
-
       tempContent.push(subTempContent);
     });
     setContent(tempContent);
@@ -110,8 +109,13 @@ export default function DeliveryTable() {
         <ManagementTable
           headers={headers}
           content={tableRender}
+<<<<<<< HEAD
           startIdx = {1}
           contentController={{
+=======
+          startIdx={1}
+          sorterUtility={{
+>>>>>>> a2931b2aa769ddde40ffcf156f50801ade060bfe
             content,
             setContent
           }}
@@ -122,7 +126,7 @@ export default function DeliveryTable() {
         modalType="input-form"
         popUpTitle="הוספת משלוח"
         postPath="delivery"
-        updatePostUi={updatePostUi}
+        updatePostUiFunc={updatePostUi}
       />
 
     </div>

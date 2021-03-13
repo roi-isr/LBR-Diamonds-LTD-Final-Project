@@ -18,8 +18,7 @@ export default function fetchPost(path, data) {
             .then(response => response.json())
             .then(data => {
                 if (data.message || data.message.includes("Success") || data.message.includes("success")) {
-                    alert("Data added successfully");
-                    resolve();
+                    resolve(data._id);
                 }
                 else {
                     alert("Your submittion failed");

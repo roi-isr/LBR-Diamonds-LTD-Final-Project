@@ -1,5 +1,5 @@
-import { ServerUrl } from './ServerUrl'
-import { getValidToken } from './Authentication'
+import { ServerUrl } from './ServerUrl';
+import { getValidToken } from './Authentication';
 
 export default function fetchDelete(path) {
     return new Promise(async (resolve, reject) => {
@@ -15,7 +15,6 @@ export default function fetchDelete(path) {
             .then(response => response.json())
             .then(data => {
                 if (data.message || data.message.includes("Success") || data.message.includes("success")) {
-                    alert("Data deleted successfully");
                     resolve();
                 }
                 else {

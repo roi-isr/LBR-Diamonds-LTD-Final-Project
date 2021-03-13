@@ -3,7 +3,8 @@ import '../css/StockTable.css'
 import { CircularProgressbar } from 'react-circular-progressbar'
 import ManagementTable from '../../../ManagementTable/jsx/ManagementTable'
 import Button from 'react-bootstrap/Button';
-import { sorter } from '../../../ManagementTable/Utility';
+import fetchGet from '../../../../ApiEndpoints/Get';
+import fetchDelete from '../../../../ApiEndpoints/Delete';
 import FormModal from '../../../UI-Elements/Modal/Modal'
 
 const inputFields = [
@@ -14,7 +15,11 @@ const inputFields = [
   { name: "צבע", type: 'text' },
   { name: "קוד", type: 'text' },
   { name: "הערות", type: 'text' },
-  { name: "מלאי", type: 'text' },
+  { name: "תאריך קנייה - תשלום", type: 'date' },
+  {
+    name: "סטטוס", select: true,
+    options: [{ value: 'בחנות', label: 'בחנות' }, { value: 'לא בחנות', label: 'לא בחנות' }]
+  },
 ];
 
 const rows = [
@@ -30,7 +35,13 @@ const headers = ["מודל", "משקל", "עלות", "נקיון", "צבע", "ק
 export default function StockTable() {
   const [content, setContent] = useState(rows);
   const [tableRender, setTableRender] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   // Fecth data from DB
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   useEffect(() => {
     let tempContent = [];
     content.forEach((item, index) => {
@@ -53,6 +64,35 @@ export default function StockTable() {
     })
     setTableRender(tempContent)
   }, [content])
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const fetchedData = await fetchGet('stocks');
+      console.log(fetchedData)
+      renderData(fetchedData);
+
+    } catch {
+      console.log("Failed to fetch contact data from DB");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const renderData = (data) => {
+    const tempContent = []
+    Object.values(data).forEach(contactValues => {
+      const subTempContent = [];
+      subTempContent.push(
+        contactValues['package_model'], contactValues['weight_in_karat'], contactValues['cost_per_karat'],
+        contactValues['clearance'], contactValues['color'],
+        contactValues['code'], contactValues['comments'],
+        contactValues['sell_date'], contactValues['status'],
+      );
+      tempContent.push(subTempContent);
+    });
+    setContent(tempContent);
+  }
 
   const deleteRow = (index) => {
     const con = window.confirm("Are you sure that you want to delete the item?");

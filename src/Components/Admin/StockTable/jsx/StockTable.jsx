@@ -8,6 +8,8 @@ import fetchDelete from '../../../../ApiEndpoints/Delete';
 import FormModal from '../../../UI-Elements/Modal/Modal'
 import Loader from 'react-loader-spinner';
 
+const updateMap = new Map();
+
 const inputFields = [
   { name: "מודל", type: 'text' },
   { name: "משקל החבילה", type: 'text' },
@@ -23,12 +25,13 @@ const inputFields = [
   },
 ];
 
-const headers = ["מודל", "משקל", "עלות", "נקיון", "צבע", "קוד", "תאריך קנייה - תשלום", "הערות", "סטטוס", "מלאי", "", ""];
+const headers = ["מודל", "משקל", "עלות", "נקיון", "צבע", "קוד", "הערות", "תאריך קנייה - תשלום", "סטטוס", "מלאי", "", ""];
 
 export default function StockTable() {
   const [content, setContent] = useState([[]]);
   const [tableRender, setTableRender] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [updateModalId, setUpdateModalId] = useState(false);
 
   // Fecth data from DB
   useEffect(() => {
@@ -50,7 +53,8 @@ export default function StockTable() {
       const updateBtn =
         <Button
           key={Math.random() * index}
-          variant="outline-warning">
+          variant="outline-warning"
+          onClick={() => setUpdateModalId(item[0])}>
           עדכן
         </Button>;
 
@@ -82,8 +86,27 @@ export default function StockTable() {
     }
   }
 
-  const updatePostUi = (newDelivery) => {
-    setContent(prevContent => [...prevContent, newDelivery]);
+  const updatePostUi = (newItem) => {
+    setContent(prevContent => [...prevContent, newItem]);
+  }
+
+  const updatePutUi = (updatedItem) => {
+    const tempContent = [...content];
+    const wantedIndex = tempContent.findIndex((item) => item[0] === updatedItem[0]);
+    const wantedItem = tempContent[wantedIndex];
+    tempContent[wantedIndex] = [...updatedItem, wantedItem[wantedItem.length - 2], updatedItem[2] * updatedItem[3]];
+    console.log(tempContent)
+    setContent(tempContent);
+    updateMap[updatedItem[0]] = [
+      { name: "מודל", content: updatedItem[1] },
+      { name: "משקל", content: updatedItem[2] },
+      { name: "עלות", content: updatedItem[3] },
+      { name: "נקיון", content: updatedItem[4] },
+      { name: "צבע", content: updatedItem[5] },
+      { name: "קוד", content: updatedItem[6] },
+      { name: "הערות", content: updatedItem[7] },
+      { name: "תאריך קנייה - תשלום", content: updatedItem[8], type: 'date' },
+    ];
   }
 
   const renderData = (data) => {
@@ -94,11 +117,22 @@ export default function StockTable() {
         stockValues['stock_id'], stockValues['package_model'],
         stockValues['weight_in_karat'], stockValues['cost_per_karat'],
         stockValues['clearance'], stockValues['color'],
-        stockValues['code'], stockValues['sell_date'],
-        stockValues['comments'], stockValues['status'],
+        stockValues['code'], stockValues['comments'],
+        stockValues['sell_date'], stockValues['status'],
         stockValues['weight_in_karat'] * stockValues['cost_per_karat'],
       );
       tempStock.push(subTempStock);
+
+      updateMap[stockValues['stock_id']] = [
+        { name: "מודל", content: stockValues['package_model'] },
+        { name: "משקל", content: stockValues['weight_in_karat'] },
+        { name: "עלות", content: stockValues['cost_per_karat'] },
+        { name: "נקיון", content: stockValues['clearance'] },
+        { name: "צבע", content: stockValues['color'] },
+        { name: "קוד", content: stockValues['code'] },
+        { name: "הערות", content: stockValues['comments'] },
+        { name: "תאריך קנייה - תשלום", content: stockValues['sell_date'], type: 'date' },
+      ];
     });
     setContent(tempStock);
   }
@@ -110,7 +144,7 @@ export default function StockTable() {
     }
     try {
       await fetchDelete(`stock/${content[index][0]}`);
-      setContent(prevContent => prevContent.filter((item, i) => index != i));
+      setContent(prevContent => prevContent.filter((item, i) => index !== i));
     } catch {
       alert('Error in deletion...')
     }
@@ -143,6 +177,19 @@ export default function StockTable() {
           }}
         />
       }
+      {
+        updateModalId &&
+        <FormModal
+          modalType="update-form"
+          fields={updateMap[updateModalId]}
+          autoShow={true}
+          closeForm={() => setUpdateModalId(false)}
+          popUpTitle="עדכון פרטי מלאי"
+          apiPath={`stock/update/${updateModalId}`}
+          updatePutUiFunc={updatePutUi}
+        />
+      }
+
       <FormModal
         fields={inputFields}
         modalType="input-form"
@@ -161,5 +208,4 @@ export default function StockTable() {
       </div>
     </div >
   );
-
 }

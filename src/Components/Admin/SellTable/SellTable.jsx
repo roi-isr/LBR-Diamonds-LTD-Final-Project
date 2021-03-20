@@ -49,7 +49,7 @@ export default function SellTable() {
           אישור הגעה
             </Button>;
 
-      tempContent.push([...item, deleteBtn, confirmBtn]);
+      tempContent.push([...item, confirmBtn, deleteBtn]);
     })
     setTableRender(tempContent)
   }, [content])

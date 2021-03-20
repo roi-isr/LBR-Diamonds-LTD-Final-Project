@@ -95,8 +95,6 @@ export default function StockTable() {
     const wantedIndex = tempContent.findIndex((item) => item[0] === updatedItem[0]);
     const wantedItem = tempContent[wantedIndex];
     tempContent[wantedIndex] = [...updatedItem, wantedItem[wantedItem.length - 2], updatedItem[2] * updatedItem[3]];
-    console.log(tempContent)
-    setContent(tempContent);
     updateMap[updatedItem[0]] = [
       { name: "מודל", content: updatedItem[1] },
       { name: "משקל", content: updatedItem[2] },
@@ -107,6 +105,7 @@ export default function StockTable() {
       { name: "הערות", content: updatedItem[7] },
       { name: "תאריך קנייה - תשלום", content: updatedItem[8], type: 'date' },
     ];
+    setContent(tempContent);
   }
 
   const renderData = (data) => {
@@ -150,7 +149,12 @@ export default function StockTable() {
     }
   }
 
+  // Move an item in or out of the store
   const moveInOutStoreHandler = (index) => {
+    const userConfirm = window.confirm(`האם אתה בטוח שברצונך ${content[index][9] === 'בחנות' ? 'להוציא' : 'להכניס'} את הפריט ${content[index][9] === 'בחנות' ? 'מה' : 'אל ה'}חנות?`);
+    if (!userConfirm) {
+      return;
+    }
     const tempContent = [...content];
     tempContent[index][9] = tempContent[index][9] === 'בחנות' ? 'לא בחנות' : 'בחנות';
     setContent(tempContent)

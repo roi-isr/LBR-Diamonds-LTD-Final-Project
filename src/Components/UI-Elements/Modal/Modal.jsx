@@ -94,7 +94,7 @@ function ModalForm({ modalType, fields, content, autoShow, closeForm,
         renderForm = fields.map((item, index) => {
             if (item.type === 'date') {
                 const now = new Date(item.content);
-                dateFormat = `${now.getFullYear()}-${now.getMonth() < 9 ? "0" : ""}${now.getMonth() + 1}-${now.getDate()}`
+                dateFormat = `${now.getFullYear()}-${now.getMonth() < 9 ? "0" : ""}${now.getMonth() + 1}-${now.getDate() < 10 ? "0" : ""}${now.getDate()}`
             }
             return (
                 <div

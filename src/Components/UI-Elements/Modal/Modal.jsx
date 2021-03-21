@@ -42,6 +42,7 @@ function ModalForm({ modalType, fields, content, autoShow, closeForm,
         try {
             setIsFetching(true);
             if (modalType === 'update-form') {
+                console.log(inputData);
                 itemId = await fetchPut(apiPath, inputData);
                 updatePutUiFunc([itemId, ...Object.values(inputData)])
             } else {
@@ -93,7 +94,7 @@ function ModalForm({ modalType, fields, content, autoShow, closeForm,
         let dateFormat;
         renderForm = fields.map((item, index) => {
             if (item.type === 'date') {
-                const now = new Date(item.content);
+                const now = new Date(inputData[index]);
                 dateFormat = `${now.getFullYear()}-${now.getMonth() < 9 ? "0" : ""}${now.getMonth() + 1}-${now.getDate() < 10 ? "0" : ""}${now.getDate()}`
             }
             return (

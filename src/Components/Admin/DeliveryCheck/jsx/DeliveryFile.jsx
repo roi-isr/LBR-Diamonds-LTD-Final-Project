@@ -166,7 +166,7 @@ export default function DeliveryTable() {
           autoShow={true}
           closeForm={() => setUpdateModalId(false)}
           popUpTitle="עדכון פרטי משלוח"
-          apiPath={`delivery/update/${updateModalId}`}
+          apiPath={`delivery/${updateModalId}`}
           updatePutUiFunc={updatePutUi}
         />
       }
@@ -174,7 +174,7 @@ export default function DeliveryTable() {
         fields={inputFields}
         modalType="input-form"
         popUpTitle="הוספת משלוח"
-        postPath="delivery"
+        apiPath="delivery"
         updatePostUiFunc={updatePostUi}
       />
 

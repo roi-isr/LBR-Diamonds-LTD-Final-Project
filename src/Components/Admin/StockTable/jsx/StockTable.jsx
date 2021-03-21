@@ -7,6 +7,7 @@ import fetchGet from '../../../../ApiEndpoints/Get';
 import fetchDelete from '../../../../ApiEndpoints/Delete';
 import FormModal from '../../../UI-Elements/Modal/Modal'
 import Loader from 'react-loader-spinner';
+import fetchPut from '../../../../ApiEndpoints/Put';
 
 const updateMap = new Map();
 
@@ -40,7 +41,6 @@ export default function StockTable() {
 
   useEffect(() => {
     let tempContent = [];
-    console.log(content)
     content.forEach((item, index) => {
       const confirmBtn =
         <Button
@@ -76,7 +76,6 @@ export default function StockTable() {
     setLoading(true);
     try {
       const fetchedData = await fetchGet('stocks');
-      console.log(fetchedData)
       renderData(fetchedData);
 
     } catch {
@@ -87,7 +86,8 @@ export default function StockTable() {
   }
 
   const updatePostUi = (newItem) => {
-    setContent(prevContent => [...prevContent, newItem]);
+    const newItemFixed = [...newItem,newItem[2]*newItem[3]]
+    setContent(prevContent => [...prevContent, newItemFixed]);
   }
 
   const updatePutUi = (updatedItem) => {
@@ -150,14 +150,22 @@ export default function StockTable() {
   }
 
   // Move an item in or out of the store
-  const moveInOutStoreHandler = (index) => {
+  const moveInOutStoreHandler = async (index) => {
     const userConfirm = window.confirm(`האם אתה בטוח שברצונך ${content[index][9] === 'בחנות' ? 'להוציא' : 'להכניס'} את הפריט ${content[index][9] === 'בחנות' ? 'מה' : 'אל ה'}חנות?`);
     if (!userConfirm) {
       return;
     }
-    const tempContent = [...content];
-    tempContent[index][9] = tempContent[index][9] === 'בחנות' ? 'לא בחנות' : 'בחנות';
-    setContent(tempContent)
+    const nextStatus = content[index][9] === 'בחנות' ? 'לא בחנות' : 'בחנות';
+    try {
+      await fetchPut(`stock/update-status/${content[index][0]}`, { status: nextStatus })
+      const tempContent = [...content];
+      tempContent[index][9] = nextStatus;
+      setContent(tempContent);
+      alert(`הפריט הועבר ${content[index][9] === 'בחנות' ? 'אל ה' : 'מה'}חנות בהצלחה!`)
+    }
+    catch {
+      alert(`בעיה בהעברת פריט ${content[index][9] === 'בחנות' ? 'מה' : 'אל ה'}`);
+    }
   }
 
   //Returns the table to our requested page, shows us all the company's current inventory.
@@ -189,7 +197,7 @@ export default function StockTable() {
           autoShow={true}
           closeForm={() => setUpdateModalId(false)}
           popUpTitle="עדכון פרטי מלאי"
-          apiPath={`stock/update/${updateModalId}`}
+          apiPath={`stock/${updateModalId}`}
           updatePutUiFunc={updatePutUi}
         />
       }
@@ -198,7 +206,7 @@ export default function StockTable() {
         fields={inputFields}
         modalType="input-form"
         popUpTitle="הוספת מלאי"
-        postPath="stock"
+        apiPath="stock"
         updatePostUiFunc={updatePostUi}
       />
 

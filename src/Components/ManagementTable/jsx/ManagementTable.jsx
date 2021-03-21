@@ -5,7 +5,7 @@ import '../css/ManagementTable.css'
 import { sorter as sorterFunc } from '../Utility'
 
 
-function ManagementTable({ headers, content, contentController, startIdx }) {
+function ManagementTable({ headers, content, contentController, startIdx, direction }) {
     const { content: pureContent, setContent } = contentController;
     const [orderColumn, setOrderColumn] = useState("");
 
@@ -32,10 +32,9 @@ function ManagementTable({ headers, content, contentController, startIdx }) {
     }
     return (
         <div className="man-table-wrapper">
-            <Table dir="rtl"
+            <Table dir={direction || "rtl"}
                 style={{ textAlign: 'right', fontSize: '1.2rem', textAlign: 'center' }}
-                striped bordered hover
-            >
+                striped bordered hover>
                 <thead>
                     <tr>
                         {headers.map((item, index) =>

@@ -24,6 +24,9 @@ function ContactData() {
     useEffect(() => {
         let tempContent = [];
         content.forEach((item, index) => {
+            if (item.length < headers.length - 1) {
+                return;
+            }
             const deleteBtn =
                 <Button
                     key={Math.random() * index}

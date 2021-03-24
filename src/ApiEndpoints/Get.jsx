@@ -3,7 +3,7 @@ import { getValidToken } from './Authentication'
 
 export default function fetchGet(path) {
     return new Promise(async (resolve, reject) => {
-        const token = await getValidToken();
+        const token = path === "store-items" ? "" : await getValidToken();
         fetch(`${ServerUrl}/${path}`,
             {
                 method: 'GET',
@@ -13,13 +13,20 @@ export default function fetchGet(path) {
                     'Authorization': `Bearer ${token}`,
                 },
             })
-            .then(response => response.json())
+            .then(response => {
+                if (response.ok) {
+                    return response.json()
+                }
+                else {
+                    alert("Unabled to fetch data from DB");
+                    reject();
+                }
+            })
             .then(data => {
                 resolve(data);
-            }
-            )
+            })
             .catch(() => {
-                alert("Your submittion failed");
+                alert("Unabled to fetch data from DB");
                 reject();
             });
     })

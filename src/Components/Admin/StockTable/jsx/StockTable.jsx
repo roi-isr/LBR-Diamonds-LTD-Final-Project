@@ -42,6 +42,9 @@ export default function StockTable() {
   useEffect(() => {
     let tempContent = [];
     content.forEach((item, index) => {
+      if (item.length < headers.length - 1) {
+        return;
+      }
       const confirmBtn =
         <Button
           key={Math.random() * index}
@@ -85,25 +88,25 @@ export default function StockTable() {
     }
   }
 
-  const updatePostUi = (newItem) => {
-    const newItemFixed = [...newItem, newItem[2] * newItem[3]]
-    setContent(prevContent => [...prevContent, newItemFixed]);
+  const updatePostUi = (newStock) => {
+    const newStockFixed = [...newStock, newStock[2] * newStock[3]]
+    setContent(prevContent => [...prevContent, newStockFixed]);
   }
 
-  const updatePutUi = (updatedItem) => {
+  const updatePutUi = (updatedStock) => {
     const tempContent = [...content];
-    const wantedIndex = tempContent.findIndex((item) => item[0] === updatedItem[0]);
+    const wantedIndex = tempContent.findIndex((item) => item[0] === updatedStock[0]);
     const wantedItem = tempContent[wantedIndex];
-    tempContent[wantedIndex] = [...updatedItem, wantedItem[wantedItem.length - 2], updatedItem[2] * updatedItem[3]];
-    updateMap[updatedItem[0]] = [
-      { name: "מודל", content: updatedItem[1] },
-      { name: "משקל", content: updatedItem[2] },
-      { name: "עלות", content: updatedItem[3] },
-      { name: "נקיון", content: updatedItem[4] },
-      { name: "צבע", content: updatedItem[5] },
-      { name: "קוד", content: updatedItem[6] },
-      { name: "הערות", content: updatedItem[7] },
-      { name: "תאריך קנייה - תשלום", content: updatedItem[8], type: 'date' },
+    tempContent[wantedIndex] = [...updatedStock, wantedItem[wantedItem.length - 2], updatedStock[2] * updatedStock[3]];
+    updateMap[updatedStock[0]] = [
+      { name: "מודל", content: updatedStock[1] },
+      { name: "משקל", content: updatedStock[2] },
+      { name: "עלות", content: updatedStock[3] },
+      { name: "נקיון", content: updatedStock[4] },
+      { name: "צבע", content: updatedStock[5] },
+      { name: "קוד", content: updatedStock[6] },
+      { name: "הערות", content: updatedStock[7] },
+      { name: "תאריך קנייה - תשלום", content: updatedStock[8], type: 'date' },
     ];
     setContent(tempContent);
   }

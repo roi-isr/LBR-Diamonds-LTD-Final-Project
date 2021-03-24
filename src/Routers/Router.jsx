@@ -12,7 +12,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import NotFound from '../Components/NotFound/NotFound'
 import BasicTable from '../Components/Admin/StockTable/jsx/StockTable';
 import DeliveryTable from '../Components/Admin/DeliveryCheck/jsx/DeliveryFile';
-import SellTable from '../Components/Admin/SellTable/SellTable';
+import SellTable from '../Components/Admin/SellTable/jsx/SellTable';
 import AdminContact from '../Components/Admin/ContactData/jsx/ContactData'
 import PredictForm from '../Components/Admin/PredictPrice/PredictPrice'
 

@@ -1,26 +1,28 @@
+
 import React, { useState, useEffect } from 'react';
 import ManagementTable from '../../../ManagementTable/jsx/ManagementTable'
 import Button from 'react-bootstrap/Button'
-import '../css/DeliveryFile.css';
-import FormModal from '../../../UI-Elements/Modal/Modal';
+import FormModal from '../../../UI-Elements/Modal/Modal'
 import fetchGet from '../../../../ApiEndpoints/Get';
 import fetchDelete from '../../../../ApiEndpoints/Delete';
 import Loader from 'react-loader-spinner';
+import '../css/SellTable.css';
 
 const updateMap = new Map();
 
-
 const inputFields = [
-  { name: "מספר החבילה", type: 'text' },
-  { name: "משקל החבילה", type: 'text' },
-  { name: " מהיכן המשלוח", type: 'text' },
-  { name: "חברת השילוח", type: 'text' },
-  { name: "שם השולח", type: 'text' },
-  { name: "תאריך המשלוח", type: 'date' }];
+  { name: "מודל", type: 'text' },
+  { name: "משקל", type: 'text' },
+  { name: "מחיר לקראט", type: 'text' },
+  { name: "קוד", type: 'text' },
+  { name: "שם הקונה", type: 'text' },
+  { name: "תאריך מכירה", type: 'date' },
+  { name: "תשלום", type: 'text' },
+];
 
-const headers = ["מספר החבילה", "משקל החבילה", "מהיכן המשלוח", "חברת השילוח", "שם השולח ", "תאריך המשלוח", "", "",""];
+const headers = ["קוד", "מודל", "משקל ", "מחיר לקראט ", "סה''כ", "שם הקונה", "תאריך מכירה ", "תשלום", "", ""];
 
-export default function DeliveryTable() {
+export default function SellTable() {
   const [content, setContent] = useState([[]]);
   const [tableRender, setTableRender] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -34,16 +36,9 @@ export default function DeliveryTable() {
   useEffect(() => {
     let tempContent = [];
     content.forEach((item, index) => {
-      if (item.length < headers.length - 2) {
+      if (item.length < headers.length - 1) {
         return;
       }
-      const confirmBtn =
-        <Button
-          key={Math.random() * index}
-          variant="outline-success">
-          אישור הגעה
-          </Button>;
-
       const updateBtn =
         <Button
           key={Math.random() * index}
@@ -62,20 +57,22 @@ export default function DeliveryTable() {
 
       const renderItems = item.slice(1);
 
-      tempContent.push([...renderItems, confirmBtn, updateBtn, deleteBtn]);
+      tempContent.push([...renderItems, updateBtn, deleteBtn]);
     })
     setTableRender(tempContent);
   }, [content])
 
-  const updatePostUi = (newDelivery) => {
-    setContent(prevContent => [...prevContent, newDelivery]);
+  const updatePostUi = (newSell) => {
+    const newSellFixed = [...newSell];
+    // Add the total column
+    newSellFixed.splice(5, 0, newSell[3] * newSell[4]);
+    setContent(prevContent => [...prevContent, newSellFixed]);
   }
 
   const fetchData = async () => {
     setLoading(true);
     try {
-      const fetchedData = await fetchGet('deliveries');
-      console.log(fetchedData)
+      const fetchedData = await fetchGet('sells');
       renderData(fetchedData);
 
     } catch {
@@ -92,7 +89,7 @@ export default function DeliveryTable() {
     }
     try {
       // Delete from DB
-      await fetchDelete(`delivery/${content[index][0]}`);
+      await fetchDelete(`sell/${content[index][0]}`);
       // Delete from UI
       setContent(prevContent => prevContent.filter((item, i) => index !== i));
     } catch {
@@ -103,46 +100,51 @@ export default function DeliveryTable() {
   const updatePutUi = (updatedItem) => {
     const tempContent = [...content];
     const wantedIndex = tempContent.findIndex((item) => item[0] === updatedItem[0]);
-    tempContent[wantedIndex] = [...updatedItem];
+    const updatedItemFixed = [...updatedItem];
+    updatedItemFixed.splice(5, 0, updatedItem[3] * updatedItem[4])
+    tempContent[wantedIndex] = [...updatedItemFixed];
     updateMap[updatedItem[0]] = [
       { name: "קוד החבילה", content: updatedItem[1] },
-      { name: "משקל", content: updatedItem[2] },
-      { name: "מהיכן המשלוח", content: updatedItem[3] },
-      { name: "חברת השילוח", content: updatedItem[4] },
-      { name: "שם השולח", content: updatedItem[5] },
-      { name: "תאריך המשלוח", content: updatedItem[6], type: 'date' },
+      { name: "מודל", content: updatedItem[2] },
+      { name: "משקל", content: updatedItem[3] },
+      { name: "מחיר לקראט", content: updatedItem[4] },
+      { name: "שם הקונה", content: updatedItem[5] },
+      { name: "תאריך מכירה", content: updatedItem[6], type: 'date' },
+      { name: "תשלום", content: updatedItem[7] },
     ];
     setContent(tempContent);
   }
 
   // Convert the data fetch for DB into renderable data
   const renderData = (data) => {
-    const tempDelivery = []
-    Object.values(data).forEach(deliveryValues => {
-      const subTempDelivery = [];
-      subTempDelivery.push(
-        deliveryValues['delivery_id'], deliveryValues['package_code'],
-        deliveryValues['package_weight'], deliveryValues['delivery_from_country'],
-        deliveryValues['delivery_company'], deliveryValues['sender'], deliveryValues['send_date']
+    const tempSell = []
+    Object.values(data).forEach(sellValues => {
+      const subTempSell = [];
+      subTempSell.push(
+        sellValues['sell_id'], sellValues['package_code'],
+        sellValues['package_model'], sellValues['weight_in_carat'], sellValues['price_per_carat'],
+        sellValues['weight_in_carat'] * sellValues['price_per_carat'],
+        sellValues['buying_entity'], sellValues['payment_method'], sellValues['sell_date']
       );
-      tempDelivery.push(subTempDelivery);
+      tempSell.push(subTempSell);
 
-      updateMap[deliveryValues['delivery_id']] = [
-        { name: "קוד החבילה", content: deliveryValues['package_code'] },
-        { name: "משקל", content: deliveryValues['package_weight'] },
-        { name: "מהיכן המשלוח", content: deliveryValues['delivery_from_country'] },
-        { name: "חברת השילוח", content: deliveryValues['delivery_company'] },
-        { name: "שם השולח", content: deliveryValues['sender'] },
-        { name: "תאריך המשלוח", content: deliveryValues['send_date'], type: 'date' },
+      updateMap[sellValues['sell_id']] = [
+        { name: "קוד החבילה", content: sellValues['package_code'] },
+        { name: "מודל", content: sellValues['package_model'] },
+        { name: "משקל", content: sellValues['weight_in_carat'] },
+        { name: "מחיר לקראט", content: sellValues['price_per_carat'] },
+        { name: "שם הקונה", content: sellValues['buying_entity'] },
+        { name: "תאריך מכירה", content: sellValues['sell_date'], type: 'date' },
+        { name: "תשלום", content: sellValues['payment_method'] },
       ];
     });
-    setContent(tempDelivery);
+    setContent(tempSell);
 
   }
 
   //Returns the table to our requested page.
   return (
-    <div className="delivery-main-div">
+    <div className="sell-main-div">
       {loading ?
         <Loader style={{ margin: 'auto' }}
           type='Bars'
@@ -168,7 +170,7 @@ export default function DeliveryTable() {
           autoShow={true}
           closeForm={() => setUpdateModalId(false)}
           popUpTitle="עדכון פרטי משלוח"
-          apiPath={`delivery/${updateModalId}`}
+          apiPath={`sell/${updateModalId}`}
           updatePutUiFunc={updatePutUi}
         />
       }
@@ -176,7 +178,7 @@ export default function DeliveryTable() {
         fields={inputFields}
         modalType="input-form"
         popUpTitle="הוספת משלוח"
-        apiPath="delivery"
+        apiPath="sell"
         updatePostUiFunc={updatePostUi}
       />
 

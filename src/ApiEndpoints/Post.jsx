@@ -17,7 +17,7 @@ export default function fetchPost(path, data) {
             })
             .then(response => response.json())
             .then(data => {
-                if (data.message || data.message.includes("Success") || data.message.includes("success")) {
+                if (data.message && (data.message.includes("Success") || data.message.includes("success"))) {
                     resolve(data._id);
                 }
                 else {

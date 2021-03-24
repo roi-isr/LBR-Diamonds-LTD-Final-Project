@@ -8,11 +8,20 @@ import Loader from 'react-loader-spinner';
 
 const headers = ['Model', 'Weight (Carat)', 'Price (per Carat)', 'Clarity', 'Color'];
 
+const offerInputFields = [
+  { name: "Name", type: 'text' },
+  { name: "Phone", type: 'text' },
+  { name: "Email", type: 'text' },
+  { name: "Offered Weight", type: 'text' },
+  { name: "Offered Price", type: 'text' },
+  { name: "Additional comments", type: 'text' },
+];
 
 function ItemsLayout() {
 
   const [content, setContent] = useState([[]]);
   const [tableRender, setTableRender] = useState([]);
+  const [sendOfferModal, setSendOfferModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
   // Fecth data from DB
@@ -26,7 +35,8 @@ function ItemsLayout() {
       const offerBtn =
         <Button
           key={Math.random() * index}
-          variant="outline-success">
+          variant="outline-success"
+          onClick={() => setSendOfferModal(item[0])}>
           SEND OFFER
      </Button>;
 
@@ -83,6 +93,19 @@ function ItemsLayout() {
             content,
             setContent
           }}
+        />
+      }
+
+      {
+        sendOfferModal &&
+        <FormModal
+          directionInput="ltr"
+          modalType="input-form"
+          fields={offerInputFields}
+          autoShow={true}
+          closeForm={() => setSendOfferModal(false)}
+          popUpTitle="Send an offer to admin"
+          apiPath={`offer/${sendOfferModal}`}
         />
       }
     </div>

@@ -10,7 +10,7 @@ import Loader from 'react-loader-spinner';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import MenuItem from '@material-ui/core/MenuItem'
 
-function ModalForm({ modalType, fields, content, autoShow, closeForm,
+function ModalForm({ modalType, fields, autoShow, closeForm,
     popUpTitle, apiPath, updatePostUiFunc, updatePutUiFunc, directionInput }) {
     const [show, setShow] = useState(false);
     const [inputData, setInputData] = useState({});
@@ -187,7 +187,9 @@ function ModalForm({ modalType, fields, content, autoShow, closeForm,
             <Modal show={show || autoShow} onHide={handleClose} animation={false}>
                 <form onSubmit={handleSubmit}>
                     <Modal.Header closeButton>
-                        <Modal.Title style={{ marginLeft: '160px' }}>{popUpTitle}</Modal.Title>
+                        <Modal.Title style={{ marginLeft: '100px' }}>
+                            {popUpTitle}
+                        </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         {renderForm}
@@ -206,15 +208,21 @@ function ModalForm({ modalType, fields, content, autoShow, closeForm,
                             <CheckCircleIcon
                                 style={{ fill: 'green', width: '40px', height: '40px', margin: '0 auto 0 0' }}
                             />}
-                        <Button variant="secondary" onClick={handleClose}>
-                            סגור
-                            </Button>
-                        {modalType !== 'info-form' &&
+                        <div  style={{ display: 'flex', flexDirection: directionInput === "ltr" ? 'row-reverse' : 'row' }}>
                             <Button
-                                variant="primary"
-                                type='submit'>
-                                שמור שינויים
-                            </Button>}
+                                style={{ margin: '0 5px' }}
+                                variant="secondary"
+                                onClick={handleClose}>
+                                {directionInput === "ltr" ? "Close" : "סגור"}
+                            </Button>
+                            {modalType !== 'info-form' &&
+                                <Button
+                                    style={{ margin: '0 5px' }}
+                                    variant="primary"
+                                    type='submit'>
+                                    {directionInput === "ltr" ? "Save Changes" : "שמור שינויים"}
+                                </Button>}
+                        </div>
                     </Modal.Footer>
                 </form>
             </Modal>

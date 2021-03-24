@@ -111,7 +111,7 @@ function ItemsLayout() {
           directionInput='ltr'
           modalType="input-form"
           popUpTitle="Contact seller"
-          postPath="delivery"
+          postPath=""
           updatePostUi={updatePostUi}
         />
   

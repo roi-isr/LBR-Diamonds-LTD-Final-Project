@@ -1,29 +1,31 @@
 import React from 'react';
 import '../css/About.css';
-import Factory from '../../../Assets/diamonds_comps/Diamonds-Botswana.jpg';
+import Factory from '../../../Assets/diamonds_comps/diamond_photo.png';
+import Avatar from '@material-ui/core/Avatar';
+
 
 class About extends React.Component {
   render() {
     return (
       <div >
-
-        <h1
-          className="h1-about-us">
-          About Us
-</h1>
-        <div className="about-us-content">
-          <div className="about-us-inner">
-            <p className="about-us-par"> LBR DIAMONDS is a company that specializes in the production of natural diamonds, marketing and distribution of diamonds in Israel.
-<br />
-The diamond production process is a complex process, from the purchase of the rough diamond, the polishing of the diamond and of course the sale of the diamonds by agents throughout Israel.
-<br />
-With us, you will find all types of diamonds, from a 0.01 carat diamond to 5 carats.
-<br />
-The company has a reputation and experience of over 20 years and is managed by Yoram Rabinian, a member of the Israeli Diamond Exchange.
- </p>
-          </div>
-          <img src={Factory}  className="factory-img" />
-        </div>
+     <h1 style={{fontFamily:"Comic Sans MS",textAlign:"center"}}>About us </h1>
+        <div style={{display:"flex"}}>
+          <div style={{display:"flex", flexDirection:'column',textAlign:"center"}}>
+            <Avatar style={{height:"300px",width:"300px"}} className="av1" alt="Remy Sharp" src={Factory} />
+            <h2 style={{fontFamily:"Comic Sans MS"}}>Specialize in the production of natural diamonds.</h2>
+            </div>
+            <div style={{display:"flex", flexDirection:'column',textAlign:"center"}}>
+            <Avatar style={{height:"300px",width:"300px"}} className="av1" alt="Remy Sharp" src={Factory} />
+           <h2 style={{fontFamily:"Comic Sans MS"}}>Wholesale and private diamond marketing.</h2>
+            </div><div style={{display:"flex", flexDirection:'column',textAlign:"center"}}>
+            <Avatar style={{height:"300px",width:"300px"}} className="av1" alt="Remy Sharp" src={Factory} />
+           <h2 style={{fontFamily:"Comic Sans MS",textAlign:"center"}}>Fast deliveries worldwide.</h2>
+            </div><div style={{display:"flex", flexDirection:'column'}}>
+            <Avatar style={{height:"300px",width:"300px"}} className="av1" alt="Remy Sharp" src={Factory} />
+            <h2 style={{fontFamily:"Comic Sans MS"}}>Over 25 years of experience in the field.</h2>
+            
+            </div>
+            </div>
 
       </div>
     );

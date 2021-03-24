@@ -27,10 +27,22 @@
     display: flex;
     flex-direction: row;
 }
+.factory-img{
+height: 300px;
+width: 100%;
 
+}
 @media only screen and (max-width: 990px) {
     .about-us-content {
         display: flex;
         flex-direction: column-reverse;
     }
+}
+ 
+ .av1 {
+    width: 150px;
+    height: 150px;
+  }
+#h4{
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }

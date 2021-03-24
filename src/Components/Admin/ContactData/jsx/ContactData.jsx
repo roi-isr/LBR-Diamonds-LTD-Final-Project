@@ -144,7 +144,7 @@ function ContactData() {
             {!loading && itemDetailsIndex &&
                 <FormModal
                     fields={showDetailsFieldsMap[itemDetailsIndex]}
-                    modalType="contact-info-form"
+                    modalType="info-form"
                     autoShow={true}
                     closeForm={() => setitemDetailsIndex(false)}
                     popUpTitle="צפייה בהודעה"

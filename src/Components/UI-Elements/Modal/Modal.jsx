@@ -1,20 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Modal.css';
 import Modal from 'react-bootstrap/Modal';
 import TextField from '@material-ui/core/TextField';
 import FormLabel from '@material-ui/core/FormLabel';
 import Button from 'react-bootstrap/Button'
 import fetchPost from '../../../ApiEndpoints/Post';
+import fetchPut from '../../../ApiEndpoints/Put';
 import Loader from 'react-loader-spinner';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import MenuItem from '@material-ui/core/MenuItem'
 
-function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPath, updatePostUiFunc,directionInput }) {
+function ModalForm({ modalType, fields, content, autoShow, closeForm,
+    popUpTitle, apiPath, updatePostUiFunc, updatePutUiFunc, directionInput }) {
     const [show, setShow] = useState(false);
     const [inputData, setInputData] = useState({});
-    const handleShow = () => setShow(true);
-
+    const [isFetching, setIsFetching] = useState(false);
     let renderForm = null;
+
+    useEffect(() => {
+        if (modalType === 'update-form') {
+            const contentObj = {};
+            fields.forEach((item, index) => {
+                contentObj[index] = item.content;
+            });
+            setInputData(contentObj);
+        }
+    }, [])
 
     const handleClose = () => {
         setInputData({});
@@ -27,17 +38,25 @@ function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPat
 
     async function handleSubmit(e) {
         e.preventDefault();
+        let itemId;
         try {
             setIsFetching(true);
-            const itemId = await fetchPost(postPath, inputData);
-            updatePostUiFunc([itemId, ...Object.values(inputData)]);
+            if (modalType === 'update-form') {
+                console.log(inputData);
+                itemId = await fetchPut(apiPath, inputData);
+                updatePutUiFunc([itemId, ...Object.values(inputData)])
+            } else {
+                itemId = await fetchPost(apiPath, inputData);
+                updatePostUiFunc([itemId, ...Object.values(inputData)]);
+            }
             setIsFetching('Success');
-            setTimeout(handleClose, 3000);
+            setTimeout(handleClose, 2000);
         } catch {
             alert('error')
             setIsFetching('Fail');
         }
     }
+
     // Determine if a input form or a info form
     if (modalType === 'input-form') {
         renderForm = fields.map((item, index) =>
@@ -48,7 +67,7 @@ function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPat
                 <TextField
                     {...item}
                     required
-                    dir={directionInput||'rtl'}
+                    dir={directionInput || 'rtl'}
                     type={item.type}
                     placeholder={item.name}
                     fullWidth
@@ -59,10 +78,10 @@ function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPat
                 >
                     {/* for combobox inputs */}
                     {item.options && item.options.map(option =>
-                        <MenuItem 
-                        key={option.value} 
-                        value={option.value}
-                        style={{direction:'rtl'}}>
+                        <MenuItem
+                            key={option.value}
+                            value={option.value}
+                            style={{ direction: 'rtl' }}>
                             {option.label}
                         </MenuItem>
                     )}
@@ -71,7 +90,44 @@ function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPat
         );
     }
 
-    else if (modalType === 'contact-info-form') {
+    if (modalType === 'update-form') {
+        let dateFormat;
+        renderForm = fields.map((item, index) => {
+            if (item.type === 'date') {
+                const now = new Date(inputData[index]);
+                dateFormat = `${now.getFullYear()}-${now.getMonth() < 9 ? "0" : ""}${now.getMonth() + 1}-${now.getDate() < 10 ? "0" : ""}${now.getDate()}`
+            }
+            return (
+                <div
+                    className='input-del-div'
+                    key={'item-input' + index}>
+                    <FormLabel>{item.name}</FormLabel>
+                    <TextField
+                        dir={directionInput || 'rtl'}
+                        type={item.type || 'text'}
+                        fullWidth
+                        variant="outlined"
+                        color="secondary"
+                        value={item.type === 'date' ? dateFormat : inputData[index]}
+                        onChange={(e) => setInputData(prevState => { return { ...prevState, [index]: e.target.value } })}
+                    >
+                        {/* for combobox inputs */}
+                        {item.options && item.options.map(option =>
+                            <MenuItem
+                                key={option.value}
+                                value={option.value}
+                                style={{ direction: 'rtl' }}>
+                                {option.label}
+                            </MenuItem>
+                        )}
+                    </TextField>
+                </div>
+            );
+        }
+        );
+    }
+
+    else if (modalType === 'info-form') {
         renderForm = fields.map((item, index) =>
             index < 3 &&
             <div
@@ -117,7 +173,6 @@ function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPat
         )
     }
 
-
     return (
         <React.Fragment>
             {modalType === 'input-form' &&
@@ -154,7 +209,7 @@ function ModalForm({ modalType, fields, autoShow, closeForm, popUpTitle, postPat
                         <Button variant="secondary" onClick={handleClose}>
                             סגור
                             </Button>
-                        {modalType === 'input-form' &&
+                        {modalType !== 'info-form' &&
                             <Button
                                 variant="primary"
                                 type='submit'>

@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     backgroundColor: theme.palette.primary.main,
     color: "#fff",
-    "&:hover":{
+    "&:hover": {
       backgroundColor: theme.palette.primary.light
     },
     margin: theme.spacing(3, 0, 2),

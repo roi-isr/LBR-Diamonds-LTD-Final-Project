@@ -7,7 +7,7 @@ import fetchGet from '../../../../ApiEndpoints/Get';
 import fetchDelete from '../../../../ApiEndpoints/Delete';
 import Loader from 'react-loader-spinner';
 
-const headers = ["מספר החבילה", "משקל החבילה", "מהיכן המשלוח", "חברת השילוח", "שם השולח ", "תאריך המשלוח", "", ""];
+const updateMap = new Map();
 
 
 const inputFields = [
@@ -18,11 +18,13 @@ const inputFields = [
   { name: "שם השולח", type: 'text' },
   { name: "תאריך המשלוח", type: 'date' }];
 
+const headers = ["מספר החבילה", "משקל החבילה", "מהיכן המשלוח", "חברת השילוח", "שם השולח ", "תאריך המשלוח", "", ""];
 
 export default function DeliveryTable() {
   const [content, setContent] = useState([[]]);
   const [tableRender, setTableRender] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [updateModalId, setUpdateModalId] = useState(false);
 
   // Fecth data from DB
   useEffect(() => {
@@ -32,22 +34,33 @@ export default function DeliveryTable() {
   useEffect(() => {
     let tempContent = [];
     content.forEach((item, index) => {
-      const deleteBtn =
-        <Button
-          key={Math.random() * index}
-          onClick={() => deleteRow(index)}
-          variant="outline-danger">
-          הסר
-      </Button>;
 
       const confirmBtn =
         <Button
           key={Math.random() * index}
           variant="outline-success">
           אישור הגעה
-            </Button>;
+          </Button>;
 
-      tempContent.push([...item.slice(1), deleteBtn, confirmBtn]);
+      const updateBtn =
+        <Button
+          key={Math.random() * index}
+          variant="outline-warning"
+          onClick={() => setUpdateModalId(item[0])}>
+          עדכן
+        </Button>;
+
+      const deleteBtn =
+        <Button
+          key={Math.random() * index}
+          onClick={() => deleteRow(index)}
+          variant="outline-danger">
+          הסר
+       </Button>;
+
+      const renderItems = item.slice(1);
+
+      tempContent.push([...renderItems, confirmBtn, updateBtn, deleteBtn]);
     })
     setTableRender(tempContent);
   }, [content])
@@ -75,30 +88,59 @@ export default function DeliveryTable() {
     if (!con) {
       return
     }
-    // Delete from DB
-    await fetchDelete(`delivery/${content[index][0]}`);
-    // Delete from UI
-    setContent(prevContent => prevContent.filter((item, i) => index !== i));
+    try {
+      // Delete from DB
+      await fetchDelete(`delivery/${content[index][0]}`);
+      // Delete from UI
+      setContent(prevContent => prevContent.filter((item, i) => index !== i));
+    } catch {
+      alert('Error in deletion...')
+    }
+  }
+
+  const updatePutUi = (updatedItem) => {
+    const tempContent = [...content];
+    const wantedIndex = tempContent.findIndex((item) => item[0] === updatedItem[0]);
+    tempContent[wantedIndex] = [...updatedItem];
+    updateMap[updatedItem[0]] = [
+      { name: "קוד החבילה", content: updatedItem[1] },
+      { name: "משקל", content: updatedItem[2] },
+      { name: "מהיכן המשלוח", content: updatedItem[3] },
+      { name: "חברת השילוח", content: updatedItem[4] },
+      { name: "שם השולח", content: updatedItem[5] },
+      { name: "תאריך המשלוח", content: updatedItem[6] , type: 'date' },
+    ];
+    setContent(tempContent);
   }
 
   // Convert the data fetch for DB into renderable data
   const renderData = (data) => {
-    const tempContent = []
-    Object.values(data).forEach(contactValues => {
-      const subTempContent = [];
-      subTempContent.push(
-        contactValues['delivery_id'], contactValues['package_code'], contactValues['package_weight'],
-        contactValues['delivery_from_country'], contactValues['delivery_company'],
-        contactValues['seller'], contactValues['send_date']
+    const tempDelivery = []
+    Object.values(data).forEach(deliveryValues => {
+      const subTempDelivery = [];
+      subTempDelivery.push(
+        deliveryValues['delivery_id'], deliveryValues['package_code'],
+        deliveryValues['package_weight'], deliveryValues['delivery_from_country'],
+        deliveryValues['delivery_company'], deliveryValues['sender'], deliveryValues['send_date']
       );
-      tempContent.push(subTempContent);
+      tempDelivery.push(subTempDelivery);
+
+      updateMap[deliveryValues['delivery_id']] = [
+        { name: "קוד החבילה", content: deliveryValues['package_code'] },
+        { name: "משקל", content: deliveryValues['package_weight'] },
+        { name: "מהיכן המשלוח", content: deliveryValues['delivery_from_country'] },
+        { name: "חברת השילוח", content: deliveryValues['delivery_company'] },
+        { name: "שם השולח", content: deliveryValues['sender'] },
+        { name: "תאריך המשלוח", content: deliveryValues['send_date'], type: 'date' },
+      ];
     });
-    setContent(tempContent);
+    setContent(tempDelivery);
+
   }
 
   //Returns the table to our requested page.
   return (
-    <div style={{ textAlign: 'center' }}>
+    <div className="delivery-main-div">
       {loading ?
         <Loader style={{ margin: 'auto' }}
           type='Bars'
@@ -109,23 +151,30 @@ export default function DeliveryTable() {
         <ManagementTable
           headers={headers}
           content={tableRender}
-<<<<<<< HEAD
-          startIdx = {1}
-          contentController={{
-=======
           startIdx={1}
-          sorterUtility={{
->>>>>>> a2931b2aa769ddde40ffcf156f50801ade060bfe
+          contentController={{
             content,
             setContent
           }}
+        />
+      }
+      {
+        updateModalId &&
+        <FormModal
+          modalType="update-form"
+          fields={updateMap[updateModalId]}
+          autoShow={true}
+          closeForm={() => setUpdateModalId(false)}
+          popUpTitle="עדכון פרטי משלוח"
+          apiPath={`delivery/${updateModalId}`}
+          updatePutUiFunc={updatePutUi}
         />
       }
       <FormModal
         fields={inputFields}
         modalType="input-form"
         popUpTitle="הוספת משלוח"
-        postPath="delivery"
+        apiPath="delivery"
         updatePostUiFunc={updatePostUi}
       />
 

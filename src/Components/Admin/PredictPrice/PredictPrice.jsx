@@ -24,7 +24,7 @@ export default function PredictForm() {
 
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>הכנס משקל</Form.Label>
-                        <Form.Control style={{width: inputFieldsWidth}} type="input" placeholder="הכנס משקל" />
+                        <Form.Control style={{ width: inputFieldsWidth }} type="input" placeholder="הכנס משקל" />
                     </Form.Group>
                     <Form.Group controlId="formBasicPassword">
                         <Form.Label>בחר חיתוך</Form.Label>
@@ -45,11 +45,11 @@ export default function PredictForm() {
 
                     <Form.Group controlId="formBasicPassword">
                         <Form.Label>הכנס לוח</Form.Label>
-                        <Form.Control style={{width: inputFieldsWidth}} type="input" placeholder="הכנס לוח" />
+                        <Form.Control style={{ width: inputFieldsWidth }} type="input" placeholder="הכנס לוח" />
                     </Form.Group>
                     <Form.Group controlId="formBasicPassword">
                         <Form.Label>הכנס עומק</Form.Label>
-                        <Form.Control style={{width: inputFieldsWidth}} type="input" placeholder="הכנס עומק" />
+                        <Form.Control style={{ width: inputFieldsWidth }} type="input" placeholder="הכנס עומק" />
                     </Form.Group>
 
                     <Button

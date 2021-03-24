@@ -44,7 +44,7 @@ function MapDisplay() {
     }
     return (
         <div>
-            <MapWrapper style={{position:'relative'}}>
+            <MapWrapper style={{ position: 'relative' }}>
                 <MapContainer className="map-container-css" center={position} zoom={15} scrollWheelZoom={false}>
                     <TileLayer
                         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -57,10 +57,10 @@ function MapDisplay() {
                     </Marker>
                     <MapFeatures />
                 </MapContainer>
-            <button
-                className="home-btn"
-                onClick={getBackToCenter}>
-                H
+                <button
+                    className="home-btn"
+                    onClick={getBackToCenter}>
+                    H
               </button>
             </MapWrapper>
             {/* go back to centrelized position button */}
@@ -140,7 +140,7 @@ function ContactForm() {
         {
             controlId: "exampleForm.ControlTextarea1", label: "Content",
             controlAttr: {
-                as: "textarea", className:"contact-txt-area", placeholder: "Add your content", rows: 3, value: content,
+                as: "textarea", className: "contact-txt-area", placeholder: "Add your content", rows: 3, value: content,
                 onChange: (event) => setContent(event.target.value)
             }
         },

@@ -24,10 +24,10 @@ function ItemsLayout() {
     let tempContent = [];
     content.forEach((item, index) => {
       const offerBtn =
-      <Button
-        key={Math.random() * index}
-        variant="outline-success">
-        SEND OFFER
+        <Button
+          key={Math.random() * index}
+          variant="outline-success">
+          SEND OFFER
      </Button>;
 
       const renderItems = item.slice(1);
@@ -51,7 +51,7 @@ function ItemsLayout() {
 
   // Convert the data fetch for DB into renderable data
   const renderData = (data) => {
-    const tempContent = []
+    const tempContent = [];
     Object.values(data).forEach(storeValues => {
       const subTempContent = [];
       subTempContent.push(

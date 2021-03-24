@@ -108,7 +108,7 @@ export default function DeliveryTable() {
       { name: "מהיכן המשלוח", content: updatedItem[3] },
       { name: "חברת השילוח", content: updatedItem[4] },
       { name: "שם השולח", content: updatedItem[5] },
-      { name: "תאריך המשלוח", content: updatedItem[6] , type: 'date' },
+      { name: "תאריך המשלוח", content: updatedItem[6], type: 'date' },
     ];
     setContent(tempContent);
   }

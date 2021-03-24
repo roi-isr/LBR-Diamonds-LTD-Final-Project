@@ -86,7 +86,7 @@ export default function StockTable() {
   }
 
   const updatePostUi = (newItem) => {
-    const newItemFixed = [...newItem,newItem[2]*newItem[3]]
+    const newItemFixed = [...newItem, newItem[2] * newItem[3]]
     setContent(prevContent => [...prevContent, newItemFixed]);
   }
 

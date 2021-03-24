@@ -1,4 +1,4 @@
-import {CHANGE_NAV, VIS_NAV} from './actionTypes';
+import { CHANGE_NAV, VIS_NAV } from './actionTypes';
 
 /* Change site navbar content */
 export const change_content = (val) => {

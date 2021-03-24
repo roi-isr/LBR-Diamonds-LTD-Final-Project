@@ -39,8 +39,8 @@ function RouterComponent({ routing, relUrl }) {
         { path: relUrl + '/delivery', component: DeliveryTable },
         { path: relUrl + '/sell', component: SellTable },
         { path: relUrl + '/contact', component: AdminContact },
-        { path: relUrl + '/ml-price', component: PredictForm},
-    
+        { path: relUrl + '/ml-price', component: PredictForm },
+
     ];
 
     var path;

@@ -8,24 +8,26 @@ class About extends React.Component {
   render() {
     return (
       <div >
-     <h1 style={{fontFamily:"Comic Sans MS",textAlign:"center"}}>About us </h1>
-        <div style={{display:"flex"}}>
-          <div style={{display:"flex", flexDirection:'column',textAlign:"center"}}>
-            <Avatar style={{height:"300px",width:"300px"}} className="av1" alt="Remy Sharp" src={Factory} />
-            <h2 style={{fontFamily:"Comic Sans MS"}}>Specialize in the production of natural diamonds.</h2>
-            </div>
-            <div style={{display:"flex", flexDirection:'column',textAlign:"center"}}>
-            <Avatar style={{height:"300px",width:"300px"}} className="av1" alt="Remy Sharp" src={Factory} />
-           <h2 style={{fontFamily:"Comic Sans MS"}}>Wholesale and private diamond marketing.</h2>
-            </div><div style={{display:"flex", flexDirection:'column',textAlign:"center"}}>
-            <Avatar style={{height:"300px",width:"300px"}} className="av1" alt="Remy Sharp" src={Factory} />
-           <h2 style={{fontFamily:"Comic Sans MS",textAlign:"center"}}>Fast deliveries worldwide.</h2>
-            </div><div style={{display:"flex", flexDirection:'column'}}>
-            <Avatar style={{height:"300px",width:"300px"}} className="av1" alt="Remy Sharp" src={Factory} />
-            <h2 style={{fontFamily:"Comic Sans MS"}}>Over 25 years of experience in the field.</h2>
-            
-            </div>
-            </div>
+        <h1 style={{ fontFamily: "Comic Sans MS", textAlign: "center" }}>About us </h1>
+        <div className="about-main-div">
+          <div className="about-sec-div">
+            <Avatar style={{ height: "300px", width: "300px", margin:'auto' }} className="av1" alt="Remy Sharp" src={Factory} />
+            <p className="about-description">Specialize in the production of natural diamonds.</p>
+          </div>
+          <div className="about-sec-div">
+            <Avatar style={{ height: "300px", width: "300px", margin:'auto' }} className="av1" alt="Remy Sharp" src={Factory} />
+            <p className="about-description">Wholesale and private diamond marketing.</p>
+          </div>
+          <div className="about-sec-div">
+            <Avatar style={{ height: "300px", width: "300px", margin:'auto' }} className="av1" alt="Remy Sharp" src={Factory} />
+            <p className="about-description">Fast deliveries worldwide.</p>
+          </div>
+          <div className="about-sec-div">
+            <Avatar style={{ height: "300px", width: "300px", margin:'auto' }} className="av1" alt="Remy Sharp" src={Factory} />
+            <p className="about-description">Over 25 years of experience in the field.</p>
+
+          </div>
+        </div>
 
       </div>
     );

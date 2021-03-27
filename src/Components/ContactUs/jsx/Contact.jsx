@@ -6,6 +6,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import styled from 'styled-components/macro'
 import L from 'leaflet';
 import icon from 'leaflet/dist/images/marker-icon.png';
+import { ServerUrl } from '../../../ApiEndpoints/ServerUrl'
 
 /* Creating a styled component that wraps the map and gives it a unique style */
 const MapWrapper = styled.div`
@@ -89,7 +90,7 @@ function ContactForm() {
     }
 
     const fetchContact = (content) => {
-        fetch("http://127.0.0.1:5000/contact",
+        fetch(`${ServerUrl}/contact`,
             {
                 mode: 'no-cors',
                 method: 'POST',
@@ -148,7 +149,9 @@ function ContactForm() {
 
     const renderFormElements =
         formElementsAttr.map((item, index) =>
-            <Form.Group key={index} controlId={item.controlId}>
+            <Form.Group
+                key={index}
+                controlId={item.controlId}>
                 <Form.Label>{item.label}</Form.Label>
                 <Form.Control
                     required
@@ -158,9 +161,13 @@ function ContactForm() {
 
     return (
         <div className="contact-form-div">
-            <Form onSubmit={(e) => submitForm(e)}>
+            <Form
+                style={{ textAlign: 'center' }}
+                onSubmit={(e) => submitForm(e)}>
                 {renderFormElements}
-                <Button type='submit'>Contact Us!</Button>
+                <Button
+                    type='submit'
+                    style={{ fontSize: '18px', margin: 'auto' }}>Contact Us!</Button>
             </Form>
         </div>
     );

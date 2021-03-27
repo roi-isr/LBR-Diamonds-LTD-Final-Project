@@ -31,7 +31,7 @@ export function fetchAuthRequest(httpContent) {
 // Refresh the current access token
 export function refreshToken(token) {
     return new Promise((resolve, reject) => {
-        fetch("http://127.0.0.1:5000/refresh", {
+        fetch(`${ServerUrl}/refresh`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,

@@ -4,7 +4,7 @@ import { getValidToken } from './Authentication';
 export default function fetchDelete(path) {
     return new Promise(async (resolve, reject) => {
         const token = await getValidToken();
-        fetch(`http://127.0.0.1:5000/${path}`,
+        fetch(`${ServerUrl}/${path}`,
             {
                 method: 'DELETE',
                 headers:

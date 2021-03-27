@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "../css/Header.css"
 import Logo from '../../Assets/logo.jpg'
 import { Link } from 'react-router-dom'
@@ -39,8 +39,23 @@ function Header(props) {
 }
 
 function CustomizedNavItem(props) {
+    const [navExpended, setNavExpended] = useState(false);
+
+    const closeNav = () => setNavExpended(false);
+
+    const navItemClickHandler = (item) => {
+        if (item.click) {
+            item.click();
+        }
+        closeNav();
+    }
+
     return (
-        <Navbar bg="light" expand="lg">
+        <Navbar
+            bg="light"
+            expand="lg"
+            onToggle={(e) => setNavExpended(e)}
+            expanded={navExpended}>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav
@@ -53,7 +68,7 @@ function CustomizedNavItem(props) {
                                 pathname: item.path || null
                             }}
                             className="nav-link"
-                            onClick={item.click || null}
+                            onClick={() => navItemClickHandler(item)}
                             key={index}>
                             {item.name}
                         </Nav.Link>

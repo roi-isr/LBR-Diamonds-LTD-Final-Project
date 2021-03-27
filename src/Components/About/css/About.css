@@ -4,6 +4,24 @@
     border-radius: 8px;
 }
 
+.about-main-div {
+    display: flex;
+    text-align: center;
+}
+
+.about-sec-div {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: auto;
+}
+
+.about-description {
+    font-family: Comic Sans MS;
+    text-align: center;
+    font-size: 25px;
+}
+
 .about-us-par {
     margin-top: 20px;
 }
@@ -27,22 +45,29 @@
     display: flex;
     flex-direction: row;
 }
-.factory-img{
-height: 300px;
-width: 100%;
 
+.factory-img {
+    height: 300px;
+    width: 100%;
 }
+
 @media only screen and (max-width: 990px) {
     .about-us-content {
         display: flex;
         flex-direction: column-reverse;
     }
+    .about-main-div {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
 }
- 
- .av1 {
+
+.av1 {
     width: 150px;
     height: 150px;
-  }
-#h4{
+}
+
+#h4 {
     font-family: Georgia, 'Times New Roman', Times, serif;
 }

@@ -6,6 +6,7 @@ import Loader from 'react-loader-spinner';
 import '../css/ContactData.css';
 import FormModal from '../../../UI-Elements/Modal/Modal';
 import fetchGet from '../../../../ApiEndpoints/Get';
+import { ServerUrl } from '../../../../ApiEndpoints/ServerUrl'
 
 const headers = ["שם השולח", "מייל", "טלפון", "זמן יצירת קשר", "", ""];
 
@@ -93,7 +94,7 @@ function ContactData() {
 
     const deleteFromDatabase = (deleteId) => {
         const token = getValidToken();
-        fetch(`http://127.0.0.1:5000/contact/${deleteId}`,
+        fetch(`${ServerUrl}/contact/${deleteId}`,
             {
                 method: 'DELETE',
                 headers:

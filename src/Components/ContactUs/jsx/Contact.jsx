@@ -67,7 +67,6 @@ function MapDisplay() {
             {/* go back to centrelized position button */}
         </div>
     );
-
 }
 
 /* Contact us form component */

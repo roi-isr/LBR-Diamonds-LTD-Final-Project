@@ -2,9 +2,9 @@ import { ServerUrl } from './ServerUrl'
 import { getValidToken } from './Authentication'
 
 
-export default function fetchPost(path, data) {
+export default function fetchPost(path, data, authRequired=true) {
     return new Promise(async (resolve, reject) => {
-        const token = await getValidToken();
+        const token = authRequired ? await getValidToken():"";
         fetch(`${ServerUrl}/${path}`,
             {
                 method: 'POST',

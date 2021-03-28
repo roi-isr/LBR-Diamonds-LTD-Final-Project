@@ -5,8 +5,9 @@ import Button from 'react-bootstrap/Button';
 import FormModal from '../../../Components/UI-Elements/Modal/Modal';
 import fetchGet from '../../../ApiEndpoints/Get';
 import Loader from 'react-loader-spinner';
+import '../css/ItemsLayout.css';
 
-const headers = ['Model', 'Weight (Carat)', 'Price (per Carat)', 'Clarity', 'Color'];
+const headers = ['Model', 'Weight (Carat)', 'Price (per Carat)', 'Clarity', 'Color', ''];
 
 const offerInputFields = [
   { name: "Name", type: 'text' },
@@ -49,7 +50,7 @@ function ItemsLayout() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const fetchedData = await fetchGet('store-items');
+      const fetchedData = await fetchGet('store-items', false);
       renderData(fetchedData);
 
     } catch {
@@ -65,8 +66,8 @@ function ItemsLayout() {
     Object.values(data).forEach(storeValues => {
       const subTempContent = [];
       subTempContent.push(
-        storeValues['stock_id'], storeValues['package_model'], storeValues['weight_in_karat'], storeValues['cost_per_karat'],
-        storeValues['clearance'], storeValues['color'],
+        storeValues['stock_id'], storeValues['package_model'], storeValues['weight_in_karat'],
+        storeValues['cost_per_karat'], storeValues['clearance'], storeValues['color'],
       );
 
       tempContent.push(subTempContent);
@@ -76,7 +77,7 @@ function ItemsLayout() {
 
   //Returns the table to our requested page.
   return (
-    <div style={{ textAlign: 'center', direction: "ltr" }}>
+    <div className="items-layout-main-div">
       {loading ?
         <Loader style={{ margin: 'auto' }}
           type='Bars'
@@ -106,6 +107,7 @@ function ItemsLayout() {
           closeForm={() => setSendOfferModal(false)}
           popUpTitle="Send an offer to admin"
           apiPath={`offer/${sendOfferModal}`}
+          authRequired={false}
         />
       }
     </div>

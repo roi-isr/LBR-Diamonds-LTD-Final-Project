@@ -11,7 +11,8 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import MenuItem from '@material-ui/core/MenuItem'
 
 function ModalForm({ modalType, fields, autoShow, closeForm,
-    popUpTitle, apiPath, updatePostUiFunc, updatePutUiFunc, directionInput }) {
+    popUpTitle, apiPath, updatePostUiFunc, updatePutUiFunc, directionInput,
+    authRequired, pagePagination }) {
     const [show, setShow] = useState(false);
     const [inputData, setInputData] = useState({});
     const [isFetching, setIsFetching] = useState(false);
@@ -46,8 +47,8 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
                 itemId = await fetchPut(apiPath, inputData);
                 updatePutUiFunc([itemId, ...Object.values(inputData)])
             } else {
-                itemId = await fetchPost(apiPath, inputData);
-                updatePostUiFunc([itemId, ...Object.values(inputData)]);
+                itemId = await fetchPost(apiPath, inputData, authRequired ?? true);
+                updatePostUiFunc && updatePostUiFunc([itemId, ...Object.values(inputData)]);
             }
             setIsFetching('Success');
             setTimeout(handleClose, 2000);
@@ -90,7 +91,7 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
         );
     }
 
-    if (modalType === 'update-form') {
+    else if (modalType === 'update-form') {
         let dateFormat;
         renderForm = fields.map((item, index) => {
             if (item.type === 'date') {
@@ -127,7 +128,49 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
         );
     }
 
-    else if (modalType === 'info-form') {
+    else if (modalType === 'offer-info-form') {
+        let dateFormat;
+        renderForm = fields.map((item, index) => {
+            if (item.type === 'date') {
+                const now = new Date(inputData[index]);
+                dateFormat = `${now.getFullYear()}-${now.getMonth() < 9 ? "0" : ""}${now.getMonth() + 1}-${now.getDate() < 10 ? "0" : ""}${now.getDate()}`
+            }
+            return (
+                <div
+                    className='input-del-div'
+                    key={'item-input' + index}>
+                    <FormLabel>{item.name}</FormLabel>
+                    <TextField
+                        dir={directionInput || 'rtl'}
+                        type={item.type || 'text'}
+                        fullWidth
+                        disabled
+                        variant="outlined"
+                        color="secondary"
+                        value={item.content}
+                        multiline={item.multiline ?? false}
+                    >
+                    </TextField>
+                </div>
+            );
+        });
+        renderForm.push(
+            <Button
+                style={{ float: 'left' }}
+                name="next-offer"
+                onClick={() => pagePagination('+')}>
+                הבא
+            </Button>,
+            <Button
+                style={{ float: 'right' }}
+                name="prev-offer"
+                onClick={() => pagePagination('-')}>
+                הקודם
+            </Button>
+        )
+    }
+
+    else if (modalType === 'contact-info-form') {
         renderForm = fields.map((item, index) =>
             index < 3 &&
             <div
@@ -138,7 +181,7 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
                     inputProps={{ style: { textAlign: 'center', height: '1px' } }}
                     value={item.content}
                     disabled
-                    type={item.type}
+                    type={item.type || 'text'}
                     variant="outlined"
                     color="secondary">
                 </TextField>
@@ -208,14 +251,14 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
                             <CheckCircleIcon
                                 style={{ fill: 'green', width: '40px', height: '40px', margin: '0 auto 0 0' }}
                             />}
-                        <div  style={{ display: 'flex', flexDirection: directionInput === "ltr" ? 'row-reverse' : 'row' }}>
+                        <div style={{ width: '100%', textAlign: 'center' }}>
                             <Button
                                 style={{ margin: '0 5px' }}
                                 variant="secondary"
                                 onClick={handleClose}>
                                 {directionInput === "ltr" ? "Close" : "סגור"}
                             </Button>
-                            {modalType !== 'info-form' &&
+                            {modalType !== 'contact-info-form' && modalType !== 'offer-info-form' &&
                                 <Button
                                     style={{ margin: '0 5px' }}
                                     variant="primary"

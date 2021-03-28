@@ -1,9 +1,9 @@
 import { ServerUrl } from './ServerUrl'
 import { getValidToken } from './Authentication'
 
-export default function fetchGet(path) {
+export default function fetchGet(path, authRequired=true) {
     return new Promise(async (resolve, reject) => {
-        const token = path === "store-items" ? "" : await getValidToken();
+        const token = authRequired ? await getValidToken() : "";
         fetch(`${ServerUrl}/${path}`,
             {
                 method: 'GET',

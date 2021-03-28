@@ -26,14 +26,17 @@ const inputFields = [
   },
 ];
 
-const headers = ["מודל", "משקל", "עלות", "נקיון", "צבע", "קוד", "הערות", "תאריך קנייה - תשלום", "סטטוס", "מלאי", "", ""];
+const offerModalFields = ["מודל היהלום", "קוד היהלום", "שם הפונה", "טלפון", "מייל", "משקל מוצע", "מחיר מוצע", "הערות"]
+
+const headers = ["מודל", "משקל", "עלות", "נקיון", "צבע", "קוד", "הערות", "תאריך קנייה - תשלום", "סטטוס", "מלאי", "כמות פניות", "", ""];
 
 export default function StockTable() {
   const [content, setContent] = useState([[]]);
   const [tableRender, setTableRender] = useState([]);
   const [loading, setLoading] = useState(false);
   const [updateModalId, setUpdateModalId] = useState(false);
-
+  const [showOffersModal, setShowOffersModal] = useState();
+  const [currOfferPagination, setCurrOfferPagination] = useState();
   // Fecth data from DB
   useEffect(() => {
     fetchData();
@@ -45,12 +48,22 @@ export default function StockTable() {
       if (item.length < headers.length - 1) {
         return;
       }
+      const watchOffersBtn =
+        <Button
+          key={Math.random() * index}
+          variant="outline-info"
+          disabled={item[11] === 0}
+          onClick={() => getOfferData(item[0])}
+        >
+          צפה בפניות!
+      </Button>;
+
       const confirmBtn =
         <Button
           key={Math.random() * index}
           variant={content[index][9] === 'בחנות' ? "outline-danger" : "outline-success"}
           onClick={() => moveInOutStoreHandler(index)}>
-          {content[index][9] === 'בחנות' ? 'הוצא מהחנות' : 'העבר לחנות'}
+          {item[9] === 'בחנות' ? 'הוצא מהחנות' : 'העבר לחנות'}
         </Button>;
 
       const updateBtn =
@@ -70,7 +83,7 @@ export default function StockTable() {
        </Button>;
 
       const renderItems = item.slice(1);
-      tempContent.push([...renderItems, confirmBtn, updateBtn, deleteBtn]);
+      tempContent.push([...renderItems, watchOffersBtn, confirmBtn, updateBtn, deleteBtn]);
     })
     setTableRender(tempContent)
   }, [content])
@@ -79,7 +92,8 @@ export default function StockTable() {
     setLoading(true);
     try {
       const fetchedData = await fetchGet('stocks');
-      renderData(fetchedData);
+      const fetchOfferCounter = await fetchGet('stocks-to-offers-counter');
+      renderData(fetchedData, fetchOfferCounter);
 
     } catch {
       console.log("Failed to fetch contact data from DB");
@@ -89,7 +103,7 @@ export default function StockTable() {
   }
 
   const updatePostUi = (newStock) => {
-    const newStockFixed = [...newStock, newStock[2] * newStock[3]]
+    const newStockFixed = [...newStock, newStock[2] * newStock[3], 0]
     setContent(prevContent => [...prevContent, newStockFixed]);
   }
 
@@ -111,7 +125,7 @@ export default function StockTable() {
     setContent(tempContent);
   }
 
-  const renderData = (data) => {
+  const renderData = (data, offerCounterData) => {
     const tempStock = []
     Object.values(data).forEach(stockValues => {
       const subTempStock = [];
@@ -122,6 +136,7 @@ export default function StockTable() {
         stockValues['code'], stockValues['comments'],
         stockValues['sell_date'], stockValues['status'],
         stockValues['weight_in_karat'] * stockValues['cost_per_karat'],
+        offerCounterData[stockValues['stock_id']] ?? 0
       );
       tempStock.push(subTempStock);
 
@@ -171,6 +186,57 @@ export default function StockTable() {
     }
   }
 
+  const getOfferData = async (offerId) => {
+    window.offerData = await fetchGet(`stock-to-offers/${offerId}`);
+    setCurrOfferPagination(0);
+    setShowOffersModal({
+      id: offerId,
+      data: [
+        { name: "מודל", content: window.offerData[0]['package_model'] },
+        { name: "קוד", content: window.offerData[0]['code'] },
+        { name: "שם הפונה", content: window.offerData[0]['name'] },
+        { name: "טלפון", content: window.offerData[0]['phone'] },
+        { name: "מייל", content: window.offerData[0]['email'] },
+        { name: "משקל מוצע", content: window.offerData[0]['offered_weight'] },
+        { name: "מחיר מוצע", content: window.offerData[0]['offered_price'] },
+        { name: "הערות", content: window.offerData[0]['additional_comments'], multiline: true },
+        // { name: "תאריך קנייה - תשלום", content: stockValues['sell_date'], type: 'date' },
+      ]
+    });
+  }
+
+  const offerPagePagination = (operation) => {
+    let nextPage;
+    if (operation === '+') {
+      nextPage = currOfferPagination + 1;
+    }
+    else {
+      nextPage = currOfferPagination - 1;
+    }
+
+    if (!window.offerData[nextPage]) {
+      alert('No more data');
+      return;
+    }
+    setShowOffersModal(lastState => {
+      return (
+        {
+          ...lastState,
+          data: [
+            { name: "מודל", content: window.offerData[nextPage]['package_model'] },
+            { name: "קוד", content: window.offerData[nextPage]['code'] },
+            { name: "שם הפונה", content: window.offerData[nextPage]['name'] },
+            { name: "טלפון", content: window.offerData[nextPage]['phone'] },
+            { name: "מייל", content: window.offerData[nextPage]['email'] },
+            { name: "משקל מוצע", content: window.offerData[nextPage]['offered_weight'] },
+            { name: "מחיר מוצע", content: window.offerData[nextPage]['offered_price'] },
+            { name: "הערות", content: window.offerData[nextPage]['additional_comments'], multiline: true },
+            // { name: "תאריך קנייה - תשלום", content: stockValues['sell_date'], type: 'date' },
+          ]
+        });
+    });
+    setCurrOfferPagination(nextPage);
+  }
   //Returns the table to our requested page, shows us all the company's current inventory.
   //Another element gives an indication to the business owner, what the status of his credit line at a given moment.
   return (
@@ -204,6 +270,18 @@ export default function StockTable() {
           updatePutUiFunc={updatePutUi}
         />
       }
+      {
+        showOffersModal &&
+        <FormModal
+          modalType="offer-info-form"
+          fields={showOffersModal.data}
+          autoShow={true}
+          closeForm={() => setShowOffersModal(false)}
+          popUpTitle="פרטי ההצעה"
+          updatePutUiFunc={updatePutUi}
+          pagePagination={offerPagePagination}
+        />
+      }
 
       <FormModal
         fields={inputFields}
@@ -214,7 +292,7 @@ export default function StockTable() {
       />
 
       <div className="progress-stock-wrapper">
-        <label> ניצול מסגרת האשראי </label>
+        <label>ניצול מסגרת האשראי</label>
         <CircularProgressbar
           maxValue={100}
           value={10}

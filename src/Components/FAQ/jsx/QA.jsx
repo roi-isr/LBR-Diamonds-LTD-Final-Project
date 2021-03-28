@@ -6,7 +6,7 @@ class QA extends React.Component {
   render() {
     return (
       <div className='Guide'>
-        <h3 style={{ textAlign: 'center', fontSize: '50px', fontWeight: 'bold' }}>Step-by-Step Guide</h3>
+        <h3 className='qa-title' >Step-by-Step Guide</h3>
         <h4><u>How to Choose a Diamond:</u></h4>
         <p>
           1 . First, identify the diamond shape desired by the recipient. If you do not know and cannot find out, consider round or princess cut.

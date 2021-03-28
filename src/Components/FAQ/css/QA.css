@@ -9,3 +9,9 @@
     width: 100%;
     margin: 5px auto;
 }
+
+.qa-title {
+    text-align: center;
+    font-size: 50px;
+    font-weight: bold;
+}

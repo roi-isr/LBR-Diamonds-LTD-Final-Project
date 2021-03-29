@@ -33,7 +33,7 @@ function ManagementTable({ headers, content, contentController, startIdx, direct
     return (
         <div className="man-table-wrapper">
             <Table dir={direction || "rtl"}
-                style={{ textAlign: 'right', fontSize: '1.2rem', textAlign: 'center' }}
+                style={{ fontSize: '1.2rem', textAlign: 'center' }}
                 striped bordered hover>
                 <thead>
                     <tr>
@@ -60,7 +60,7 @@ function ManagementTable({ headers, content, contentController, startIdx, direct
                         <tr
                             key={Math.random() * index}>
                             {row.map((item, idx) =>
-                                <td class="align-middle"
+                                <td className="align-middle"
                                     key={Math.random() * idx}>
                                     {item}
                                 </td>

@@ -18,7 +18,7 @@ const inputFields = [
   { name: "שם השולח", type: 'text' },
   { name: "תאריך המשלוח", type: 'date' }];
 
-const headers = ["מספר החבילה", "משקל החבילה", "מהיכן המשלוח", "חברת השילוח", "שם השולח ", "תאריך המשלוח", "", "",""];
+const headers = ["מספר החבילה", "משקל החבילה", "מהיכן המשלוח", "חברת השילוח", "שם השולח ", "תאריך המשלוח", "", "", ""];
 
 export default function DeliveryTable() {
   const [content, setContent] = useState([[]]);
@@ -28,10 +28,39 @@ export default function DeliveryTable() {
 
   // Fecth data from DB
   useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const fetchedData = await fetchGet('deliveries');
+        console.log(fetchedData)
+        renderData(fetchedData);
+
+      } catch {
+        console.log("Failed to fetch contact data from DB");
+      } finally {
+        setLoading(false);
+      }
+    }
+
     fetchData();
   }, []);
 
   useEffect(() => {
+    const deleteRow = async (index) => {
+      const con = window.confirm("Are you sure that you want to delete the item?");
+      if (!con) {
+        return
+      }
+      try {
+        // Delete from DB
+        await fetchDelete(`delivery/${content[index][0]}`);
+        // Delete from UI
+        setContent(prevContent => prevContent.filter((item, i) => index !== i));
+      } catch {
+        alert('Error in deletion...')
+      }
+    }
+
     let tempContent = [];
     content.forEach((item, index) => {
       if (item.length < headers.length - 2) {
@@ -69,35 +98,6 @@ export default function DeliveryTable() {
 
   const updatePostUi = (newDelivery) => {
     setContent(prevContent => [...prevContent, newDelivery]);
-  }
-
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const fetchedData = await fetchGet('deliveries');
-      console.log(fetchedData)
-      renderData(fetchedData);
-
-    } catch {
-      console.log("Failed to fetch contact data from DB");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  const deleteRow = async (index) => {
-    const con = window.confirm("Are you sure that you want to delete the item?");
-    if (!con) {
-      return
-    }
-    try {
-      // Delete from DB
-      await fetchDelete(`delivery/${content[index][0]}`);
-      // Delete from UI
-      setContent(prevContent => prevContent.filter((item, i) => index !== i));
-    } catch {
-      alert('Error in deletion...')
-    }
   }
 
   const updatePutUi = (updatedItem) => {

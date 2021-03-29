@@ -27,6 +27,19 @@ function ItemsLayout() {
 
   // Fecth data from DB
   useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const fetchedData = await fetchGet('store-items', false);
+        renderData(fetchedData);
+
+      } catch {
+        console.log("Failed to fetch contact data from DB");
+      } finally {
+        setLoading(false);
+      }
+    }
+
     fetchData();
   }, []);
 
@@ -46,19 +59,6 @@ function ItemsLayout() {
     })
     setTableRender(tempContent);
   }, [content])
-
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const fetchedData = await fetchGet('store-items', false);
-      renderData(fetchedData);
-
-    } catch {
-      console.log("Failed to fetch contact data from DB");
-    } finally {
-      setLoading(false);
-    }
-  }
 
   // Convert the data fetch for DB into renderable data
   const renderData = (data) => {

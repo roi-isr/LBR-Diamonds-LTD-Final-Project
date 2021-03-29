@@ -17,7 +17,6 @@ const createCookies = (tokens) => {
 const updateAccessTokenCookie = (token) => {
     const cookies = new WebCookies();
     cookies.setAccessToken(token);
-
 }
 
 /* Managing the token reducer (redux's global state)*/

@@ -1,4 +1,5 @@
 /* using react-router-dom for implementing multi-page application with a router component */
+
 import React from 'react';
 import Homepage from '../Components/HomePage/jsx/Homepage'
 import Store from '../Components/VirtualStore/jsx/VirtualStore'
@@ -8,13 +9,14 @@ import About from '../Components/About/jsx/About'
 import Sign from '../Components/Login/sign-in-side/SignInSide'
 import WithAdmin from '../HOC/WithAdmin'
 import Admin from '../Components/Admin/Admin'
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import NotFound from '../Components/NotFound/NotFound'
 import BasicTable from '../Components/Admin/StockTable/jsx/StockTable';
 import DeliveryTable from '../Components/Admin/DeliveryCheck/jsx/DeliveryFile';
 import SellTable from '../Components/Admin/SellTable/jsx/SellTable';
 import AdminContact from '../Components/Admin/ContactData/jsx/ContactData'
 import PredictForm from '../Components/Admin/PredictPrice/PredictPrice'
+import { AdminHomeWelcome } from '../Components/Admin/Admin'
 
 const RedirectToHome = () => <Redirect to="home" />;
 
@@ -35,6 +37,7 @@ function RouterComponent({ routing, relUrl }) {
     ];
 
     const adminPaths = [
+        { path: relUrl + '/', exact: true, component: AdminHomeWelcome },
         { path: relUrl + '/reports', component: BasicTable },
         { path: relUrl + '/delivery', component: DeliveryTable },
         { path: relUrl + '/sell', component: SellTable },
@@ -62,6 +65,7 @@ function RouterComponent({ routing, relUrl }) {
                     {...item} />
             )}
         </Switch>;
+
     return switchContainer;
 }
 

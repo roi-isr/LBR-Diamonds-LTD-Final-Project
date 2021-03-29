@@ -18,7 +18,6 @@ import { save_token } from '../../../store/actions/index'
 import Admin from '../../Admin/Admin'
 import Loader from 'react-loader-spinner'
 import styled from 'styled-components/macro';
-import { WebCookies } from '../../../Entities/Cookies'
 import { fetchAuthRequest } from '../../../ApiEndpoints/Authentication';
 
 const LoadingDiv = styled.div
@@ -94,8 +93,7 @@ function SignInSide(props) {
     try {
       // Authenticate admin
       const tokens = await fetchAuthRequest(httpContent);
-      const cookie = new WebCookies();
-      props.token_saver(tokens);
+      props.tokenSaver(tokens);
     } catch (error) {
       alert(error);
     } finally {
@@ -202,7 +200,7 @@ function SignInSide(props) {
 
 const mapDispatchToProp = (dispatch) => {
   return {
-    token_saver: (tokens) => dispatch(save_token(tokens))
+    tokenSaver: (tokens) => dispatch(save_token(tokens))
   }
 }
 

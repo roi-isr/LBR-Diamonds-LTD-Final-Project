@@ -67,9 +67,9 @@ function CustomizedNavItem(props) {
                             to={{
                                 pathname: item.path || null
                             }}
+                            key={index}
                             className="nav-link"
-                            onClick={() => navItemClickHandler(item)}
-                            key={index}>
+                            onClick={() => navItemClickHandler(item)}>
                             {item.name}
                         </Nav.Link>
                     )}

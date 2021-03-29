@@ -19,10 +19,32 @@ function ContactData() {
     const [itemDetailsIndex, setitemDetailsIndex] = useState(false);
 
     useEffect(() => {
+        // Fecth data from DB
+        const fetchContact = async () => {
+            setLoading(true);
+            try {
+                const fetchedData = await fetchGet('contacts');
+                renderData(fetchedData);
+                setLoading(false);
+            } catch {
+                console.log("Failed to fetch contact data from DB");
+            }
+        }
         fetchContact();
     }, []);
 
     useEffect(() => {
+        // Delete a row from contact table
+        const deleteRow = async (index) => {
+            const con = window.confirm("Are you sure that you want to delete the item?");
+            if (!con) {
+                return
+            }
+            const deleteId = content[index][4];
+            await deleteFromDatabase(deleteId);
+            deleteFromUI(index);
+        }
+
         let tempContent = [];
         content.forEach((item, index) => {
             if (item.length < headers.length - 1) {
@@ -49,18 +71,6 @@ function ContactData() {
         })
         setTableRender(tempContent)
     }, [content])
-
-    // Fecth data from DB
-    const fetchContact = async () => {
-        setLoading(true);
-        try {
-            const fetchedData = await fetchGet('contacts');
-            renderData(fetchedData);
-            setLoading(false);
-        } catch {
-            console.log("Failed to fetch contact data from DB");
-        }
-    }
 
     // Convert the data fetch for DB into renderable data
     const renderData = (data) => {
@@ -92,9 +102,16 @@ function ContactData() {
         setContent(prevContent => prevContent.filter((item, i) => index !== i));
     }
 
-    const deleteFromDatabase = (deleteId) => {
-        const token = getValidToken();
-        fetch(`${ServerUrl}/contact/${deleteId}`,
+    const deleteFromDatabase = async (deleteId) => {
+        const token = await getValidToken();
+
+        const onSubmitSuccess = (msg) => {
+            console.log(msg);
+        }
+        const onSubmitFail = () => {
+            console.log("Failed to delete contact data from DB");
+        }
+        return fetch(`${ServerUrl}/contact/${deleteId}`,
             {
                 method: 'DELETE',
                 headers:
@@ -106,23 +123,7 @@ function ContactData() {
             .then(data => onSubmitSuccess(data.message))
             .catch(() => onSubmitFail())
 
-        const onSubmitSuccess = (msg) => {
-            console.log(msg);
-        }
-        const onSubmitFail = () => {
-            console.log("Failed to delete contact data from DB");
-        }
-    }
 
-    // Delete a row from contact table
-    const deleteRow = (index) => {
-        const con = window.confirm("Are you sure that you want to delete the item?");
-        if (!con) {
-            return
-        }
-        deleteFromUI(index);
-        const deleteId = content[index][4];
-        deleteFromDatabase(deleteId);
     }
 
     // Returns the table to our requested page.

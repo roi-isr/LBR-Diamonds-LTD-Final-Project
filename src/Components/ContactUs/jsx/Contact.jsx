@@ -77,7 +77,7 @@ function ContactForm() {
     const [content, setContent] = useState("")
 
     // Send the form data to the server .
-    const submitForm = (event) => {
+    const submitForm = async (event) => {
         event.preventDefault();
         const contentData = {
             email_address: email,
@@ -85,11 +85,22 @@ function ContactForm() {
             phone: phone,
             content: content
         }
-        fetchContact(contentData);
+        await fetchContact(contentData);
     }
 
-    const fetchContact = (content) => {
-        fetch(`${ServerUrl}/contact`,
+    const fetchContact = async (content) => {
+        const onSubmitSuccess = () => {
+            alert("הודעתך נשלחה בהצלחה!");
+            setEmail("");
+            setName("");
+            setPhone("");
+            setContent("");
+        }
+
+        const onSubmitFail = () => {
+            console.log("בעיה בשליחת ההודעה...");
+        }
+        return fetch(`${ServerUrl}/contact`,
             {
                 mode: 'no-cors',
                 method: 'POST',
@@ -101,18 +112,6 @@ function ContactForm() {
             })
             .then(() => onSubmitSuccess())
             .catch(() => onSubmitFail())
-    }
-
-    const onSubmitSuccess = () => {
-        alert("הודעתך נשלחה בהצלחה!");
-        setEmail("");
-        setName("");
-        setPhone("");
-        setContent("");
-    }
-
-    const onSubmitFail = () => {
-        console.log("בעיה בשליחת ההודעה...");
     }
 
     const formElementsAttr = [
@@ -151,7 +150,10 @@ function ContactForm() {
             <Form.Group
                 key={index}
                 controlId={item.controlId}>
-                <Form.Label>{item.label}</Form.Label>
+                <Form.Label
+                    style={{ fontSize: '1.2rem' }}>
+                    {item.label}
+                </Form.Label>
                 <Form.Control
                     required
                     {...item.controlAttr}

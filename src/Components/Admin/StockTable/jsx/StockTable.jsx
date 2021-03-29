@@ -26,8 +26,6 @@ const inputFields = [
   },
 ];
 
-const offerModalFields = ["מודל היהלום", "קוד היהלום", "שם הפונה", "טלפון", "מייל", "משקל מוצע", "מחיר מוצע", "הערות"]
-
 const headers = ["מודל", "משקל", "עלות", "נקיון", "צבע", "קוד", "הערות", "תאריך קנייה - תשלום", "סטטוס", "מלאי", "כמות פניות", "", ""];
 
 export default function StockTable() {
@@ -37,12 +35,78 @@ export default function StockTable() {
   const [updateModalId, setUpdateModalId] = useState(false);
   const [showOffersModal, setShowOffersModal] = useState();
   const [currOfferPagination, setCurrOfferPagination] = useState();
+  const [offerData, setOfferData] = useState();
   // Fecth data from DB
   useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const fetchedData = await fetchGet('stocks');
+        const fetchOfferCounter = await fetchGet('stocks-to-offers-counter');
+        renderData(fetchedData, fetchOfferCounter);
+
+      } catch (err) {
+        console.log("Failed to fetch contact data from DB");
+      } finally {
+        setLoading(false);
+      }
+    }
     fetchData();
   }, []);
 
   useEffect(() => {
+    const deleteRow = async (index) => {
+      const con = window.confirm("Are you sure that you want to delete the item?");
+      if (!con) {
+        return
+      }
+      try {
+        await fetchDelete(`stock/${content[index][0]}`);
+        setContent(prevContent => prevContent.filter((item, i) => index !== i));
+      } catch {
+        alert('Error in deletion...')
+      }
+    }
+
+    // Move an item in or out of the store
+    const moveInOutStoreHandler = async (index) => {
+      const userConfirm = window.confirm(`האם אתה בטוח שברצונך ${content[index][9] === 'בחנות' ? 'להוציא' : 'להכניס'} את הפריט ${content[index][9] === 'בחנות' ? 'מה' : 'אל ה'}חנות?`);
+      if (!userConfirm) {
+        return;
+      }
+      const nextStatus = content[index][9] === 'בחנות' ? 'לא בחנות' : 'בחנות';
+      try {
+        await fetchPut(`stock/update-status/${content[index][0]}`, { status: nextStatus })
+        const tempContent = [...content];
+        tempContent[index][9] = nextStatus;
+        setContent(tempContent);
+        alert(`הפריט הועבר ${content[index][9] === 'בחנות' ? 'אל ה' : 'מה'}חנות בהצלחה!`)
+      }
+      catch {
+        alert(`בעיה בהעברת פריט ${content[index][9] === 'בחנות' ? 'מה' : 'אל ה'}`);
+      }
+    }
+
+    const watchOffer = async (stockId) => {
+      const offerD = await fetchGet(`stock-to-offers/${stockId}`)
+      setOfferData(offerD);
+      setCurrOfferPagination(0);
+      setShowOffersModal({
+        offer_id: offerD[0]['offer_id'],
+        data: [
+          { name: "מודל", content: offerD[0]['package_model'] },
+          { name: "קוד", content: offerD[0]['code'] },
+          { name: "שם הפונה", content: offerD[0]['name'] },
+          { name: "טלפון", content: offerD[0]['phone'] },
+          { name: "מייל", content: offerD[0]['email'] },
+          { name: "משקל מוצע", content: offerD[0]['offered_weight'] },
+          { name: "מחיר מוצע", content: offerD[0]['offered_price'] },
+          { name: "הערות", content: offerD[0]['additional_comments'], multiline: true },
+          // { name: "תאריך קנייה - תשלום", content: stockValues['sell_date'], type: 'date' },
+        ]
+      });
+    }
+
     let tempContent = [];
     content.forEach((item, index) => {
       if (item.length < headers.length - 1) {
@@ -53,7 +117,7 @@ export default function StockTable() {
           key={Math.random() * index}
           variant="outline-info"
           disabled={item[11] === 0}
-          onClick={() => getOfferData(item[0])}
+          onClick={() => watchOffer(item[0])}
         >
           צפה בפניות!
       </Button>;
@@ -86,21 +150,7 @@ export default function StockTable() {
       tempContent.push([...renderItems, watchOffersBtn, confirmBtn, updateBtn, deleteBtn]);
     })
     setTableRender(tempContent)
-  }, [content])
-
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const fetchedData = await fetchGet('stocks');
-      const fetchOfferCounter = await fetchGet('stocks-to-offers-counter');
-      renderData(fetchedData, fetchOfferCounter);
-
-    } catch {
-      console.log("Failed to fetch contact data from DB");
-    } finally {
-      setLoading(false);
-    }
-  }
+  }, [content, offerData])
 
   const updatePostUi = (newStock) => {
     const newStockFixed = [...newStock, newStock[2] * newStock[3], 0]
@@ -124,6 +174,7 @@ export default function StockTable() {
     ];
     setContent(tempContent);
   }
+
 
   const renderData = (data, offerCounterData) => {
     const tempStock = []
@@ -154,88 +205,74 @@ export default function StockTable() {
     setContent(tempStock);
   }
 
-  const deleteRow = async (index) => {
-    const con = window.confirm("Are you sure that you want to delete the item?");
-    if (!con) {
-      return
-    }
-    try {
-      await fetchDelete(`stock/${content[index][0]}`);
-      setContent(prevContent => prevContent.filter((item, i) => index !== i));
-    } catch {
-      alert('Error in deletion...')
-    }
-  }
-
-  // Move an item in or out of the store
-  const moveInOutStoreHandler = async (index) => {
-    const userConfirm = window.confirm(`האם אתה בטוח שברצונך ${content[index][9] === 'בחנות' ? 'להוציא' : 'להכניס'} את הפריט ${content[index][9] === 'בחנות' ? 'מה' : 'אל ה'}חנות?`);
-    if (!userConfirm) {
-      return;
-    }
-    const nextStatus = content[index][9] === 'בחנות' ? 'לא בחנות' : 'בחנות';
-    try {
-      await fetchPut(`stock/update-status/${content[index][0]}`, { status: nextStatus })
-      const tempContent = [...content];
-      tempContent[index][9] = nextStatus;
-      setContent(tempContent);
-      alert(`הפריט הועבר ${content[index][9] === 'בחנות' ? 'אל ה' : 'מה'}חנות בהצלחה!`)
-    }
-    catch {
-      alert(`בעיה בהעברת פריט ${content[index][9] === 'בחנות' ? 'מה' : 'אל ה'}`);
-    }
-  }
-
-  const getOfferData = async (offerId) => {
-    window.offerData = await fetchGet(`stock-to-offers/${offerId}`);
-    setCurrOfferPagination(0);
-    setShowOffersModal({
-      id: offerId,
-      data: [
-        { name: "מודל", content: window.offerData[0]['package_model'] },
-        { name: "קוד", content: window.offerData[0]['code'] },
-        { name: "שם הפונה", content: window.offerData[0]['name'] },
-        { name: "טלפון", content: window.offerData[0]['phone'] },
-        { name: "מייל", content: window.offerData[0]['email'] },
-        { name: "משקל מוצע", content: window.offerData[0]['offered_weight'] },
-        { name: "מחיר מוצע", content: window.offerData[0]['offered_price'] },
-        { name: "הערות", content: window.offerData[0]['additional_comments'], multiline: true },
-        // { name: "תאריך קנייה - תשלום", content: stockValues['sell_date'], type: 'date' },
-      ]
-    });
-  }
-
-  const offerPagePagination = (operation) => {
+  const offerPagePagination = (operation, afterDelete = false) => {
     let nextPage;
-    if (operation === '+') {
-      nextPage = currOfferPagination + 1;
-    }
-    else {
+    if (operation === '-') {
       nextPage = currOfferPagination - 1;
     }
-
-    if (!window.offerData[nextPage]) {
-      alert('No more data');
+    else {
+      nextPage = currOfferPagination + 1;
+    }
+    if (afterDelete && Object.keys(offerData).length === 1) {
+      setShowOffersModal(lastState => {
+        return (
+          {
+            ...lastState,
+            offer_id: "",
+            data: []
+          });
+      });
+      alert('אין פניות נוספות...');
       return;
     }
+
+    else if (!offerData[nextPage]) {
+      alert('אין פניות נוספות...');
+      return;
+    }
+
     setShowOffersModal(lastState => {
       return (
         {
           ...lastState,
+          offer_id: offerData[nextPage]['offer_id'],
           data: [
-            { name: "מודל", content: window.offerData[nextPage]['package_model'] },
-            { name: "קוד", content: window.offerData[nextPage]['code'] },
-            { name: "שם הפונה", content: window.offerData[nextPage]['name'] },
-            { name: "טלפון", content: window.offerData[nextPage]['phone'] },
-            { name: "מייל", content: window.offerData[nextPage]['email'] },
-            { name: "משקל מוצע", content: window.offerData[nextPage]['offered_weight'] },
-            { name: "מחיר מוצע", content: window.offerData[nextPage]['offered_price'] },
-            { name: "הערות", content: window.offerData[nextPage]['additional_comments'], multiline: true },
+            { name: "מודל", content: offerData[nextPage]['package_model'] },
+            { name: "קוד", content: offerData[nextPage]['code'] },
+            { name: "שם הפונה", content: offerData[nextPage]['name'] },
+            { name: "טלפון", content: offerData[nextPage]['phone'] },
+            { name: "מייל", content: offerData[nextPage]['email'] },
+            { name: "משקל מוצע", content: offerData[nextPage]['offered_weight'] },
+            { name: "מחיר מוצע", content: offerData[nextPage]['offered_price'] },
+            { name: "הערות", content: offerData[nextPage]['additional_comments'], multiline: true },
             // { name: "תאריך קנייה - תשלום", content: stockValues['sell_date'], type: 'date' },
           ]
         });
     });
-    setCurrOfferPagination(nextPage);
+    if (operation !== 'none') {
+      setCurrOfferPagination(nextPage);
+    }
+  }
+
+  const removeCurrentOfferFromUi = () => {
+    const reducedOfferIdx = content.findIndex(item => item[0] === offerData[currOfferPagination]['stock_id']);
+    const tempOfferData = { ...offerData };
+    delete tempOfferData[currOfferPagination];
+    // Reorder items after remove
+    for (let i = currOfferPagination; i < Object.keys(offerData).length - 1; i++) {
+      tempOfferData[i] = tempOfferData[i + 1];
+    }
+    delete tempOfferData[Object.keys(offerData).length - 1];
+    if (currOfferPagination === 0) {
+      offerPagePagination('none', true);
+    }
+    else {
+      offerPagePagination('-', true);
+    }
+    const updatedContent = [...content];
+    updatedContent[reducedOfferIdx][11]--;
+    setOfferData(tempOfferData);
+    setContent(updatedContent);
   }
   //Returns the table to our requested page, shows us all the company's current inventory.
   //Another element gives an indication to the business owner, what the status of his credit line at a given moment.
@@ -274,12 +311,14 @@ export default function StockTable() {
         showOffersModal &&
         <FormModal
           modalType="offer-info-form"
-          fields={showOffersModal.data}
+          fields={showOffersModal}
           autoShow={true}
           closeForm={() => setShowOffersModal(false)}
           popUpTitle="פרטי ההצעה"
           updatePutUiFunc={updatePutUi}
           pagePagination={offerPagePagination}
+          currPage={`${Object.keys(offerData).length === 0 ? 0 : currOfferPagination + 1}/${Object.keys(offerData).length}`}
+          removeCurrentOfferFromUi={removeCurrentOfferFromUi}
         />
       }
 

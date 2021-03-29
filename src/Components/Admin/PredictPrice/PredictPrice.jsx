@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import RadioBox from "./RadioBox"
@@ -18,7 +18,7 @@ export default function PredictForm() {
         <React.Fragment>
             <h1 className="pred-title-div">Predict diamonds price (ML based)</h1>
             <div className="predict-main-div">
-                <img src={background} className="predict-dmn-img" />
+                <img src={background} alt="diamond-price-predictions" className="predict-dmn-img" />
 
                 <Form dir='rtl' background={background} className="predict-form" >
 

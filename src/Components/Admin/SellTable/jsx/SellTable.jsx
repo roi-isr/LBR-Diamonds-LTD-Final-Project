@@ -30,10 +30,38 @@ export default function SellTable() {
 
   // Fecth data from DB
   useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const fetchedData = await fetchGet('sells');
+        renderData(fetchedData);
+
+      } catch {
+        console.log("Failed to fetch contact data from DB");
+      } finally {
+        setLoading(false);
+      }
+    }
     fetchData();
   }, []);
 
   useEffect(() => {
+
+    const deleteRow = async (index) => {
+      const con = window.confirm("Are you sure that you want to delete the item?");
+      if (!con) {
+        return
+      }
+      try {
+        // Delete from DB
+        await fetchDelete(`sell/${content[index][0]}`);
+        // Delete from UI
+        setContent(prevContent => prevContent.filter((item, i) => index !== i));
+      } catch {
+        alert('Error in deletion...')
+      }
+    }
+
     let tempContent = [];
     content.forEach((item, index) => {
       if (item.length < headers.length - 1) {
@@ -67,34 +95,6 @@ export default function SellTable() {
     // Add the total column
     newSellFixed.splice(5, 0, newSell[3] * newSell[4]);
     setContent(prevContent => [...prevContent, newSellFixed]);
-  }
-
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const fetchedData = await fetchGet('sells');
-      renderData(fetchedData);
-
-    } catch {
-      console.log("Failed to fetch contact data from DB");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  const deleteRow = async (index) => {
-    const con = window.confirm("Are you sure that you want to delete the item?");
-    if (!con) {
-      return
-    }
-    try {
-      // Delete from DB
-      await fetchDelete(`sell/${content[index][0]}`);
-      // Delete from UI
-      setContent(prevContent => prevContent.filter((item, i) => index !== i));
-    } catch {
-      alert('Error in deletion...')
-    }
   }
 
   const updatePutUi = (updatedItem) => {

@@ -33,7 +33,7 @@ class QA extends React.Component {
         </ul>
 
 
-        <Button className="qa-search-btn" color="primary" disableElevation>
+        <Button className="qa-search-btn" color="primary">
           SEARCH FOR A DIAMOND NOW
         </Button>
       </div >

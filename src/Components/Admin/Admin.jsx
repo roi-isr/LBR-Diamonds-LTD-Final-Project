@@ -7,9 +7,20 @@ import { WebCookies } from '../../Entities/Cookies';
 import { withRouter, useHistory } from 'react-router-dom';
 import RouterComponent from '../../Routers/Router'
 import './Admin.css';
+import styled from 'styled-components/macro'
+
+const AdminWelcome = styled.h1`
+    font-size: 180px;
+    text-align: center;
+    margin: 100px 0;
+    @media (max-width: 990px){
+        font-size: 105px;
+    }
+`
 
 function Admin(props) {
     const history = useHistory();
+
     /* Log off as admin and return to home page*/
     const logout = useCallback(() => {
         const logOutPrompt = window.confirm("Are you sure that you want to log out?");
@@ -20,11 +31,11 @@ function Admin(props) {
         removeCookies();
         props.logOut();
         props.showNav(false);
-    }, [props]);
+    }, [props, history]);
 
     /* Remove access token from browser cookies */
     const removeCookies = () => {
-        const cookies = new WebCookies().removeCookies();
+        (new WebCookies()).removeCookies();
     }
 
     /* Display dedicated navbar options for admin */
@@ -53,6 +64,10 @@ function Admin(props) {
             />
         </React.Fragment>
     );
+}
+
+export const AdminHomeWelcome = () => {
+    return <AdminWelcome>Welcome, admin!</AdminWelcome>;
 }
 
 const mapDispatchToProp = (dispatch) => {

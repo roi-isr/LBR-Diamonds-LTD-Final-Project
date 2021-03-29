@@ -4,21 +4,23 @@ import { connect } from 'react-redux';
 import { WebCookies } from '../Entities/Cookies'
 
 function WithAdmin(props) {
-    useEffect(() => {
-        props.hide_nav();
-        if (!props.isLoggedIn) {
-            getTokenFromCookies();
-        }
-    }, []);
 
     /* Get access token from cookies, in case of a page refresh */
-    const getTokenFromCookies = () => {
-        const cookies = new WebCookies();
-        const refreshToken = cookies.getRefreshToken();
-        if (refreshToken) {
-            props.refreshToken(refreshToken);
+    useEffect(() => {
+        if (props.isLoggedIn) {
+            return;
         }
-    }
+        const getTokenFromCookies = () => {
+            const cookies = new WebCookies();
+            const refreshToken = cookies.getRefreshToken();
+            if (refreshToken) {
+                props.refreshToken(refreshToken);
+            }
+        }
+        props.hideNav();
+        getTokenFromCookies();
+
+    }, [props]);
 
     return (
         <React.Fragment>
@@ -32,7 +34,7 @@ function WithAdmin(props) {
 
 const mapDispatchToProp = (dispatch) => {
     return {
-        hide_nav: () => dispatch(change_visiblity(false)),
+        hideNav: () => dispatch(change_visiblity(false)),
         refreshToken: (refreshToken) => dispatch(update_login_stat(refreshToken))
     }
 }

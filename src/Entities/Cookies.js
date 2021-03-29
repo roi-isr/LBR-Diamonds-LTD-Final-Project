@@ -3,7 +3,7 @@
 import Cookies from "universal-cookie";
 export class WebCookies {
     constructor() {
-        this._cookies = new Cookies;
+        this._cookies = new Cookies();
         this._accessKey = 'accessTokenStr';
         this._refreshKey = 'refreshTokenStr';
         this._expirationKey = 'accessTokenExpiration'

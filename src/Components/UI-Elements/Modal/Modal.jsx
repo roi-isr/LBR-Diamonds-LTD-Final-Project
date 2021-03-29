@@ -6,13 +6,14 @@ import FormLabel from '@material-ui/core/FormLabel';
 import Button from 'react-bootstrap/Button'
 import fetchPost from '../../../ApiEndpoints/Post';
 import fetchPut from '../../../ApiEndpoints/Put';
+import fetchDelete from '../../../ApiEndpoints/Delete';
 import Loader from 'react-loader-spinner';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import MenuItem from '@material-ui/core/MenuItem'
 
 function ModalForm({ modalType, fields, autoShow, closeForm,
     popUpTitle, apiPath, updatePostUiFunc, updatePutUiFunc, directionInput,
-    authRequired, pagePagination }) {
+    authRequired, pagePagination, currPage, removeCurrentOfferFromUi }) {
     const [show, setShow] = useState(false);
     const [inputData, setInputData] = useState({});
     const [isFetching, setIsFetching] = useState(false);
@@ -26,7 +27,7 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
             });
             setInputData(contentObj);
         }
-    }, [])
+    }, [fields, modalType])
 
     const handleClose = () => {
         setInputData({});
@@ -43,7 +44,6 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
         try {
             setIsFetching(true);
             if (modalType === 'update-form') {
-                console.log(inputData);
                 itemId = await fetchPut(apiPath, inputData);
                 updatePutUiFunc([itemId, ...Object.values(inputData)])
             } else {
@@ -51,7 +51,7 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
                 updatePostUiFunc && updatePostUiFunc([itemId, ...Object.values(inputData)]);
             }
             setIsFetching('Success');
-            setTimeout(handleClose, 2000);
+            setTimeout(handleClose, 1000);
         } catch {
             alert('error')
             setIsFetching('Fail');
@@ -124,13 +124,24 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
                     </TextField>
                 </div>
             );
-        }
-        );
+        });
     }
 
     else if (modalType === 'offer-info-form') {
+        const fieldsFixed = fields.data;
+        const offerId = fields.offer_id;
+        const offerUserEmail = fieldsFixed[4]?.content;
+
+        const deleteOffer = async (offerId) => {
+            const deleteConfirm = window.confirm('האם אתה בטוח שברצונך למחוק הצעה זו?');
+            if (!deleteConfirm) {
+                return;
+            }
+            await fetchDelete(`offer/${offerId}`);
+            removeCurrentOfferFromUi();
+        }
         let dateFormat;
-        renderForm = fields.map((item, index) => {
+        renderForm = fieldsFixed.map((item, index) => {
             if (item.type === 'date') {
                 const now = new Date(inputData[index]);
                 dateFormat = `${now.getFullYear()}-${now.getMonth() < 9 ? "0" : ""}${now.getMonth() + 1}-${now.getDate() < 10 ? "0" : ""}${now.getDate()}`
@@ -155,18 +166,40 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
             );
         });
         renderForm.push(
-            <Button
-                style={{ float: 'left' }}
-                name="next-offer"
-                onClick={() => pagePagination('+')}>
-                הבא
-            </Button>,
-            <Button
-                style={{ float: 'right' }}
-                name="prev-offer"
-                onClick={() => pagePagination('-')}>
-                הקודם
+            <div className="modal-form-pagination">
+                <Button
+                    style={{ float: 'left' }}
+                    name="next-offer"
+                    onClick={() => pagePagination('+')}>
+                    הבא
             </Button>
+                <div className="curr-page-h6">
+                    <h6 >
+                        {currPage}
+                    </h6>
+                    <div className="offer-options-div" >
+                        <Button
+                            variant="warning"
+                            dir="rtl"
+                            href={`https://mail.google.com/mail/u/0/?fs=1&to=${offerUserEmail}&su=A%20response%20to%20your%20offer&body=%0A%0A%0ABest%20regards,%0ALBR%20Diamonds.&tf=cm`}
+                            target="_blank">
+                            שלח מייל!
+                    </Button>
+                        <Button
+                            variant="danger"
+                            dir="rtl"
+                            onClick={() => deleteOffer(offerId)}>
+                            הסר פנייה
+                    </Button>
+                    </div>
+                </div>
+                <Button
+                    style={{ float: 'right' }}
+                    name="prev-offer"
+                    onClick={() => pagePagination('-')}>
+                    הקודם
+            </Button>
+            </div >
         )
     }
 
@@ -228,9 +261,10 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
             }
 
             <Modal show={show || autoShow} onHide={handleClose} animation={false}>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} >
                     <Modal.Header closeButton>
-                        <Modal.Title style={{ marginLeft: '100px' }}>
+                        <Modal.Title
+                            style={{ marginLeft: 'auto' }}>
                             {popUpTitle}
                         </Modal.Title>
                     </Modal.Header>

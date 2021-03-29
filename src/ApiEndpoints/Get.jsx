@@ -17,7 +17,7 @@ export default function fetchGet(path, authRequired = true) {
                 if (response.ok) {
                     return response.json()
                 }
-                else if (response.status == 404 && path === 'stocks-to-offers-counter') {
+                else if (response.status === 404 && path === 'stocks-to-offers-counter') {
                     resolve({});
                 }
                 else {

@@ -160,8 +160,10 @@ export default function StockTable() {
   const updatePutUi = (updatedStock) => {
     const tempContent = [...content];
     const wantedIndex = tempContent.findIndex((item) => item[0] === updatedStock[0]);
+    console.log(wantedIndex);
     const wantedItem = tempContent[wantedIndex];
-    tempContent[wantedIndex] = [...updatedStock, wantedItem[wantedItem.length - 2], updatedStock[2] * updatedStock[3]];
+    tempContent[wantedIndex] = [...updatedStock, wantedItem[wantedItem.length - 3], +updatedStock[2] * +updatedStock[3], wantedItem[wantedItem.length - 1]];
+    console.log(tempContent[wantedIndex])
     updateMap[updatedStock[0]] = [
       { name: "מודל", content: updatedStock[1] },
       { name: "משקל", content: updatedStock[2] },

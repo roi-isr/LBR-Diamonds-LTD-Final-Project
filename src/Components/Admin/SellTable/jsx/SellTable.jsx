@@ -25,7 +25,7 @@ const headers = ["קוד", "מודל", "משקל ", "מחיר לקראט ", "ס�
 export default function SellTable() {
   const [content, setContent] = useState([[]]);
   const [tableRender, setTableRender] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [updateModalId, setUpdateModalId] = useState(false);
 
   // Fecth data from DB
@@ -124,7 +124,7 @@ export default function SellTable() {
         sellValues['sell_id'], sellValues['package_code'],
         sellValues['package_model'], sellValues['weight_in_carat'], sellValues['price_per_carat'],
         sellValues['weight_in_carat'] * sellValues['price_per_carat'],
-        sellValues['buying_entity'], sellValues['payment_method'], sellValues['sell_date']
+        sellValues['buying_entity'], sellValues['sell_date'], sellValues['payment_method']
       );
       tempSell.push(subTempSell);
 
@@ -155,11 +155,6 @@ export default function SellTable() {
         <ManagementTable
           headers={headers}
           content={tableRender}
-          startIdx={1}
-          contentController={{
-            content,
-            setContent
-          }}
         />
       }
       {

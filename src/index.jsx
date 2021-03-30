@@ -10,12 +10,14 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from "react-redux";
 import NavControlReducer from "./store/reducers/NavControlReducer";
 import Token from "./store/reducers/TokenReducer";
+import Search from "./store/reducers/SearchReducer";
 import thunk from 'redux-thunk'
 import { BrowserRouter } from 'react-router-dom'
 
 const rootReducer = combineReducers({
   navControl: NavControlReducer,
-  tokenSaver: Token
+  tokenSaver: Token,
+  searchBar: Search
 });
 
 // Adding a middleware, for being able to execute code before each reducer comes on action

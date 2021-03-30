@@ -23,7 +23,7 @@ const headers = ["מספר החבילה", "משקל החבילה", "מהיכן �
 export default function DeliveryTable() {
   const [content, setContent] = useState([[]]);
   const [tableRender, setTableRender] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [updateModalId, setUpdateModalId] = useState(false);
 
   // Fecth data from DB
@@ -153,11 +153,6 @@ export default function DeliveryTable() {
         <ManagementTable
           headers={headers}
           content={tableRender}
-          startIdx={1}
-          contentController={{
-            content,
-            setContent
-          }}
         />
       }
       {

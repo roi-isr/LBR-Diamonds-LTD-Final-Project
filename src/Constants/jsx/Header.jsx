@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import "../css/Header.css"
-import Logo from '../../Assets/logo.jpg'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import "../css/Header.css";
+import Logo from '../../Assets/logo.jpg';
+import { Link } from 'react-router-dom';
 import { Form, FormControl, Button, Nav, Navbar } from 'react-bootstrap';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import { update_search_str } from '../../store/actions/index';
 
 function Header(props) {
     return (
@@ -40,14 +41,27 @@ function Header(props) {
 
 function CustomizedNavItem(props) {
     const [navExpended, setNavExpended] = useState(false);
+    const [searchStr, setSearchStr] = useState("");
 
     const closeNav = () => setNavExpended(false);
+
+    // Clean search bar
+    useEffect(() => {
+        if (props.searchStrRedux === "") {
+            setSearchStr("");
+        }
+    }, [props.searchStrRedux]);
 
     const navItemClickHandler = (item) => {
         if (item.click) {
             item.click();
         }
         closeNav();
+    }
+
+    const onSearchClicked = (e) => {
+        e.preventDefault();
+        props.sendSearch(searchStr);
     }
 
     return (
@@ -74,14 +88,20 @@ function CustomizedNavItem(props) {
                         </Nav.Link>
                     )}
                 </Nav>
-                <Form inline>
+                <Form inline onSubmit={onSearchClicked}>
                     <FormControl
                         type="text"
                         placeholder="Search"
-                        className="mr-sm-2 search-input-nav" />
+                        className="mr-sm-2 search-input-nav"
+                        disabled={!props.isSearchVisible}
+                        value={searchStr}
+                        onChange={(e) => setSearchStr(e.target.value)}
+                    />
                     <Button
                         className="gen-search-btn"
-                        variant="outline-success">
+                        variant="outline-success"
+                        disabled={!props.isSearchVisible}
+                        type='submit'>
                         Search
                     </Button>
                 </Form>
@@ -100,9 +120,18 @@ const mapStateToPropsHeader = (state) => {
 // Connect Nav to Redux's gloal state as a consumer
 const mapStateToPropsNav = (state) => {
     return {
-        content: state.navControl.content
+        content: state.navControl.content,
+        isSearchVisible: state.searchBar.isVisible,
+        searchStrRedux: state.searchBar.searchStr
     }
 }
 
-const ConnectedNavItem = connect(mapStateToPropsNav)(CustomizedNavItem);
+
+const mapDispatchToPropsNav = (dispatch) => {
+    return {
+        sendSearch: (searchStr) => dispatch(update_search_str(searchStr))
+    }
+}
+
+const ConnectedNavItem = connect(mapStateToPropsNav, mapDispatchToPropsNav)(CustomizedNavItem);
 export default connect(mapStateToPropsHeader)(Header);

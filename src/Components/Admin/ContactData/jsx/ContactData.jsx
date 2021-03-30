@@ -15,7 +15,7 @@ const showDetailsFieldsMap = new Map();
 function ContactData() {
     const [content, setContent] = useState([]);
     const [tableRender, setTableRender] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [itemDetailsIndex, setitemDetailsIndex] = useState(false);
 
     useEffect(() => {
@@ -140,10 +140,6 @@ function ContactData() {
                 <ManagementTable
                     headers={headers}
                     content={tableRender}
-                    contentController={{
-                        content,
-                        setContent
-                    }}
                 />
             }
             {!loading && itemDetailsIndex &&

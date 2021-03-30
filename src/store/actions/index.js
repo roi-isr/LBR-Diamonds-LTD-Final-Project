@@ -10,3 +10,8 @@ export {
     update_login_stat,
     log_out
 } from './token';
+
+export {
+    set_search_bar_visible,
+    update_search_str
+} from './search';

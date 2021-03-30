@@ -31,7 +31,7 @@ const headers = ["מודל", "משקל", "עלות", "נקיון", "צבע", "ק
 export default function StockTable() {
   const [content, setContent] = useState([[]]);
   const [tableRender, setTableRender] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [updateModalId, setUpdateModalId] = useState(false);
   const [showOffersModal, setShowOffersModal] = useState();
   const [currOfferPagination, setCurrOfferPagination] = useState();
@@ -290,11 +290,6 @@ export default function StockTable() {
         <ManagementTable
           headers={headers}
           content={tableRender}
-          startIdx={1}
-          contentController={{
-            content,
-            setContent
-          }}
         />
       }
       {

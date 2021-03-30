@@ -23,7 +23,7 @@ function ItemsLayout() {
   const [content, setContent] = useState([[]]);
   const [tableRender, setTableRender] = useState([]);
   const [sendOfferModal, setSendOfferModal] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // Fecth data from DB
   useEffect(() => {
@@ -89,11 +89,6 @@ function ItemsLayout() {
           direction='ltr'
           headers={headers}
           content={tableRender}
-          startIdx={1}
-          contentController={{
-            content,
-            setContent
-          }}
         />
       }
 

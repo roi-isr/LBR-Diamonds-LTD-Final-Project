@@ -1,8 +1,8 @@
 /* This component defines the whole admin's sub-platform of our site. */
 
 import React, { useEffect, useCallback } from 'react';
-import { connect } from 'react-redux'
-import { change_content, change_visiblity, log_out } from '../../store/actions/index'
+import { connect } from 'react-redux';
+import { change_content, change_visiblity, log_out } from '../../store/actions/index';
 import { WebCookies } from '../../Entities/Cookies';
 import { withRouter, useHistory } from 'react-router-dom';
 import RouterComponent from '../../Routers/Router'
@@ -25,7 +25,7 @@ function Admin(props) {
     const logout = useCallback(() => {
         const logOutPrompt = window.confirm("Are you sure that you want to log out?");
         if (!logOutPrompt) {
-            setTimeout(() => history.goBack(), 40)
+            setTimeout(() => history.goBack(), 0)
             return;
         }
         removeCookies();
@@ -70,7 +70,7 @@ export const AdminHomeWelcome = () => {
     return <AdminWelcome>Welcome, admin!</AdminWelcome>;
 }
 
-const mapDispatchToProp = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
     return {
         changeContent: (content) => dispatch(change_content(content)),
         showNav: (bool) => dispatch(change_visiblity(bool)),
@@ -84,4 +84,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProp)(withRouter(Admin));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Admin));

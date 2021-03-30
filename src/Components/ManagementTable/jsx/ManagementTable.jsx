@@ -1,38 +1,59 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SortIcon from '@material-ui/icons/Sort';
 import { Table } from 'react-bootstrap';
 import '../css/ManagementTable.css'
 import { sorter as sorterFunc } from '../Utility'
+import { set_search_bar_visible, update_search_str } from '../../../store/actions/index';
+import { connect } from 'react-redux';
 
 
-function ManagementTable({ headers, content, contentController, startIdx, direction }) {
-    const { content: pureContent, setContent } = contentController;
+function ManagementTable({ headers, content, direction = 'rtl', searchStr, setSearchVisible, cleanSearch }) {
+    const [shownContent, setShownContent] = useState([...content]);
     const [orderColumn, setOrderColumn] = useState("");
+
+    useEffect(() => {
+        setSearchVisible(true);
+        return () => {
+            setSearchVisible(false);
+            cleanSearch();
+        };
+    }, [setSearchVisible, cleanSearch]);
+
+    useEffect(() => {
+        if (searchStr === '') {
+            // Show all content
+            setShownContent(content);
+            return;
+        }
+        const filteredContent = content.filter(record => {
+            return record.reduce((acc, cur) => acc === true || (typeof cur === 'string' && (new RegExp(searchStr)).test(cur)) || cur === +searchStr, false);
+        });
+        setShownContent(filteredContent);
+    }, [searchStr, content]);
 
     // Sort table in ASC or DESC order
     const sortTable = (ind) => {
-        const index = ind + (startIdx || 0);
         let order;
         if (orderColumn === "") {
             order = 'ASC';
-            setOrderColumn(`${index}-ASC`);
+            setOrderColumn(`${ind}-ASC`);
         }
         else {
             const splittedOrder = orderColumn.split('-');
-            if (parseInt(splittedOrder[0]) === index && splittedOrder[1] === 'ASC') {
+            if (parseInt(splittedOrder[0]) === ind && splittedOrder[1] === 'ASC') {
                 order = 'DESC';
-                setOrderColumn(`${index}-DESC`);
+                setOrderColumn(`${ind}-DESC`);
             }
             else {
                 order = 'ASC';
-                setOrderColumn(`${index}-ASC`);
+                setOrderColumn(`${ind}-ASC`);
             }
         }
-        sorterFunc(index, order, pureContent, setContent)
+        sorterFunc(ind, order, shownContent, setShownContent)
     }
     return (
         <div className="man-table-wrapper">
-            <Table dir={direction || "rtl"}
+            <Table dir={direction}
                 style={{ fontSize: '1.2rem', textAlign: 'center' }}
                 striped bordered hover>
                 <thead>
@@ -56,7 +77,7 @@ function ManagementTable({ headers, content, contentController, startIdx, direct
                     </tr>
                 </thead>
                 <tbody>
-                    {content.map((row, index) =>
+                    {shownContent.map((row, index) =>
                         <tr
                             key={Math.random() * index}>
                             {row.map((item, idx) =>
@@ -72,4 +93,18 @@ function ManagementTable({ headers, content, contentController, startIdx, direct
         </div>
     );
 }
-export default ManagementTable;
+
+const mapStateToPropsNav = (state) => {
+    return {
+        searchStr: state.searchBar.searchStr
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setSearchVisible: (boolVal) => dispatch(set_search_bar_visible(boolVal)),
+        cleanSearch: () => dispatch(update_search_str(""))
+    }
+}
+
+export default connect(mapStateToPropsNav, mapDispatchToProps)(ManagementTable);

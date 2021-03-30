@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Form, FormControl, Button, Nav, Navbar } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { update_search_str } from '../../store/actions/index';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 function Header(props) {
     return (
@@ -62,6 +63,7 @@ function CustomizedNavItem(props) {
     const onSearchClicked = (e) => {
         e.preventDefault();
         props.sendSearch(searchStr);
+        closeNav();
     }
 
     return (
@@ -74,7 +76,7 @@ function CustomizedNavItem(props) {
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav
                     className="mr-auto site-nav-bar"
-                    style={{ width: "70%", justifyContent: 'space-between', alignItems: 'center' }}>
+                    style={{ width: "72%", marginLeft: 'auto', justifyContent: 'space-between', alignItems: 'center' }}>
                     {props.content.map((item, index) =>
                         <Nav.Link
                             as={Link}
@@ -84,7 +86,7 @@ function CustomizedNavItem(props) {
                             key={index}
                             className="nav-link"
                             onClick={() => navItemClickHandler(item)}>
-                            {item.name}
+                            {item.name || <AccountCircleIcon/>}
                         </Nav.Link>
                     )}
                 </Nav>

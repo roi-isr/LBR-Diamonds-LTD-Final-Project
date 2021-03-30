@@ -1,7 +1,6 @@
 .man-table-wrapper {
     overflow: scroll;
     max-height: 550px;
-    margin-top: 3px;
 }
 
 .man-table-wrapper::-webkit-scrollbar {

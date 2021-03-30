@@ -38,11 +38,12 @@ function RouterComponent({ routing, relUrl }) {
 
     const adminPaths = [
         { path: relUrl + '/', exact: true, component: AdminHomeWelcome },
-        { path: relUrl + '/reports', component: BasicTable },
-        { path: relUrl + '/delivery', component: DeliveryTable },
-        { path: relUrl + '/sell', component: SellTable },
+        { path: relUrl + '/stocks', component: BasicTable },
+        { path: relUrl + '/deliveries', component: DeliveryTable },
+        { path: relUrl + '/sells', component: SellTable },
         { path: relUrl + '/contact', component: AdminContact },
         { path: relUrl + '/ml-price', component: PredictForm },
+        { path: relUrl + '', component: NotFound },
 
     ];
 

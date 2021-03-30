@@ -137,19 +137,22 @@ function ContactData() {
                     width={300}
                     color="SlateBlue"
                 /> :
-                <ManagementTable
-                    headers={headers}
-                    content={tableRender}
-                />
-            }
-            {!loading && itemDetailsIndex &&
-                <FormModal
-                    fields={showDetailsFieldsMap[itemDetailsIndex]}
-                    modalType="contact-info-form"
-                    autoShow={true}
-                    closeForm={() => setitemDetailsIndex(false)}
-                    popUpTitle="צפייה בהודעה"
-                />
+                <React.Fragment>
+                    <ManagementTable
+                        title="יצירת קשר"
+                        headers={headers}
+                        content={tableRender}
+                    />
+                    {!loading && itemDetailsIndex &&
+                        <FormModal
+                            fields={showDetailsFieldsMap[itemDetailsIndex]}
+                            modalType="contact-info-form"
+                            autoShow={true}
+                            closeForm={() => setitemDetailsIndex(false)}
+                            popUpTitle="צפייה בהודעה"
+                        />
+                    }
+                </React.Fragment>
             }
 
         </div>

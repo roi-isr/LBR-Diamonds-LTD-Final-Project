@@ -204,6 +204,7 @@ export default function StockTable() {
         { name: "תאריך קנייה - תשלום", content: stockValues['sell_date'], type: 'date' },
       ];
     });
+    tempStock.sort((a, b) => b[11] - a[11]);
     setContent(tempStock);
   }
 
@@ -287,54 +288,57 @@ export default function StockTable() {
           width={300}
           color="SlateBlue"
         /> :
-        <ManagementTable
-          headers={headers}
-          content={tableRender}
-        />
-      }
-      {
-        updateModalId &&
-        <FormModal
-          modalType="update-form"
-          fields={updateMap[updateModalId]}
-          autoShow={true}
-          closeForm={() => setUpdateModalId(false)}
-          popUpTitle="עדכון פרטי מלאי"
-          apiPath={`stock/${updateModalId}`}
-          updatePutUiFunc={updatePutUi}
-        />
-      }
-      {
-        showOffersModal &&
-        <FormModal
-          modalType="offer-info-form"
-          fields={showOffersModal}
-          autoShow={true}
-          closeForm={() => setShowOffersModal(false)}
-          popUpTitle="פרטי ההצעה"
-          updatePutUiFunc={updatePutUi}
-          pagePagination={offerPagePagination}
-          currPage={`${Object.keys(offerData).length === 0 ? 0 : currOfferPagination + 1}/${Object.keys(offerData).length}`}
-          removeCurrentOfferFromUi={removeCurrentOfferFromUi}
-        />
-      }
+        <React.Fragment>
+          <ManagementTable
+            title="מלאי"
+            headers={headers}
+            content={tableRender}
+          />
+          <FormModal
+            fields={inputFields}
+            modalType="input-form"
+            popUpTitle="הוספת מלאי"
+            apiPath="stock"
+            updatePostUiFunc={updatePostUi}
+          />
 
-      <FormModal
-        fields={inputFields}
-        modalType="input-form"
-        popUpTitle="הוספת מלאי"
-        apiPath="stock"
-        updatePostUiFunc={updatePostUi}
-      />
+          <div className="progress-stock-wrapper">
+            <label>ניצול מסגרת האשראי</label>
+            <CircularProgressbar
+              maxValue={100}
+              value={10}
+              percentage={10}
+              text={`${10}%`} />
+          </div>
 
-      <div className="progress-stock-wrapper">
-        <label>ניצול מסגרת האשראי</label>
-        <CircularProgressbar
-          maxValue={100}
-          value={10}
-          percentage={10}
-          text={`${10}%`} />
-      </div>
+          {
+            updateModalId &&
+            <FormModal
+              modalType="update-form"
+              fields={updateMap[updateModalId]}
+              autoShow={true}
+              closeForm={() => setUpdateModalId(false)}
+              popUpTitle="עדכון פרטי מלאי"
+              apiPath={`stock/${updateModalId}`}
+              updatePutUiFunc={updatePutUi}
+            />
+          }
+          {
+            showOffersModal &&
+            <FormModal
+              modalType="offer-info-form"
+              fields={showOffersModal}
+              autoShow={true}
+              closeForm={() => setShowOffersModal(false)}
+              popUpTitle="פרטי ההצעה"
+              updatePutUiFunc={updatePutUi}
+              pagePagination={offerPagePagination}
+              currPage={`${Object.keys(offerData).length === 0 ? 0 : currOfferPagination + 1}/${Object.keys(offerData).length}`}
+              removeCurrentOfferFromUi={removeCurrentOfferFromUi}
+            />
+          }
+        </React.Fragment>
+      }
     </div >
   );
 }

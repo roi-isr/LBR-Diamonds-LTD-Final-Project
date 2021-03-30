@@ -5,9 +5,22 @@ import '../css/ManagementTable.css'
 import { sorter as sorterFunc } from '../Utility'
 import { set_search_bar_visible, update_search_str } from '../../../store/actions/index';
 import { connect } from 'react-redux';
+import styled from 'styled-components/macro'
 
+const StoreCustomTitle = styled.h1`
+position: -webkit-sticky;
+position: sticky;
+left:0;
+top:0;
+  text-align: center;
+  font-size: 50px;
+  text-shadow: 1px 1px 3px #111;
+  background-image: linear-gradient(to bottom right, #F8F8FF, #DCDCDC);
+  margin-bottom: 0px;
+  border: 0.5px solid black;
+`;
 
-function ManagementTable({ headers, content, direction = 'rtl', searchStr, setSearchVisible, cleanSearch }) {
+function ManagementTable({ title, headers, content, direction = 'rtl', searchStr, setSearchVisible, cleanSearch }) {
     const [shownContent, setShownContent] = useState([...content]);
     const [orderColumn, setOrderColumn] = useState("");
 
@@ -25,8 +38,28 @@ function ManagementTable({ headers, content, direction = 'rtl', searchStr, setSe
             setShownContent(content);
             return;
         }
+
+        const convertDateFormat = (dateStr) => {
+            if (new RegExp('\\d{1,2}/\\d{1,2}/\\d{2,4}').test(dateStr)) {
+                const dateSplit = dateStr.split('/');
+                return new Date(`${dateSplit[1]}-${dateSplit[0]}-${dateSplit[2]}`)
+            }
+            else if (!isNaN(new Date(dateStr))) {
+                return new Date(dateStr);
+            }
+            return null;
+        }
+        const dateIfDate = convertDateFormat(searchStr);
         const filteredContent = content.filter(record => {
-            return record.reduce((acc, cur) => acc === true || (typeof cur === 'string' && (new RegExp(searchStr)).test(cur)) || cur === +searchStr, false);
+            return record.reduce((acc, cur) =>
+                acc === true ||
+                (typeof cur === 'string' && (new RegExp(searchStr, 'i')).test(cur)) ||
+                cur === +searchStr ||
+                (!isNaN(new Date(cur)) && dateIfDate &&
+                    (new Date(cur).getTime() - dateIfDate.getTime()) <= 24 * 60 * 60 * 1000 &&
+                    (new Date(cur).getTime() - dateIfDate.getTime()) >= 0)
+                , false
+            );
         });
         setShownContent(filteredContent);
     }, [searchStr, content]);
@@ -53,6 +86,8 @@ function ManagementTable({ headers, content, direction = 'rtl', searchStr, setSe
     }
     return (
         <div className="man-table-wrapper">
+            <StoreCustomTitle>{title}</StoreCustomTitle>
+
             <Table dir={direction}
                 style={{ fontSize: '1.2rem', textAlign: 'center' }}
                 striped bordered hover>

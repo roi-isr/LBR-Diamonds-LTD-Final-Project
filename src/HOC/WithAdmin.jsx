@@ -19,7 +19,7 @@ function WithAdmin(props) {
         }
         props.hideNav();
         getTokenFromCookies();
-
+        return (() => props.showNav());
     }, [props]);
 
     return (
@@ -35,6 +35,7 @@ function WithAdmin(props) {
 const mapDispatchToProp = (dispatch) => {
     return {
         hideNav: () => dispatch(change_visiblity(false)),
+        showNav: () => dispatch(change_visiblity(true)),
         refreshToken: (refreshToken) => dispatch(update_login_stat(refreshToken))
     }
 }

@@ -183,7 +183,7 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
                             dir="rtl"
                             href={`https://mail.google.com/mail/u/0/?fs=1&to=${offerUserEmail}&su=A%20response%20to%20your%20offer&body=%0A%0A%0ABest%20regards,%0ALBR%20Diamonds.&tf=cm`}
                             target="_blank">
-                            שלח מייל!
+                            חזור במייל!
                     </Button>
                         <Button
                             variant="danger"
@@ -204,6 +204,7 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
     }
 
     else if (modalType === 'contact-info-form') {
+        const offerUserEmail = fields[1]?.content;
         renderForm = fields.map((item, index) =>
             index < 3 &&
             <div
@@ -245,6 +246,14 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
                     type={fields[4].type}
                 >
                 </textarea>
+                <Button
+                    style={{ position: 'relative', top: '10px' }}
+                    variant="warning"
+                    dir="rtl"
+                    href={`https://mail.google.com/mail/u/0/?fs=1&to=${offerUserEmail}&su=A%20response%20to%20your%20offer&body=%0A%0A%0ABest%20regards,%0ALBR%20Diamonds.&tf=cm`}
+                    target="_blank">
+                    חזור במייל!
+                    </Button>
             </div>
         )
     }
@@ -291,7 +300,9 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
                                 variant="secondary"
                                 onClick={handleClose}>
                                 {directionInput === "ltr" ? "Close" : "סגור"}
+
                             </Button>
+
                             {modalType !== 'contact-info-form' && modalType !== 'offer-info-form' &&
                                 <Button
                                     style={{ margin: '0 5px' }}

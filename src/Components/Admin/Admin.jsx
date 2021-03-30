@@ -41,9 +41,9 @@ function Admin(props) {
     /* Display dedicated navbar options for admin */
     const changeNavToAdmin = useCallback(() => {
         const adminNav = [
-            { name: "Delivery", path: "/admin/delivery" },
-            { name: "Stock Management", path: "/admin/reports" },
-            { name: "Sells", path: "/admin/sell" },
+            { name: "Delivery", path: "/admin/deliveries" },
+            { name: "Stock Management", path: "/admin/stocks" },
+            { name: "Sells", path: "/admin/sells" },
             { name: "Contact", path: "/admin/contact" },
             { name: "Predict Price", path: "/admin/ml-price" },
             { name: "Logout", click: logout, path: "/admin" }

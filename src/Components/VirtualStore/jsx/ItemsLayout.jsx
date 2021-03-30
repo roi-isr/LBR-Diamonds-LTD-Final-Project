@@ -46,6 +46,9 @@ function ItemsLayout() {
   useEffect(() => {
     let tempContent = [];
     content.forEach((item, index) => {
+      if (item.length < headers.length) {
+        return;
+      }
       const offerBtn =
         <Button
           key={Math.random() * index}
@@ -85,26 +88,29 @@ function ItemsLayout() {
           width={300}
           color="SlateBlue"
         /> :
-        <ManagementTable
-          direction='ltr'
-          headers={headers}
-          content={tableRender}
-        />
+        <React.Fragment>
+          <ManagementTable
+            title="Virtual Store"
+            direction='ltr'
+            headers={headers}
+            content={tableRender}
+          />
+          {
+            sendOfferModal &&
+            <FormModal
+              directionInput="ltr"
+              modalType="input-form"
+              fields={offerInputFields}
+              autoShow={true}
+              closeForm={() => setSendOfferModal(false)}
+              popUpTitle="Send an offer to admin"
+              apiPath={`offer/${sendOfferModal}`}
+              authRequired={false}
+            />
+          }
+        </React.Fragment>
       }
 
-      {
-        sendOfferModal &&
-        <FormModal
-          directionInput="ltr"
-          modalType="input-form"
-          fields={offerInputFields}
-          autoShow={true}
-          closeForm={() => setSendOfferModal(false)}
-          popUpTitle="Send an offer to admin"
-          apiPath={`offer/${sendOfferModal}`}
-          authRequired={false}
-        />
-      }
     </div>
 
   );

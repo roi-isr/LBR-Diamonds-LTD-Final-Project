@@ -152,30 +152,33 @@ export default function SellTable() {
           width={300}
           color="SlateBlue"
         /> :
-        <ManagementTable
-          headers={headers}
-          content={tableRender}
-        />
+        <React.Fragment>
+          <ManagementTable
+            title="מכירות"
+            headers={headers}
+            content={tableRender}
+          />
+          <FormModal
+            fields={inputFields}
+            modalType="input-form"
+            popUpTitle="הוספת מכירה"
+            apiPath="sell"
+            updatePostUiFunc={updatePostUi}
+          />
+          {
+            updateModalId &&
+            <FormModal
+              modalType="update-form"
+              fields={updateMap[updateModalId]}
+              autoShow={true}
+              closeForm={() => setUpdateModalId(false)}
+              popUpTitle="עדכון פרטי מכירה"
+              apiPath={`sell/${updateModalId}`}
+              updatePutUiFunc={updatePutUi}
+            />
+          }
+        </React.Fragment>
       }
-      {
-        updateModalId &&
-        <FormModal
-          modalType="update-form"
-          fields={updateMap[updateModalId]}
-          autoShow={true}
-          closeForm={() => setUpdateModalId(false)}
-          popUpTitle="עדכון פרטי משלוח"
-          apiPath={`sell/${updateModalId}`}
-          updatePutUiFunc={updatePutUi}
-        />
-      }
-      <FormModal
-        fields={inputFields}
-        modalType="input-form"
-        popUpTitle="הוספת משלוח"
-        apiPath="sell"
-        updatePostUiFunc={updatePostUi}
-      />
 
     </div>
 

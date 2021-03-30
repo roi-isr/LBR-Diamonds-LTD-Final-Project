@@ -150,30 +150,33 @@ export default function DeliveryTable() {
           width={300}
           color="SlateBlue"
         /> :
-        <ManagementTable
-          headers={headers}
-          content={tableRender}
-        />
+        <React.Fragment>
+          <ManagementTable
+            title="משלוחים"
+            headers={headers}
+            content={tableRender}
+          />
+          <FormModal
+            fields={inputFields}
+            modalType="input-form"
+            popUpTitle="הוספת משלוח"
+            apiPath="delivery"
+            updatePostUiFunc={updatePostUi}
+          />
+          {
+            updateModalId &&
+            <FormModal
+              modalType="update-form"
+              fields={updateMap[updateModalId]}
+              autoShow={true}
+              closeForm={() => setUpdateModalId(false)}
+              popUpTitle="עדכון פרטי משלוח"
+              apiPath={`delivery/${updateModalId}`}
+              updatePutUiFunc={updatePutUi}
+            />
+          }
+        </React.Fragment>
       }
-      {
-        updateModalId &&
-        <FormModal
-          modalType="update-form"
-          fields={updateMap[updateModalId]}
-          autoShow={true}
-          closeForm={() => setUpdateModalId(false)}
-          popUpTitle="עדכון פרטי משלוח"
-          apiPath={`delivery/${updateModalId}`}
-          updatePutUiFunc={updatePutUi}
-        />
-      }
-      <FormModal
-        fields={inputFields}
-        modalType="input-form"
-        popUpTitle="הוספת משלוח"
-        apiPath="delivery"
-        updatePostUiFunc={updatePostUi}
-      />
 
     </div>
 

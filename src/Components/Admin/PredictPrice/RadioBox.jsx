@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import './RadioBox.css';
 
-function RadioBox({ optionArray, btnHeight, btnWidth }) {
+function RadioBox({ name, optionArray, btnHeight, btnWidth, onClickedState }) {
     const [selectedOption, setSelectedOption] = useState('');
 
     const clickHandler = (e, item) => {
         e.preventDefault();
         setSelectedOption(item)
+        onClickedState(name, item)
     }
 
 

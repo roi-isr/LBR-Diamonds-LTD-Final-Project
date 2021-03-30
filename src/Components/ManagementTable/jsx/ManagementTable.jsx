@@ -86,15 +86,19 @@ function ManagementTable({ title, headers, content, direction = 'rtl', searchStr
     }
     return (
         <div className="man-table-wrapper">
-            <StoreCustomTitle>{title}</StoreCustomTitle>
+            <StoreCustomTitle>
+                {title}
+            </StoreCustomTitle>
 
-            <Table dir={direction}
+            <Table
+                dir={direction}
                 style={{ fontSize: '1.2rem', textAlign: 'center' }}
                 striped bordered hover>
                 <thead>
                     <tr>
                         {headers.map((item, index) =>
                             <th
+                                className='align-middle'
                                 key={Math.random() * index}>
                                 <div className="div-th-man-table">
                                     <span />
@@ -114,12 +118,29 @@ function ManagementTable({ title, headers, content, direction = 'rtl', searchStr
                 <tbody>
                     {shownContent.map((row, index) =>
                         <tr
+                            className='align-middle'
                             key={Math.random() * index}>
-                            {row.map((item, idx) =>
-                                <td className="align-middle"
-                                    key={Math.random() * idx}>
-                                    {item}
-                                </td>
+                            {row.map((item, idx) => {
+                                let renderTd;
+                                if (headers[idx] === "כמות פניות") {
+                                    renderTd = (
+                                        <td className="align-middle"
+                                            key={Math.random() * idx}
+                                            style={{ fontSize: '35px', fontWeight: 'bold', color: `rgb(${(+item) * 25},0,${255 - ((+item) * 25)})` }}>
+                                            {item}
+                                        </td>
+                                    );
+                                }
+                                else {
+                                    renderTd = (
+                                        <td className="align-middle"
+                                            key={Math.random() * idx}>
+                                            {item}
+                                        </td>
+                                    );
+                                }
+                                return renderTd;
+                            }
                             )}
                         </tr>
                     )}

@@ -26,7 +26,7 @@ const inputFields = [
   },
 ];
 
-const headers = ["מודל", "משקל", "עלות", "נקיון", "צבע", "קוד", "הערות", "תאריך קנייה - תשלום", "סטטוס", "מלאי", "כמות פניות", "", ""];
+const headers = ["מודל", "משקל", "עלות", "נקיון", "צבע", "קוד", "הערות", "תאריך קנייה - תשלום", "סטטוס", "מלאי", "כמות פניות", "", "", "", ""];
 
 export default function StockTable() {
   const [content, setContent] = useState([[]]);
@@ -109,7 +109,7 @@ export default function StockTable() {
 
     let tempContent = [];
     content.forEach((item, index) => {
-      if (item.length < headers.length - 1) {
+      if (item.length < headers.length - 3) {
         return;
       }
       const watchOffersBtn =

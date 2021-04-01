@@ -97,9 +97,9 @@ export default function PredictForm() {
         predictedDiamondObj['weight'] = +predictedDiamondObj['weight'];
         predictedDiamondObj['table'] = +predictedDiamondObj['table'];
         predictedDiamondObj['depth'] = +predictedDiamondObj['depth'];
-        predictedDiamondObj['price'] = Number(curPrediction.replace(/[^0-9.-]+/g, ""));
+        const price = Number(curPrediction.replace(/[^0-9.-]+/g, ""));
         predictedDiamondObj['advise-price'] = (adminAdvise) === "" ?
-            predictedDiamondObj['price'] : (+adminAdvise);
+            price : (+adminAdvise);
         console.log(predictedDiamondObj)
         await fetchPost('admin-advise', predictedDiamondObj);
         alert("תודה על חוות דעתך!");

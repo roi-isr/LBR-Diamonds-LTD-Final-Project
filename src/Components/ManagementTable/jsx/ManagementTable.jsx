@@ -20,6 +20,12 @@ top:0;
   border: 0.5px solid black;
 `;
 
+const OffersCounterTd = styled.td`
+    font-size: 35px;
+    font-weight: bold;
+    color: rgb(${props => (+props.curItem) * 25},0,${props => 255 - ((+props.curItem) * 25)});
+    `;
+
 function ManagementTable({ title, headers, content, direction = 'rtl', searchStr, setSearchVisible, cleanSearch }) {
     const [shownContent, setShownContent] = useState([...content]);
     const [orderColumn, setOrderColumn] = useState("");
@@ -124,11 +130,12 @@ function ManagementTable({ title, headers, content, direction = 'rtl', searchStr
                                 let renderTd;
                                 if (headers[idx] === "כמות פניות") {
                                     renderTd = (
-                                        <td className="align-middle"
+                                        <OffersCounterTd
+                                            className="align-middle"
                                             key={Math.random() * idx}
-                                            style={{ fontSize: '35px', fontWeight: 'bold', color: `rgb(${(+item) * 25},0,${255 - ((+item) * 25)})` }}>
+                                            curItem={item}>
                                             {item}
-                                        </td>
+                                        </OffersCounterTd>
                                     );
                                 }
                                 else {

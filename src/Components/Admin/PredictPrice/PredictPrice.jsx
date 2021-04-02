@@ -189,7 +189,7 @@ export default function PredictForm() {
                       </Button>
                         </Form.Group>
                     </Form>
-                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                    <div className='prediction-area-div' >
 
                         {
                             isLoading ?
@@ -198,13 +198,15 @@ export default function PredictForm() {
                                     height='50px'
                                     color='#1E50FF'
                                     style={{ margin: 'auto' }} /> :
-                                <div style={{ margin: 'auto', display: 'flex', flexDirection: 'column', padding: '5px' }}>
-                                    <h3 style={{ textAlign: 'center' }}>
+                                <div className="pred-main-div" >
+                                    <h3 className="h3-pred" >
                                         {curPrediction}
                                     </h3>
                                     {curPrediction.includes("המחיר המוצע") && showAdviseForm &&
                                         < React.Fragment >
-                                            <h3 style={{ textAlign: 'center' }}>האם הצעת המחיר הגיונית בעיניך?</h3>
+                                            <h3 className="h3-pred">
+                                                האם הצעת המחיר הגיונית בעיניך?
+                                            </h3>
                                             <Form style={{ textAlign: 'center' }} onSubmit={handleSubmitAdvise}>
                                                 <Form.Group dir='rtl'
                                                     style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>

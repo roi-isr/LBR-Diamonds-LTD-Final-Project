@@ -42,13 +42,20 @@
     flex-direction: row-reverse;
     margin: auto;
     position: relative;
-    top: 10px;
-    width: 60%;
+    top: 20px;
+    margin-top: 25px;
+    width: 92%;
     justify-content: space-between;
 }
 
-@media only screen and (max-width: 990px) {
-    .offer-options-div {
-        width: 70%;
-    }
+.text-area-modal {
+    height: 250px;
+    font-size: 1.3rem;
+    overflow: auto;
+    resize: none;
+}
+
+.close-save-div {
+    width: 100%;
+    text-align: center;
 }

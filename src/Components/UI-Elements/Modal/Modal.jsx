@@ -140,12 +140,18 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
             await fetchDelete(`offer/${offerId}`);
             removeCurrentOfferFromUi();
         }
-        let dateFormat;
-        renderForm = fieldsFixed.map((item, index) => {
-            if (item.type === 'date') {
-                const now = new Date(inputData[index]);
-                dateFormat = `${now.getFullYear()}-${now.getMonth() < 9 ? "0" : ""}${now.getMonth() + 1}-${now.getDate() < 10 ? "0" : ""}${now.getDate()}`
+        const acceptOffer = () => {
+            const weight = window.prompt("הכנס את משקל המכירה", fieldsFixed[5].content);
+            if (!weight) {
+                return;
             }
+            const price = window.prompt("הכנס מחיר לקראט", fieldsFixed[6].content);
+            if (!price) {
+                return;
+            }
+            alert("המכירה אושרה ונוספה למכירות!");
+        }
+        renderForm = fieldsFixed.map((item, index) => {
             return (
                 <div
                     className='input-del-div'
@@ -178,6 +184,12 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
                         {currPage}
                     </h6>
                     <div className="offer-options-div" >
+                        <Button
+                            variant="success"
+                            dir="rtl"
+                            onClick={() => acceptOffer()}>
+                            אשר מכירה
+                    </Button>
                         <Button
                             variant="warning"
                             dir="rtl"
@@ -240,7 +252,7 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
                 <FormLabel>{fields[4].name}</FormLabel>
                 <textarea
                     dir='auto'
-                    style={{ height: '250px', fontSize: '1.3rem', overflow: 'auto', resize: 'none' }}
+                    className="text-area-modal"
                     value={fields[4].content}
                     disabled
                     type={fields[4].type}
@@ -294,7 +306,7 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
                             <CheckCircleIcon
                                 style={{ fill: 'green', width: '40px', height: '40px', margin: '0 auto 0 0' }}
                             />}
-                        <div style={{ width: '100%', textAlign: 'center' }}>
+                        <div className='close-save-div'>
                             <Button
                                 style={{ margin: '0 5px' }}
                                 variant="secondary"

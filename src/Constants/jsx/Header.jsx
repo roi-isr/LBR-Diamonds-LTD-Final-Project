@@ -86,7 +86,7 @@ function CustomizedNavItem(props) {
                             key={index}
                             className="nav-link"
                             onClick={() => navItemClickHandler(item)}>
-                            {item.name || <AccountCircleIcon/>}
+                            {item.name || <AccountCircleIcon />}
                         </Nav.Link>
                     )}
                 </Nav>

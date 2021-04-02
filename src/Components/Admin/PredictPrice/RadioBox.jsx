@@ -21,14 +21,14 @@ function RadioBox({ name, optionArray, btnHeight, btnWidth, onClickedState }) {
                     height: selectedOption === item ? `${btnHeight || '40'}px` : `${(btnHeight - 15 || '25')}px`,
                 }
                 return (
-                    < button
+                    <button
                         className="predict-option-btn"
                         key={index}
                         style={radiosStyle}
                         onClick={(e) => clickHandler(e, item)
                         }
                     >
-                        { item}
+                        {item}
                     </button>
                 )
             }

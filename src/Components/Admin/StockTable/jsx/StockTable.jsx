@@ -102,7 +102,7 @@ export default function StockTable() {
           { name: "משקל מוצע", content: offerD[0]['offered_weight'] },
           { name: "מחיר מוצע", content: offerD[0]['offered_price'] },
           { name: "הערות", content: offerD[0]['additional_comments'], multiline: true },
-          // { name: "תאריך קנייה - תשלום", content: stockValues['sell_date'], type: 'date' },
+          { name: "תאריך פנייה", content: offerD[0]['offer_date']},
         ]
       });
     }
@@ -248,7 +248,7 @@ export default function StockTable() {
             { name: "משקל מוצע", content: offerData[nextPage]['offered_weight'] },
             { name: "מחיר מוצע", content: offerData[nextPage]['offered_price'] },
             { name: "הערות", content: offerData[nextPage]['additional_comments'], multiline: true },
-            // { name: "תאריך קנייה - תשלום", content: stockValues['sell_date'], type: 'date' },
+            { name: "תאריך פנייה", content: offerData[nextPage]['offer_date'] },
           ]
         });
     });

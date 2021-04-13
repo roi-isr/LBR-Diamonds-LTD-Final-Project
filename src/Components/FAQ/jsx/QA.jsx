@@ -1,6 +1,8 @@
 import React from 'react';
 import '../css/QA.css'
 import { Button } from 'react-bootstrap';
+import Factory from '../../../Assets/diamonds_comps/diamond_photo.png';
+import Avatar from '@material-ui/core/Avatar';
 
 class QA extends React.Component {
   render() {
@@ -8,29 +10,34 @@ class QA extends React.Component {
       <div className='Guide'>
         <h3 className='qa-title' >Step-by-Step Guide</h3>
         <h4><u>How to Choose a Diamond:</u></h4>
-        <p>
-          1 . First, identify the diamond shape desired by the recipient. If you do not know and cannot find out, consider round or princess cut.
+        <div>
+          <p>
+          <Avatar style={{ height: "300px", width: "300px", margin: 'auto' }} className="av1" alt="Remy Sharp" src={Factory} />
+            <p className="about-description">Specialize in the production of natural diamonds.</p>
+            1 . Carat, the accepted weight in the world of diamonds.
+            1 carat = 0.2 g.
         </p>
-        <p>
-          2 . Set a carat weight minimum based on the recipient's preferences. If they have their heart set on a one carat diamond, even the most beautiful half carat stone will be a disappointment.
+        </div>
+        <div>
+          <p>
+            2 . Color, the color of diamonds is important and that is why it is one of the key values ​​in determining the value of a diamond.
+            The color scale ranges from D-Z.
+            Color D is a transparent and clear diamond and color Z which has a shade of yellow / brown / gray.
+            Therefore, the lighter the diamond, the rarer the diamond and therefore the higher its price.
         </p>
-        <p>
-          3 . Start with the highest quality diamond of the shape and carat weight minimum you identified in steps 1 and 2, and begin making concessions in the following order until you arrive at a diamond that fits your budget:
+        </div>
+        <div>
+          <p>
+            3 .The degree of cleanliness of the diamond is determined by a test to identify defects at a magnification of 10 times.
+            The nature of the defects, their location, and their effect on the overall appearance of the diamond is what determines the degree of cleanliness.
         </p>
-        <ul>
-          <li>First, lower the Clarity. See clarity buying tips (below) for more guidance. Go as low as VS2 before making concessions in other areas.</li>
-          <li>Next, lower the Color. See color buying tips (below) for more guidance. Go as low as H before making concessions in other areas.</li>
-          <li>Finally, lower the Cut. See cut buying tips (below) for more guidance. Go as low as Very Good in round diamonds, and Good in fancy shapes before making concessions in other areas.</li>
-          <li>If the diamonds that match your revised criteria are close to your budget, consider shaving off some carat weight in order to close the gap. A carat weight difference of 10% or less will be very difficult to detect visually.</li>
-        </ul>
-        <p>
-          4 . If after following the steps above, you are still outside your budget, repeat the process with new thresholds:
+        </div>
+        <div>
+          <p>
+            4 .Diamond cutting directly affects the interaction of the beam of light that strikes it and therefore its overall visibility in 3 main parameters: glow, fire and sparkle.
+            The cut ranges from exellent to poor.
        </p>
-        <ul>
-          <li>First, further reduce Clarity. Go as low as SI1.</li>
-          <li>Next, reduce Color. Go as low as J. If you know the diamond will be set in yellow gold, you could safely drop to K.</li>
-          <li>Finally, reduce the Cut. Go as low as Good in round diamonds, and Fair in fancy shapes.</li>
-        </ul>
+        </div>
 
 
         <Button

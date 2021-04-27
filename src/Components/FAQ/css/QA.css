@@ -1,3 +1,6 @@
+*{
+    box-sizing: border-box;
+}
 .Guide {
     height: auto;
     line-height: 35px;
@@ -14,4 +17,46 @@
     text-align: center;
     font-size: 50px;
     font-weight: bold;
+}
+
+.guide-info-item{
+    animation: renderitems 1s ease-in;
+    border: 3px solid #000;
+    box-shadow: 1px 1px 8px rgb(0, 0, 0);
+    width: 90%;
+    margin: 20px auto;
+    background-color: lavender;
+    border-radius: 10px;
+    padding: 10px 10px 5px;
+}
+
+.guide-info-item p {
+    border: 2px solid #000;
+    border-radius: 10px;
+    width: 90%;
+    margin: 30px auto 0;
+    text-align: center;
+    background-color: royalblue;
+    padding: 20px;
+    font-family: Comic Sans MS;
+    text-align: center;
+    font-size: 25px;
+}
+
+.Guide h4{
+    text-align: center;
+    font-size: 2rem;
+}
+
+
+@keyframes renderitems{
+    from{
+        opacity: 0;
+        transform: translateY(50%);
+    }
+    to{
+        opacity: 100;
+        transform: translateX(0);
+
+    }
 }

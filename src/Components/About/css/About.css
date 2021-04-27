@@ -8,6 +8,7 @@
     flex-direction: column;
     text-align: center;
     margin: auto;
+    animation: renderitemsabout 1.5s ease-in;
 }
 
 .about-description {
@@ -21,6 +22,14 @@
     text-align: center;
 }
 
+.about-sec-div p{
+    position: relative;
+    bottom: 1.5rem;
+    border: 5px double #000;
+    border-radius: 5px;
+    margin: 0 5px;
+}
+
 @media only screen and (max-width: 990px) {
     .about-us-content {
         display: flex;
@@ -30,5 +39,14 @@
         display: flex;
         flex-direction: column;
         text-align: center;
+    }
+}
+
+@keyframes renderitemsabout{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 100;
     }
 }

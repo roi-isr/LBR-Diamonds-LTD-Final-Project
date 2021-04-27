@@ -13,6 +13,10 @@ const AdminWelcome = styled.h1`
     font-size: 180px;
     text-align: center;
     margin: 100px 0;
+    border: 10px solid #000;
+    border-radius: 5px;
+    text-shadow: 1px 1px 1px #000;
+    background-image: linear-gradient(to right, #fff, #F0F8FF blue);
     @media (max-width: 990px){
         font-size: 105px;
     }

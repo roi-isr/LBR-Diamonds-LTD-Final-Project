@@ -8,6 +8,15 @@ import fetchDelete from '../../../../ApiEndpoints/Delete';
 import FormModal from '../../../UI-Elements/Modal/Modal'
 import Loader from 'react-loader-spinner';
 import fetchPut from '../../../../ApiEndpoints/Put';
+import styled from 'styled-components/macro';
+
+const CurrentBalanceComp = styled.h1
+  `
+  font-size: 3rem;
+  font-weight: 700;
+  font-style: italic;
+  padding: 10px;
+`;
 
 const updateMap = new Map();
 
@@ -20,13 +29,14 @@ const inputFields = [
   { name: "קוד", type: 'text' },
   { name: "הערות", type: 'text' },
   { name: "תאריך קנייה - תשלום", type: 'date' },
+  { name: "מחיר מכירה", type: 'text' },
   {
     name: "סטטוס", select: true,
     options: [{ value: 'בחנות', label: 'בחנות' }, { value: 'לא בחנות', label: 'לא בחנות' }]
   },
 ];
 
-const headers = ["מודל", "משקל", "עלות", "נקיון", "צבע", "קוד", "הערות", "תאריך קנייה - תשלום", "סטטוס", "מלאי", "כמות פניות", "", "", "", ""];
+const headers = ["מודל", "משקל", "עלות", "נקיון", "צבע", "קוד", "הערות", "תאריך קנייה - תשלום", "מחיר מכירה", "סטטוס", "מלאי", "כמות פניות", "", "", "", ""];
 
 export default function StockTable() {
   const [content, setContent] = useState([[]]);
@@ -36,6 +46,7 @@ export default function StockTable() {
   const [showOffersModal, setShowOffersModal] = useState();
   const [currOfferPagination, setCurrOfferPagination] = useState();
   const [offerData, setOfferData] = useState();
+
   // Fecth data from DB
   useEffect(() => {
     const fetchData = async () => {
@@ -70,20 +81,20 @@ export default function StockTable() {
 
     // Move an item in or out of the store
     const moveInOutStoreHandler = async (index) => {
-      const userConfirm = window.confirm(`האם אתה בטוח שברצונך ${content[index][9] === 'בחנות' ? 'להוציא' : 'להכניס'} את הפריט ${content[index][9] === 'בחנות' ? 'מה' : 'אל ה'}חנות?`);
+      const userConfirm = window.confirm(`האם אתה בטוח שברצונך ${content[index][10] === 'בחנות' ? 'להוציא' : 'להכניס'} את הפריט ${content[index][9] === 'בחנות' ? 'מה' : 'אל ה'}חנות?`);
       if (!userConfirm) {
         return;
       }
-      const nextStatus = content[index][9] === 'בחנות' ? 'לא בחנות' : 'בחנות';
+      const nextStatus = content[index][10] === 'בחנות' ? 'לא בחנות' : 'בחנות';
       try {
         await fetchPut(`stock/update-status/${content[index][0]}`, { status: nextStatus })
         const tempContent = [...content];
-        tempContent[index][9] = nextStatus;
+        tempContent[index][10] = nextStatus;
         setContent(tempContent);
-        alert(`הפריט הועבר ${content[index][9] === 'בחנות' ? 'אל ה' : 'מה'}חנות בהצלחה!`)
+        alert(`הפריט הועבר ${content[index][10] === 'בחנות' ? 'אל ה' : 'מה'}חנות בהצלחה!`)
       }
       catch {
-        alert(`בעיה בהעברת פריט ${content[index][9] === 'בחנות' ? 'מה' : 'אל ה'}`);
+        alert(`בעיה בהעברת פריט ${content[index][10] === 'בחנות' ? 'מה' : 'אל ה'}`);
       }
     }
 
@@ -102,7 +113,7 @@ export default function StockTable() {
           { name: "משקל מוצע", content: offerD[0]['offered_weight'] },
           { name: "מחיר מוצע", content: offerD[0]['offered_price'] },
           { name: "הערות", content: offerD[0]['additional_comments'], multiline: true },
-          { name: "תאריך פנייה", content: offerD[0]['offer_date']},
+          { name: "תאריך פנייה", content: offerD[0]['offer_date'] },
         ]
       });
     }
@@ -116,7 +127,7 @@ export default function StockTable() {
         <Button
           key={Math.random() * index}
           variant="outline-info"
-          disabled={item[11] === 0}
+          disabled={item[12] === 0}
           onClick={() => watchOffer(item[0])}
         >
           צפה בפניות!
@@ -125,9 +136,9 @@ export default function StockTable() {
       const confirmBtn =
         <Button
           key={Math.random() * index}
-          variant={content[index][9] === 'בחנות' ? "outline-danger" : "outline-success"}
+          variant={content[index][10] === 'בחנות' ? "outline-danger" : "outline-success"}
           onClick={() => moveInOutStoreHandler(index)}>
-          {item[9] === 'בחנות' ? 'הוצא מהחנות' : 'העבר לחנות'}
+          {item[10] === 'בחנות' ? 'הוצא מהחנות' : 'העבר לחנות'}
         </Button>;
 
       const updateBtn =
@@ -173,6 +184,7 @@ export default function StockTable() {
       { name: "קוד", content: updatedStock[6] },
       { name: "הערות", content: updatedStock[7] },
       { name: "תאריך קנייה - תשלום", content: updatedStock[8], type: 'date' },
+      { name: "מחיר מכירה", content: updatedStock[9] },
     ];
     setContent(tempContent);
   }
@@ -187,7 +199,7 @@ export default function StockTable() {
         stockValues['weight_in_karat'], stockValues['cost_per_karat'],
         stockValues['clearance'], stockValues['color'],
         stockValues['code'], stockValues['comments'],
-        stockValues['sell_date'], stockValues['status'],
+        stockValues['sell_date'], stockValues['cost_per_sell'], stockValues['status'],
         stockValues['weight_in_karat'] * stockValues['cost_per_karat'],
         offerCounterData[stockValues['stock_id']] ?? 0
       );
@@ -202,9 +214,10 @@ export default function StockTable() {
         { name: "קוד", content: stockValues['code'] },
         { name: "הערות", content: stockValues['comments'] },
         { name: "תאריך קנייה - תשלום", content: stockValues['sell_date'], type: 'date' },
+        { name: "מחיר מכירה", content: stockValues['cost_per_sell'] },
       ];
     });
-    tempStock.sort((a, b) => b[11] - a[11]);
+    tempStock.sort((a, b) => b[12] - a[12]);
     setContent(tempStock);
   }
 
@@ -273,10 +286,12 @@ export default function StockTable() {
       offerPagePagination('-', true);
     }
     const updatedContent = [...content];
-    updatedContent[reducedOfferIdx][11]--;
+    updatedContent[reducedOfferIdx][12]--;
     setOfferData(tempOfferData);
     setContent(updatedContent);
   }
+
+  const currentBalance = content.reduce((acc, curItem) => acc + (+curItem[11]), 0);
   //Returns the table to our requested page, shows us all the company's current inventory.
   //Another element gives an indication to the business owner, what the status of his credit line at a given moment.
   return (
@@ -302,14 +317,7 @@ export default function StockTable() {
             updatePostUiFunc={updatePostUi}
           />
 
-          <div className="progress-stock-wrapper">
-            <label>ניצול מסגרת האשראי</label>
-            <CircularProgressbar
-              maxValue={100}
-              value={10}
-              percentage={10}
-              text={`${10}%`} />
-          </div>
+          <CurrentBalanceComp>מלאי נוכחי: {currentBalance}$</CurrentBalanceComp>
 
           {
             updateModalId &&

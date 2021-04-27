@@ -25,7 +25,7 @@ const LoadingDiv = styled.div
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-`
+`;
 
 // copyright for using Material-UI style template
 function Copyright() {

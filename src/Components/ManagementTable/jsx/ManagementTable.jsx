@@ -8,16 +8,16 @@ import { connect } from 'react-redux';
 import styled from 'styled-components/macro'
 
 const StoreCustomTitle = styled.h1`
-position: -webkit-sticky;
-position: sticky;
-left:0;
-top:0;
-  text-align: center;
-  font-size: 50px;
-  text-shadow: 1px 1px 3px #111;
-  background-image: linear-gradient(to bottom right, #F8F8FF, #DCDCDC);
-  margin-bottom: 0px;
-  border: 0.5px solid black;
+    position: -webkit-sticky;
+    position: sticky;
+    left:0;
+    top:0;
+    text-align: center;
+    font-size: 50px;
+    text-shadow: 1px 1px 3px #111;
+    background-image: linear-gradient(to bottom right, #F8F8FF, #DCDCDC);
+    margin-bottom: 0px;
+    border: 0.5px solid black;
 `;
 
 const OffersCounterTd = styled.td`
@@ -36,7 +36,7 @@ function ManagementTable({ title, headers, content, direction = 'rtl', searchStr
             setSearchVisible(false);
             cleanSearch();
         };
-    }, [setSearchVisible, cleanSearch]);
+    }, [cleanSearch]);
 
     useEffect(() => {
         if (searchStr === '') {

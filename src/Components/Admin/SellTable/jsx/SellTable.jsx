@@ -11,10 +11,10 @@ import '../css/SellTable.css';
 const updateMap = new Map();
 
 const inputFields = [
+  { name: "קוד", type: 'text' },
   { name: "מודל", type: 'text' },
   { name: "משקל", type: 'text' },
   { name: "מחיר לקראט", type: 'text' },
-  { name: "קוד", type: 'text' },
   { name: "שם הקונה", type: 'text' },
   { name: "תאריך מכירה", type: 'date' },
   { name: "תשלום", type: 'text' },

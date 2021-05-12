@@ -144,7 +144,8 @@ export default function DeliveryTable() {
   return (
     <div className="delivery-main-div">
       {loading ?
-        <Loader style={{ margin: 'auto' }}
+        <Loader
+          className="spinner-icon"
           type='Bars'
           height={300}
           width={300}

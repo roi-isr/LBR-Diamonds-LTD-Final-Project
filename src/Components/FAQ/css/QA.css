@@ -2,6 +2,7 @@
     box-sizing: border-box;
 }
 .Guide {
+    padding: 10px;
     height: auto;
     line-height: 35px;
     font-size: 20px;
@@ -43,7 +44,7 @@
     font-size: 25px;
 }
 
-.Guide h4{
+.Guide h2{
     text-align: center;
     font-size: 2rem;
 }

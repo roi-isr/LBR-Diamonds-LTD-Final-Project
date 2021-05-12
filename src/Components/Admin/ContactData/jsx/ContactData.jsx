@@ -131,7 +131,7 @@ function ContactData() {
         <div className="contact-admin-div">
             {loading ?
                 <Loader
-                    className="contact-admin-spinner"
+                    className="spinner-icon"
                     type='Bars'
                     height={300}
                     width={300}

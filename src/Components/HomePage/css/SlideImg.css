@@ -2,4 +2,14 @@
     width: 100%;
     height: 100%;
     margin: auto;
+    animation: renderitemsabout 0.2s ease-in;
+}
+
+@keyframes renderpictures{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 100;
+    }
 }

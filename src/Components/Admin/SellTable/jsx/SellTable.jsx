@@ -146,7 +146,8 @@ export default function SellTable() {
   return (
     <div className="sell-main-div">
       {loading ?
-        <Loader style={{ margin: 'auto' }}
+        <Loader
+          className="spinner-icon"
           type='Bars'
           height={300}
           width={300}

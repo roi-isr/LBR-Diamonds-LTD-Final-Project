@@ -82,7 +82,8 @@ function ItemsLayout() {
   return (
     <div className="items-layout-main-div">
       {loading ?
-        <Loader style={{ margin: 'auto' }}
+        <Loader
+          className="spinner-icon"
           type='Bars'
           height={300}
           width={300}

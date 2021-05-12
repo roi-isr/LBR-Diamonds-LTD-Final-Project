@@ -297,7 +297,8 @@ export default function StockTable() {
   return (
     <div className="stock-main-div">
       {loading ?
-        <Loader style={{ margin: 'auto' }}
+        <Loader
+          className="spinner-icon"
           type='Bars'
           height={300}
           width={300}
@@ -317,7 +318,7 @@ export default function StockTable() {
             updatePostUiFunc={updatePostUi}
           />
 
-          <CurrentBalanceComp>מלאי נוכחי: {currentBalance}$</CurrentBalanceComp>
+          <CurrentBalanceComp>מלאי נוכחי: {currentBalance.toFixed(2)}$</CurrentBalanceComp>
 
           {
             updateModalId &&

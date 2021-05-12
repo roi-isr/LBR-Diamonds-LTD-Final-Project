@@ -22,7 +22,7 @@ class QA extends React.Component {
   render() {
     return (
       <div className='Guide'>
-        <h4><u>How to Choose a Diamond:</u></h4>
+        <h2><u>How to Choose a Diamond</u></h2>
         <div className="guide-info-item">
         
         <DiamondIcon/>

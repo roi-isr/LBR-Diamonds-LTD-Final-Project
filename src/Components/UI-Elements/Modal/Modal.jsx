@@ -11,6 +11,8 @@ import Loader from 'react-loader-spinner';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import MenuItem from '@material-ui/core/MenuItem'
 
+
+
 function ModalForm({ modalType, fields, autoShow, closeForm,
     popUpTitle, apiPath, updatePostUiFunc, updatePutUiFunc, deleteUiFunc,
     directionInput, authRequired, pagePagination, currPage, removeCurrentOfferFromUi, payload }) {
@@ -42,7 +44,6 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
     async function handleSubmit(e) {
         e.preventDefault();
         let itemId;
-        // try {
         setIsFetching(true);
         if (modalType === 'update-form') {
             itemId = await fetchPut(apiPath, inputData);
@@ -57,9 +58,9 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
                 else {
                     inputDataFixed = { ...inputData };
                 }
+                await fetchPost('stock', inputDataFixed, authRequired ?? true);
                 await fetchPut(apiPath, {});
                 deleteUiFunc && deleteUiFunc();
-                await fetchPost('stock', inputDataFixed, authRequired ?? true);
                 alert("המשלוח נוסף למלאי בהצלחה!");
             }
             else {
@@ -74,10 +75,6 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
         }
         setIsFetching('Success');
         setTimeout(handleClose, 1000);
-        // } catch {
-        //     alert('error')
-        //     setIsFetching('Fail');
-        // }
     }
 
     // Determine if a input form or a info form
@@ -168,6 +165,8 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
             const acceptOffer = async () => {
                 const weight = window.prompt("הכנס את משקל המכירה", fieldsFixed[5].content);
                 const maxWeight = fields['maxWeight'];
+                const diamondClarity = fields['diamondClarity'];
+                const diamondColor = fields['diamondColor'];
 
                 if (!weight) {
                     return;
@@ -197,13 +196,23 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
                     customer_mail: fieldsFixed[4].content,
                     sell_date: fieldsFixed[8].content,
                     payment_method: payment_method
-                }
+                };
 
                 await fetchPost(`sell`, sell_data);
+
+                const sell_ML_data = {
+                    weight,
+                    price: price * weight,
+                    diamondClarity,
+                    diamondColor,
+                };
+
+                await fetchPost(`sell-data`, sell_ML_data);
 
                 await fetchDelete(`offer/${offerId}`);
                 alert("המכירה אושרה ונוספה למכירות!");
                 removeCurrentOfferFromUi();
+                window.location.reload();
             }
             renderForm = fieldsFixed.map((item, index) => {
                 return (

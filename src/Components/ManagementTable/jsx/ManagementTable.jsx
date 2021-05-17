@@ -46,7 +46,7 @@ function ManagementTable({ title, headers, content, direction = 'rtl', searchStr
         }
 
         const convertDateFormat = (dateStr) => {
-            if (new RegExp('\\d{1,2}/\\d{1,2}/\\d{2,4}').test(dateStr)) {
+            if (new RegExp('^\\d{1,2}/\\d{1,2}/\\d{2,4}$').test(dateStr)) {
                 const dateSplit = dateStr.split('/');
                 return new Date(`${dateSplit[1]}-${dateSplit[0]}-${dateSplit[2]}`)
             }
@@ -56,17 +56,49 @@ function ManagementTable({ title, headers, content, direction = 'rtl', searchStr
             return null;
         }
 
-        const convertShortebDateFormat = (dateStr) => {
+        const convertShortenDateFormat = (dateStr) => {
             if (new RegExp('^\\d{1,2}/\\d{2,4}$').test(dateStr)) {
                 const dateSplit = dateStr.split('/');
-                return new Date(`${dateSplit[0]}-1-${dateSplit[1]}`)
+                return new Date(`${dateSplit[0]}-1-${dateSplit[1]}`);
+            }
+            return null;
+        }
+
+        const convertRangeDateFormat = (dateStr) => {
+            if (new RegExp('^\\d{1,2}/\\d{1,2}/\\d{2,4}-\\d{1,2}/\\d{1,2}/\\d{2,4}$').test(dateStr)) {
+                const twoDate = dateStr.split('-');
+                const dateOneSplit = twoDate[0].split('/');
+                const dateTwoSplit = twoDate[1].split('/');
+                return [
+                    new Date(`${dateOneSplit[1]}-${dateOneSplit[0]}-${dateOneSplit[2]}`),
+                    new Date(`${dateTwoSplit[1]}-${dateTwoSplit[0]}-${dateTwoSplit[2]}`)
+                ]
+            }
+            return null;
+        }
+
+        const convertRangeShortenDateFormat = (dateStr) => {
+            if (new RegExp('^\\d{1,2}/\\d{2,4}-\\d{1,2}/\\d{2,4}$').test(dateStr)) {
+                const twoDate = dateStr.split('-');
+                const dateOneSplit = twoDate[0].split('/');
+                const dateTwoSplit = twoDate[1].split('/');
+                // Prevent 19 prefix in years
+                const boundYear = dateTwoSplit[1].length == 2 ? `20${dateTwoSplit[1]}` : dateTwoSplit[1]
+                return [
+                    new Date(`${dateOneSplit[0]}-1-${dateOneSplit[1]}`),
+                    new Date(boundYear, dateTwoSplit[0], 0)
+                ];
             }
             return null;
         }
 
         const dateIfDate = convertDateFormat(searchStr);
 
-        const dateIfShortenDate = convertShortebDateFormat(searchStr);
+        const dateIfShortenDate = convertShortenDateFormat(searchStr);
+
+        const dateIsDateRange = convertRangeDateFormat(searchStr);
+
+        const dateIsShortenDateRange = convertRangeShortenDateFormat(searchStr);
 
         // Filter content by search criterea
         const filteredContent = content.filter(record => {
@@ -78,102 +110,111 @@ function ManagementTable({ title, headers, content, direction = 'rtl', searchStr
                     ((dateIfDate &&
                         (new Date(cur).getTime() - dateIfDate.getTime()) <= 24 * 60 * 60 * 1000 &&
                         (new Date(cur).getTime() - dateIfDate.getTime()) >= 0) ||
-                (dateIfShortenDate &&
-                    new Date(cur).getMonth() === dateIfShortenDate.getMonth() &&
-                    new Date(cur).getFullYear() === dateIfShortenDate.getFullYear())))
-            , false
+                        (dateIfShortenDate &&
+                            new Date(cur).getMonth() === dateIfShortenDate.getMonth() &&
+                            new Date(cur).getFullYear() === dateIfShortenDate.getFullYear()) ||
+                        (dateIsDateRange &&
+                            (new Date(cur).getTime() - dateIsDateRange[1].getTime()) <= 24 * 60 * 60 * 1000 &&
+                            (new Date(cur).getTime() - dateIsDateRange[0].getTime()) >= 0) ||
+                        (dateIsShortenDateRange &&
+                            new Date(cur).getMonth() >= dateIsShortenDateRange[0].getMonth() &&
+                            new Date(cur).getFullYear() >= dateIsShortenDateRange[0].getFullYear() &&
+                            new Date(cur).getMonth() <= dateIsShortenDateRange[1].getMonth() &&
+                            new Date(cur).getFullYear() <= dateIsShortenDateRange[1].getFullYear())
+                    ))
+                , false
             );
-});
-setShownContent(filteredContent);
+        });
+        setShownContent(filteredContent);
     }, [searchStr, content]);
 
-// Sort table in ASC or DESC order
-const sortTable = (ind) => {
-    let order;
-    if (orderColumn === "") {
-        order = 'ASC';
-        setOrderColumn(`${ind}-ASC`);
-    }
-    else {
-        const splittedOrder = orderColumn.split('-');
-        if (parseInt(splittedOrder[0]) === ind && splittedOrder[1] === 'ASC') {
-            order = 'DESC';
-            setOrderColumn(`${ind}-DESC`);
-        }
-        else {
+    // Sort table in ASC or DESC order
+    const sortTable = (ind) => {
+        let order;
+        if (orderColumn === "") {
             order = 'ASC';
             setOrderColumn(`${ind}-ASC`);
         }
-    }
-    sorterFunc(ind, order, shownContent, setShownContent)
-}
-
-const shownContentTable = shownContent.map((row, index) =>
-    <tr
-        className='align-middle'
-        key={Math.random() * index}>
-        {row.map((item, idx) => {
-            let renderTd;
-            if (headers[idx] === "כמות פניות") {
-                renderTd = (
-                    <OffersCounterTd
-                        className="align-middle"
-                        key={Math.random() * idx}
-                        curItem={item}>
-                        {item}
-                    </OffersCounterTd>
-                );
+        else {
+            const splittedOrder = orderColumn.split('-');
+            if (parseInt(splittedOrder[0]) === ind && splittedOrder[1] === 'ASC') {
+                order = 'DESC';
+                setOrderColumn(`${ind}-DESC`);
             }
             else {
-                renderTd = (
-                    <td className="align-middle"
-                        key={Math.random() * idx}>
-                        {item}
-                    </td>
-                );
+                order = 'ASC';
+                setOrderColumn(`${ind}-ASC`);
             }
-            return renderTd;
         }
-        )}
-    </tr>
-);
-return (
-    <div className="man-table-wrapper">
-        <StoreCustomTitle>
-            {title}
-        </StoreCustomTitle>
+        sorterFunc(ind, order, shownContent, setShownContent)
+    }
 
-        <Table
-            dir={direction}
-            style={{ fontSize: '1.2rem', textAlign: 'center' }}
-            striped bordered hover>
-            <thead>
-                <tr>
-                    {headers.map((item, index) =>
-                        <th
-                            className='align-middle'
-                            key={Math.random() * index}>
-                            <div className="div-th-man-table">
-                                <span />
-                                {item}
-                                {
-                                    item &&
-                                    <SortIcon
-                                        className="sort-icon-mui"
-                                        onClick={() => sortTable(index)}
-                                    />
-                                }
-                            </div>
-                        </th>
-                    )}
-                </tr>
-            </thead>
-            <tbody>
-                {shownContentTable}
-            </tbody>
-        </Table >
-    </div>
-);
+    const shownContentTable = shownContent.map((row, index) =>
+        <tr
+            className='align-middle'
+            key={Math.random() * index}>
+            {row.map((item, idx) => {
+                let renderTd;
+                if (headers[idx] === "כמות פניות") {
+                    renderTd = (
+                        <OffersCounterTd
+                            className="align-middle"
+                            key={Math.random() * idx}
+                            curItem={item}>
+                            {item}
+                        </OffersCounterTd>
+                    );
+                }
+                else {
+                    renderTd = (
+                        <td className="align-middle"
+                            key={Math.random() * idx}>
+                            {item}
+                        </td>
+                    );
+                }
+                return renderTd;
+            }
+            )}
+        </tr>
+    );
+    return (
+        <div className="man-table-wrapper">
+            <StoreCustomTitle>
+                {title}
+            </StoreCustomTitle>
+
+            <Table
+                dir={direction}
+                style={{ fontSize: '1.2rem', textAlign: 'center' }}
+                striped bordered hover>
+                <thead>
+                    <tr>
+                        {headers.map((item, index) =>
+                            <th
+                                className='align-middle'
+                                key={Math.random() * index}>
+                                <div className="div-th-man-table">
+                                    <span />
+                                    {item}
+                                    {
+                                        item &&
+                                        <SortIcon
+                                            className="sort-icon-mui"
+                                            onClick={() => sortTable(index)}
+                                        />
+                                    }
+                                </div>
+                            </th>
+                        )}
+                    </tr>
+                </thead>
+                <tbody>
+                    {shownContentTable}
+                </tbody>
+            </Table >
+        </div>
+    );
 }
 
 const mapStateToPropsNav = (state) => {

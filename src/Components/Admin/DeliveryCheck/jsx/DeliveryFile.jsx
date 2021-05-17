@@ -22,8 +22,35 @@ const moveToStockFields = (currWeight) => [
   { name: "מודל", type: 'text' },
   { name: "משקל החבילה", type: 'text', defaultValue: currWeight.toString() },
   { name: "עלות", type: 'text' },
-  { name: "ניקיון", type: 'text' },
-  { name: "צבע", type: 'text' },
+  {
+    name: "ניקיון", select: true,
+    options: [
+      { value: 'VVS1', label: 'VVS1' },
+      { value: 'VVS2', label: 'VVS2' },
+      { value: 'VS1', label: 'VS1' },
+      { value: 'VS2', label: 'VS2' },
+      { value: 'SI1', label: 'SI1' },
+      { value: 'SI2', label: 'SI2' },
+      { value: 'I1', label: 'I1' },
+      { value: 'I2', label: 'I2' },
+      { value: 'I3', label: 'I3' },
+    ]
+  },
+  {
+    name: "צבע", select: true,
+    options: [
+      { value: 'D', label: 'D' },
+      { value: 'E', label: 'E' },
+      { value: 'F', label: 'F' },
+      { value: 'G', label: 'G' },
+      { value: 'H', label: 'H' },
+      { value: 'I', label: 'I' },
+      { value: 'J', label: 'J' },
+      { value: 'K', label: 'K' },
+      { value: 'L', label: 'L' },
+      { value: 'M', label: 'M' },
+    ]
+  },
   { name: "קוד", type: 'text' },
   { name: "הערות", type: 'text' },
   { name: "תאריך קנייה - תשלום", type: 'date' },

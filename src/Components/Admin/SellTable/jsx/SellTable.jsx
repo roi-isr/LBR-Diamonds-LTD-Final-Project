@@ -16,6 +16,8 @@ const inputFields = [
   { name: "משקל", type: 'text' },
   { name: "מחיר לקראט", type: 'text' },
   { name: "שם הקונה", type: 'text' },
+  { name: "מייל הקונה", type: 'text' },
+  { name: "טלפון הקונה", type: 'text' },
   { name: "תאריך מכירה", type: 'date' },
   { name: "תשלום", type: 'text' },
 ];
@@ -59,7 +61,7 @@ export default function SellTable() {
         // Delete from UI
         setContent(prevContent => prevContent.filter((item, i) => index !== i));
       } catch {
-        alert('Error in deletion...')
+        alert('Error in deletion...');
       }
     }
 
@@ -100,10 +102,26 @@ export default function SellTable() {
     setTableRender(tempContent);
   }, [content])
 
+  const setItemForUpdate = (item) => {
+    updateMap[item[0]] = [
+      { name: "קוד החבילה", content: item[1] },
+      { name: "מודל", content: item[2] },
+      { name: "משקל", content: item[3] },
+      { name: "מחיר לקראט", content: item[4] },
+      { name: "שם הקונה", content: item[5] },
+      { name: "תאריך מכירה", content: item[6], type: 'date' },
+      { name: "תשלום", content: item[7] },
+    ];
+  }
+
   const updatePostUi = (newSell) => {
     const newSellFixed = [...newSell];
     // Add the total column
     newSellFixed.splice(5, 0, newSell[3] * newSell[4]);
+    newSellFixed.splice(7, 2);
+    const newSellForUpdate = [...newSellFixed];
+    newSellForUpdate.splice(5, 1);
+    setItemForUpdate(newSellForUpdate);
     setContent(prevContent => [...prevContent, newSellFixed]);
   }
 
@@ -113,15 +131,7 @@ export default function SellTable() {
     const updatedItemFixed = [...updatedItem];
     updatedItemFixed.splice(5, 0, updatedItem[3] * updatedItem[4])
     tempContent[wantedIndex] = [...updatedItemFixed];
-    updateMap[updatedItem[0]] = [
-      { name: "קוד החבילה", content: updatedItem[1] },
-      { name: "מודל", content: updatedItem[2] },
-      { name: "משקל", content: updatedItem[3] },
-      { name: "מחיר לקראט", content: updatedItem[4] },
-      { name: "שם הקונה", content: updatedItem[5] },
-      { name: "תאריך מכירה", content: updatedItem[6], type: 'date' },
-      { name: "תשלום", content: updatedItem[7] },
-    ];
+    setItemForUpdate(updatedItem);
     setContent(tempContent);
   }
 

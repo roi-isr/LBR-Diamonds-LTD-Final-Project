@@ -94,7 +94,7 @@ function ContactForm() {
 
     const fetchContact = async (content) => {
         const onSubmitSuccess = () => {
-            alert("הודעתך נשלחה בהצלחה!");
+            alert("Your message was sent successfully!");
             setEmail("");
             setName("");
             setPhone("");
@@ -102,6 +102,7 @@ function ContactForm() {
         }
 
         const onSubmitFail = () => {
+            alert("Couldn't submit your message. Please try again later.")
             console.log("בעיה בשליחת ההודעה...");
         }
         return fetch(`${ServerUrl}/contact`,

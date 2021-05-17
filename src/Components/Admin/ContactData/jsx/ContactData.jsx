@@ -7,6 +7,7 @@ import '../css/ContactData.css';
 import FormModal from '../../../UI-Elements/Modal/Modal';
 import fetchGet from '../../../../ApiEndpoints/Get';
 import { ServerUrl } from '../../../../ApiEndpoints/ServerUrl'
+import NoItems from '../../../UI-Elements/NoItems';
 
 const headers = ["שם השולח", "מייל", "טלפון", "זמן יצירת קשר", "", ""];
 
@@ -138,11 +139,13 @@ function ContactData() {
                     color="SlateBlue"
                 /> :
                 <React.Fragment>
-                    <ManagementTable
-                        title="יצירת קשר"
-                        headers={headers}
-                        content={tableRender}
-                    />
+                    {Object.keys(content).length === 0 && !loading ?
+                        <NoItems /> :
+                        <ManagementTable
+                            title="יצירת קשר"
+                            headers={headers}
+                            content={tableRender}
+                        />}
                     {!loading && itemDetailsIndex &&
                         <FormModal
                             fields={showDetailsFieldsMap[itemDetailsIndex]}

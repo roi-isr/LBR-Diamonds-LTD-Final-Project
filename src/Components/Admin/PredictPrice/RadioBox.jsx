@@ -28,12 +28,10 @@ function RadioBox({ name, optionArray, btnHeight, btnWidth, onClickedState }) {
                         onClick={(e) => clickHandler(e, item)
                         }
                     >
-                        {item}
+                        <strong>{item}</strong>
                     </button>
                 )
-            }
-            )
-            }
+            })}
         </div >
     );
 }

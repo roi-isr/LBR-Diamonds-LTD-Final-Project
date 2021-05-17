@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import ManagementTable from '../../../ManagementTable/jsx/ManagementTable'
 import Button from 'react-bootstrap/Button'
@@ -7,6 +6,7 @@ import fetchGet from '../../../../ApiEndpoints/Get';
 import fetchDelete from '../../../../ApiEndpoints/Delete';
 import Loader from 'react-loader-spinner';
 import '../css/SellTable.css';
+import NoItems from '../../../UI-Elements/NoItems';
 
 const updateMap = new Map();
 
@@ -20,13 +20,14 @@ const inputFields = [
   { name: "תשלום", type: 'text' },
 ];
 
-const headers = ["קוד", "מודל", "משקל ", "מחיר לקראט ", "סה''כ", "שם הקונה", "תאריך מכירה ", "תשלום", "", ""];
+const headers = ["קוד", "מודל", "משקל ", "מחיר לקראט ", "סה''כ", "שם הקונה", "תאריך מכירה ", "תשלום", "", "", ""];
 
 export default function SellTable() {
   const [content, setContent] = useState([[]]);
   const [tableRender, setTableRender] = useState([]);
   const [loading, setLoading] = useState(true);
   const [updateModalId, setUpdateModalId] = useState(false);
+  const [customerModal, setCustomerModal] = useState(false);
 
   // Fecth data from DB
   useEffect(() => {
@@ -64,9 +65,18 @@ export default function SellTable() {
 
     let tempContent = [];
     content.forEach((item, index) => {
-      if (item.length < headers.length - 1) {
+      if (item.length < headers.length - 2) {
         return;
       }
+
+      const customerBtn =
+        <Button
+          key={Math.random() * index}
+          variant="outline-info"
+          onClick={() => fetchCustomer(item[0])}>
+          פרטי הלקוח
+        </Button>;
+
       const updateBtn =
         <Button
           key={Math.random() * index}
@@ -85,7 +95,7 @@ export default function SellTable() {
 
       const renderItems = item.slice(1);
 
-      tempContent.push([...renderItems, updateBtn, deleteBtn]);
+      tempContent.push([...renderItems, customerBtn, updateBtn, deleteBtn]);
     })
     setTableRender(tempContent);
   }, [content])
@@ -123,8 +133,8 @@ export default function SellTable() {
       subTempSell.push(
         sellValues['sell_id'], sellValues['package_code'],
         sellValues['package_model'], sellValues['weight_in_carat'], sellValues['price_per_carat'],
-        sellValues['weight_in_carat'] * sellValues['price_per_carat'],
-        sellValues['buying_entity'], sellValues['sell_date'], sellValues['payment_method']
+        (sellValues['weight_in_carat'] * sellValues['price_per_carat']).toFixed(2),
+        sellValues['buying_customer'], sellValues['sell_date'], sellValues['payment_method']
       );
       tempSell.push(subTempSell);
 
@@ -133,14 +143,32 @@ export default function SellTable() {
         { name: "מודל", content: sellValues['package_model'] },
         { name: "משקל", content: sellValues['weight_in_carat'] },
         { name: "מחיר לקראט", content: sellValues['price_per_carat'] },
-        { name: "שם הקונה", content: sellValues['buying_entity'] },
+        { name: "שם הקונה", content: sellValues['buying_customer'] },
         { name: "תאריך מכירה", content: sellValues['sell_date'], type: 'date' },
         { name: "תשלום", content: sellValues['payment_method'] },
       ];
     });
     setContent(tempSell);
-
   }
+
+  const fetchCustomer = async (sellId) => {
+    const customerData = await fetchGet(`customer/${sellId}`);
+    const customerDataArr = [
+      { name: "שם הלקוח", content: customerData[0]["buying_customer"] },
+      { name: "מייל", content: customerData[0]["customer_mail"] },
+      { name: "טלפון", content: customerData[0]["customer_phone"] }
+    ]
+    setCustomerModal(customerDataArr);
+  }
+
+  const formModalVar =
+    <FormModal
+      fields={inputFields}
+      modalType="input-form"
+      popUpTitle="הוספת מכירה"
+      apiPath="sell"
+      updatePostUiFunc={updatePostUi}
+    />
 
   //Returns the table to our requested page.
   return (
@@ -154,18 +182,25 @@ export default function SellTable() {
           color="SlateBlue"
         /> :
         <React.Fragment>
-          <ManagementTable
-            title="מכירות"
-            headers={headers}
-            content={tableRender}
-          />
-          <FormModal
-            fields={inputFields}
-            modalType="input-form"
-            popUpTitle="הוספת מכירה"
-            apiPath="sell"
-            updatePostUiFunc={updatePostUi}
-          />
+          {Object.keys(content).length === 0 && !loading ?
+            <NoItems /> :
+            <ManagementTable
+              title="מכירות"
+              headers={headers}
+              content={tableRender}
+            />}
+          {formModalVar}
+          {
+            customerModal &&
+            <FormModal
+              modalType="customer-info-form"
+              fields={customerModal}
+              autoShow={true}
+              closeForm={() => setCustomerModal(false)}
+              popUpTitle="פרטי הלקוח"
+              updatePutUiFunc={updatePutUi}
+            />
+          }
           {
             updateModalId &&
             <FormModal

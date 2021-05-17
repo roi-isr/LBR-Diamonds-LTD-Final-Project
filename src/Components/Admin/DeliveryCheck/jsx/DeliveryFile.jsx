@@ -6,9 +6,9 @@ import FormModal from '../../../UI-Elements/Modal/Modal';
 import fetchGet from '../../../../ApiEndpoints/Get';
 import fetchDelete from '../../../../ApiEndpoints/Delete';
 import Loader from 'react-loader-spinner';
+import NoItems from '../../../UI-Elements/NoItems';
 
 const updateMap = new Map();
-
 
 const inputFields = [
   { name: "מספר החבילה", type: 'text' },
@@ -18,6 +18,22 @@ const inputFields = [
   { name: "שם השולח", type: 'text' },
   { name: "תאריך המשלוח", type: 'date' }];
 
+const moveToStockFields = (currWeight) => [
+  { name: "מודל", type: 'text' },
+  { name: "משקל החבילה", type: 'text', defaultValue: currWeight.toString() },
+  { name: "עלות", type: 'text' },
+  { name: "ניקיון", type: 'text' },
+  { name: "צבע", type: 'text' },
+  { name: "קוד", type: 'text' },
+  { name: "הערות", type: 'text' },
+  { name: "תאריך קנייה - תשלום", type: 'date' },
+  { name: "מחיר מכירה", type: 'text' },
+  {
+    name: "סטטוס", select: true,
+    options: [{ value: 'בחנות', label: 'בחנות' }, { value: 'לא בחנות', label: 'לא בחנות' }]
+  },
+];
+
 const headers = ["מספר החבילה", "משקל החבילה", "מהיכן המשלוח", "חברת השילוח", "שם השולח ", "תאריך המשלוח", "", "", ""];
 
 export default function DeliveryTable() {
@@ -25,6 +41,7 @@ export default function DeliveryTable() {
   const [tableRender, setTableRender] = useState([]);
   const [loading, setLoading] = useState(true);
   const [updateModalId, setUpdateModalId] = useState(false);
+  const [moveToStockModalId, setMoveToStockModalId] = useState(false);
 
   // Fecth data from DB
   useEffect(() => {
@@ -41,7 +58,6 @@ export default function DeliveryTable() {
         setLoading(false);
       }
     }
-
     fetchData();
   }, []);
 
@@ -69,7 +85,8 @@ export default function DeliveryTable() {
       const confirmBtn =
         <Button
           key={Math.random() * index}
-          variant="outline-success">
+          variant="outline-success"
+          onClick={() => setMoveToStockModalId({ _id: item[0], weight: item[2] })}>
           אישור הגעה
           </Button>;
 
@@ -117,7 +134,7 @@ export default function DeliveryTable() {
 
   // Convert the data fetch for DB into renderable data
   const renderData = (data) => {
-    const tempDelivery = []
+    const tempDelivery = [];
     Object.values(data).forEach(deliveryValues => {
       const subTempDelivery = [];
       subTempDelivery.push(
@@ -137,8 +154,17 @@ export default function DeliveryTable() {
       ];
     });
     setContent(tempDelivery);
-
   }
+
+  const formModalVar =
+    <FormModal
+      fields={inputFields}
+      modalType="input-form"
+      popUpTitle="הוספת משלוח"
+      apiPath="delivery"
+      updatePostUiFunc={updatePostUi}
+    />;
+
 
   //Returns the table to our requested page.
   return (
@@ -152,18 +178,14 @@ export default function DeliveryTable() {
           color="SlateBlue"
         /> :
         <React.Fragment>
-          <ManagementTable
-            title="משלוחים"
-            headers={headers}
-            content={tableRender}
-          />
-          <FormModal
-            fields={inputFields}
-            modalType="input-form"
-            popUpTitle="הוספת משלוח"
-            apiPath="delivery"
-            updatePostUiFunc={updatePostUi}
-          />
+          {Object.keys(content).length === 0 && !loading ?
+            <NoItems /> :
+            <ManagementTable
+              title="משלוחים"
+              headers={headers}
+              content={tableRender}
+            />}
+          {formModalVar}
           {
             updateModalId &&
             <FormModal
@@ -174,6 +196,18 @@ export default function DeliveryTable() {
               popUpTitle="עדכון פרטי משלוח"
               apiPath={`delivery/${updateModalId}`}
               updatePutUiFunc={updatePutUi}
+            />
+          }
+          {
+            moveToStockModalId &&
+            <FormModal
+              modalType="input-form"
+              fields={moveToStockFields(moveToStockModalId['weight'])}
+              autoShow={true}
+              closeForm={() => setMoveToStockModalId(false)}
+              popUpTitle="העברת משלוח למלאי"
+              apiPath={`delivery/move-to-stock/${moveToStockModalId['_id']}`}
+              deleteUiFunc={() => setContent(prevContent => prevContent.filter(item => item[0] != moveToStockModalId['_id']))}
             />
           }
         </React.Fragment>

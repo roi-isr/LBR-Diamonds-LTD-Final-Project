@@ -7,6 +7,7 @@ import styled from 'styled-components/macro'
 import L from 'leaflet';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import { ServerUrl } from '../../../ApiEndpoints/ServerUrl'
+import Loader from 'react-loader-spinner';
 
 /* Creating a styled component that wraps the map and gives it a unique style */
 const MapWrapper = styled.div`
@@ -71,13 +72,15 @@ function MapDisplay() {
 
 /* Contact us form component */
 function ContactForm() {
-    const [email, setEmail] = useState("")
-    const [name, setName] = useState("")
-    const [phone, setPhone] = useState("")
-    const [content, setContent] = useState("")
+    const [email, setEmail] = useState("");
+    const [name, setName] = useState("");
+    const [phone, setPhone] = useState("");
+    const [content, setContent] = useState("");
+    const [loading, setLoading] = useState(false);
 
     // Send the form data to the server .
     const submitForm = async (event) => {
+        setLoading(true);
         event.preventDefault();
         const contentData = {
             email_address: email,
@@ -86,6 +89,7 @@ function ContactForm() {
             content: content
         }
         await fetchContact(contentData);
+        setLoading(false);
     }
 
     const fetchContact = async (content) => {
@@ -166,9 +170,20 @@ function ContactForm() {
                 style={{ textAlign: 'center' }}
                 onSubmit={(e) => submitForm(e)}>
                 {renderFormElements}
-                <Button
-                    type='submit'
-                    style={{ fontSize: '18px', margin: 'auto' }}>Contact Us!</Button>
+                <div className="contact-submission-div">
+                    <Button
+                        type='submit'
+                        style={{ fontSize: '18px', margin: 'auto' }}>Contact Us!</Button>
+                    {loading &&
+                        <Loader
+                            className="spinner-icon"
+                            style={{ margin: '10px 0' }}
+                            type='Bars'
+                            height={30}
+                            width={30}
+                            color="SlateBlue"
+                        />}
+                </div>
             </Form>
         </div>
     );

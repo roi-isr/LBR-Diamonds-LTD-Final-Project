@@ -15,6 +15,28 @@ header {
     font-size: 20px;
 }
 
+.active-nav{
+    color: black;
+    text-shadow: 0.1px 0.1px 0.5px #000;
+    font-weight: 700;
+}
+
+.logout-nav{
+    background-color: #DC143C;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 1px !important;
+    color: #000;
+    text-shadow: 0.1px 0.1px 0.5px #000;
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.logout-nav:hover{
+    background-color: #ee496a;
+
+}
+
 .gen-search-btn {
     margin: auto;
 }

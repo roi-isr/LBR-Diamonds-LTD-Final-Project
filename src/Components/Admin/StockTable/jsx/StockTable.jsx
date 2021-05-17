@@ -9,6 +9,7 @@ import FormModal from '../../../UI-Elements/Modal/Modal'
 import Loader from 'react-loader-spinner';
 import fetchPut from '../../../../ApiEndpoints/Put';
 import styled from 'styled-components/macro';
+import NoItems from '../../../UI-Elements/NoItems';
 
 const CurrentBalanceComp = styled.h1
   `
@@ -16,6 +17,12 @@ const CurrentBalanceComp = styled.h1
   font-weight: 700;
   font-style: italic;
   padding: 10px;
+  background-color: #5F9EA0;
+  margin: 10px auto;
+  text-align: center;
+  width: 50%;
+  border: 1px solid #000;
+  border-radius: 5px;
 `;
 
 const updateMap = new Map();
@@ -98,7 +105,7 @@ export default function StockTable() {
       }
     }
 
-    const watchOffer = async (stockId) => {
+    const watchOffer = async (stockId, btnIndex) => {
       const offerD = await fetchGet(`stock-to-offers/${stockId}`)
       setOfferData(offerD);
       setCurrOfferPagination(0);
@@ -114,7 +121,8 @@ export default function StockTable() {
           { name: "מחיר מוצע", content: offerD[0]['offered_price'] },
           { name: "הערות", content: offerD[0]['additional_comments'], multiline: true },
           { name: "תאריך פנייה", content: offerD[0]['offer_date'] },
-        ]
+        ],
+        maxWeight: content[btnIndex][2]
       });
     }
 
@@ -128,7 +136,7 @@ export default function StockTable() {
           key={Math.random() * index}
           variant="outline-info"
           disabled={item[12] === 0}
-          onClick={() => watchOffer(item[0])}
+          onClick={() => watchOffer(item[0], index)}
         >
           צפה בפניות!
       </Button>;
@@ -292,6 +300,16 @@ export default function StockTable() {
   }
 
   const currentBalance = content.reduce((acc, curItem) => acc + (+curItem[11]), 0);
+
+  const formModalVar =
+    <FormModal
+      fields={inputFields}
+      modalType="input-form"
+      popUpTitle="הוספת מלאי"
+      apiPath="stock"
+      updatePostUiFunc={updatePostUi}
+    />;
+
   //Returns the table to our requested page, shows us all the company's current inventory.
   //Another element gives an indication to the business owner, what the status of his credit line at a given moment.
   return (
@@ -305,23 +323,19 @@ export default function StockTable() {
           color="SlateBlue"
         /> :
         <React.Fragment>
-          <ManagementTable
-            title="מלאי"
-            headers={headers}
-            content={tableRender}
-          />
-          <FormModal
-            fields={inputFields}
-            modalType="input-form"
-            popUpTitle="הוספת מלאי"
-            apiPath="stock"
-            updatePostUiFunc={updatePostUi}
-          />
+          {Object.keys(content).length === 0 && !loading ?
+            <NoItems /> :
+            <ManagementTable
+              title="מלאי"
+              headers={headers}
+              content={tableRender}
+            />}
 
-          <CurrentBalanceComp>מלאי נוכחי: {currentBalance.toFixed(2)}$</CurrentBalanceComp>
+          {formModalVar}
 
-          {
-            updateModalId &&
+          <CurrentBalanceComp>מלאי נוכחי: {!isNaN(currentBalance) ? currentBalance.toFixed(2) : 0}$</CurrentBalanceComp>
+
+          {updateModalId &&
             <FormModal
               modalType="update-form"
               fields={updateMap[updateModalId]}

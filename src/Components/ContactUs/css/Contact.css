@@ -6,6 +6,12 @@
     padding: 10px;
 }
 
+.contact-submission-div{
+    display: flex;
+    flex-direction: column;
+    
+}
+
 .contact-div {
     display: flex;
     flex-direction: row;

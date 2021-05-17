@@ -7,7 +7,7 @@ import { WebCookies } from '../../Entities/Cookies';
 import { withRouter, useHistory } from 'react-router-dom';
 import RouterComponent from '../../Routers/Router'
 import './Admin.css';
-import styled from 'styled-components/macro'
+import styled from 'styled-components/macro';
 
 const AdminWelcome = styled.h1`
     font-size: 180px;

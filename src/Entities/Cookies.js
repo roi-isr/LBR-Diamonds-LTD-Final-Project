@@ -6,7 +6,7 @@ export class WebCookies {
         this._cookies = new Cookies();
         this._accessKey = 'accessTokenStr';
         this._refreshKey = 'refreshTokenStr';
-        this._expirationKey = 'accessTokenExpiration'
+        this._expirationKey = 'accessTokenExpiration';
     }
 
     getCookies(cookiesKey) {
@@ -47,7 +47,7 @@ export class WebCookies {
 
     // Remove access token from browser cookies
     removeCookies() {
-        const keys = [this._accessKey, this._refreshKey, this._expirationKey]
-        keys.forEach(key => this._cookies.remove(key))
+        const keys = [this._accessKey, this._refreshKey, this._expirationKey];
+        keys.forEach(key => this._cookies.remove(key));
     }
 }

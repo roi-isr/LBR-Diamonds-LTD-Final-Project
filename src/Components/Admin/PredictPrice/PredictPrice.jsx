@@ -25,7 +25,10 @@ export default function PredictForm() {
         table: "",
         depth: ""
     });
+
     const inputFieldsWidth = "200px";
+
+    const inputStyle = { width: inputFieldsWidth, margin: 'auto', textAlign: 'center' };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -85,7 +88,7 @@ export default function PredictForm() {
         setInputData(inputDataTemp);
     }
 
-    const handleSubmitAdvise = async (event) => {
+    const handleSubmitAdvise = (event) => {
         event.preventDefault();
         if (isNaN(adminAdvise || 0)) {
             alert("עליך להזין מספרים בלבד בהערכת המחיר!");
@@ -101,11 +104,11 @@ export default function PredictForm() {
         predictedDiamondObj['advise-price'] = (adminAdvise) === "" ?
             price : (+adminAdvise);
         console.log(predictedDiamondObj)
-        await fetchPost('admin-advise', predictedDiamondObj);
+        fetchPost('admin-advise', predictedDiamondObj);
         alert("תודה על חוות דעתך!");
     }
     return (
-        <React.Fragment>
+        <div className="main-prediction-page">
             <h1 className="pred-title-div">Predict diamonds price (ML based)</h1>
             <div className="predict-main-div">
                 <img
@@ -122,7 +125,7 @@ export default function PredictForm() {
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>הכנס משקל</Form.Label>
                             <Form.Control
-                                style={{ width: inputFieldsWidth }}
+                                style={inputStyle}
                                 type="input"
                                 required
                                 placeholder="הכנס משקל"
@@ -160,7 +163,7 @@ export default function PredictForm() {
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>הכנס לוח</Form.Label>
                             <Form.Control
-                                style={{ width: inputFieldsWidth }}
+                                style={inputStyle}
                                 type="input"
                                 placeholder="הכנס לוח"
                                 required
@@ -172,7 +175,7 @@ export default function PredictForm() {
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>הכנס עומק</Form.Label>
                             <Form.Control
-                                style={{ width: inputFieldsWidth }}
+                                style={inputStyle}
                                 type="input"
                                 required
                                 placeholder="הכנס עומק"
@@ -182,7 +185,7 @@ export default function PredictForm() {
                             <Button
                                 variant="primary"
                                 type="submit"
-                                style={{ display: 'block', marginTop: '10px', maxHeight: '70px' }}
+                                style={{ display: 'block', margin: '15px auto 0', maxHeight: '70px' }}
                                 disabled={isLoading}
                             >
                                 מצא לי את המחיר!
@@ -245,6 +248,6 @@ export default function PredictForm() {
                     </div>
                 </div>
             </div>
-        </React.Fragment >
+        </div>
     );
 }

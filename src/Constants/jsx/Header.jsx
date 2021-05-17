@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "../css/Header.css";
 import Logo from '../../Assets/logo.jpg';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Form, FormControl, Button, Nav, Navbar } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { update_search_str } from '../../store/actions/index';
@@ -78,16 +78,18 @@ function CustomizedNavItem(props) {
                     className="mr-auto site-nav-bar"
                     style={{ width: "72%", marginLeft: 'auto', justifyContent: 'space-between', alignItems: 'center' }}>
                     {props.content.map((item, index) =>
-                        <Nav.Link
-                            as={Link}
+                        <NavLink
+                            activeClassName={item.name !== "Logout" ? "active-nav" : "logout-nav"}
+                            isActive={false}
+                            // as={Link}
                             to={{
-                                pathname: item.path || null
+                                pathname: item.path ?? null
                             }}
                             key={index}
                             className="nav-link"
                             onClick={() => navItemClickHandler(item)}>
                             {item.name || <AccountCircleIcon />}
-                        </Nav.Link>
+                        </NavLink>
                     )}
                 </Nav>
                 <Form inline onSubmit={onSearchClicked}>

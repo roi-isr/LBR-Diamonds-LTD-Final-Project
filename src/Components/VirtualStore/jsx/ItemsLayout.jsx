@@ -6,20 +6,20 @@ import FormModal from '../../../Components/UI-Elements/Modal/Modal';
 import fetchGet from '../../../ApiEndpoints/Get';
 import Loader from 'react-loader-spinner';
 import '../css/ItemsLayout.css';
+import NoItems from '../../UI-Elements/NoItems';
 
-const headers = ['Model', 'Weight (Carat)', 'Price (per Carat)', 'Clarity', 'Color', ''];
+const headers = ['Model', 'Weight (Carat)', 'Clarity', 'Color', 'Price (per Carat)', ''];
 
 const offerInputFields = [
   { name: "Name", type: 'text' },
   { name: "Phone", type: 'text' },
   { name: "Email", type: 'text' },
   { name: "Offered Weight", type: 'text' },
-  { name: "Offered Price", type: 'text' },
+  { name: "Offered Price (per carat)", type: 'text' },
   { name: "Additional comments", type: 'text' },
 ];
 
 function ItemsLayout() {
-
   const [content, setContent] = useState([[]]);
   const [tableRender, setTableRender] = useState([]);
   const [sendOfferModal, setSendOfferModal] = useState(false);
@@ -53,7 +53,7 @@ function ItemsLayout() {
         <Button
           key={Math.random() * index}
           variant="outline-success"
-          onClick={() => setSendOfferModal(item[0])}>
+          onClick={() => setSendOfferModal({ itemId: item[0], maxWeight: content[index][2] })}>
           SEND OFFER
      </Button>;
 
@@ -69,8 +69,9 @@ function ItemsLayout() {
     Object.values(data).forEach(storeValues => {
       const subTempContent = [];
       subTempContent.push(
-        storeValues['stock_id'], storeValues['package_model'], storeValues['weight_in_karat'],
-        storeValues['cost_per_karat'], storeValues['clearance'], storeValues['color'],
+        storeValues['stock_id'], storeValues['package_model'],
+        storeValues['weight_in_karat'], storeValues['clearance'],
+        storeValues['color'], storeValues['cost_per_karat']
       );
 
       tempContent.push(subTempContent);
@@ -90,14 +91,16 @@ function ItemsLayout() {
           color="SlateBlue"
         /> :
         <React.Fragment>
-          <ManagementTable
-            title="Virtual Store"
-            direction='ltr'
-            headers={headers}
-            content={tableRender}
-          />
-          {
-            sendOfferModal &&
+          {Object.keys(content).length === 0 && !loading ?
+            <NoItems /> :
+            <ManagementTable
+              title="Virtual Store"
+              direction='ltr'
+              headers={headers}
+              content={tableRender}
+            />}
+
+          {sendOfferModal &&
             <FormModal
               directionInput="ltr"
               modalType="input-form"
@@ -105,8 +108,9 @@ function ItemsLayout() {
               autoShow={true}
               closeForm={() => setSendOfferModal(false)}
               popUpTitle="Send an offer to admin"
-              apiPath={`offer/${sendOfferModal}`}
+              apiPath={`offer/${sendOfferModal['itemId']}`}
               authRequired={false}
+              payload={{ maxWeight: sendOfferModal['maxWeight'] }}
             />
           }
         </React.Fragment>
@@ -116,8 +120,5 @@ function ItemsLayout() {
 
   );
 }
+
 export default ItemsLayout;
-
-
-
-

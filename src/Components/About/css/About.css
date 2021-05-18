@@ -18,11 +18,19 @@
 }
 
 .about-us-title {
+    font-weight: bold;
     font-family: Comic Sans MS;
+    font-size: 4.5rem;
     text-align: center;
+    border: 2px solid #000;
+    border-radius: 3px;
+    width: 90%;
+    margin: 10px auto 0;
+    background-image: radial-gradient(circle at center, #fff, #008B8B);
+    letter-spacing: 0.2rem;
 }
 
-.about-sec-div p{
+.about-sec-div p {
     position: relative;
     bottom: 1.5rem;
     border: 5px double #000;
@@ -40,13 +48,16 @@
         flex-direction: column;
         text-align: center;
     }
+    .about-us-title {
+        font-size: 3.5rem;
+    }
 }
 
-@keyframes renderitemsabout{
-    from{
+@keyframes renderitemsabout {
+    from {
         opacity: 0;
     }
-    to{
+    to {
         opacity: 100;
     }
 }

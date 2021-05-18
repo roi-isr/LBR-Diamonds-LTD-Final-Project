@@ -45,6 +45,7 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
         e.preventDefault();
         let itemId;
         setIsFetching(true);
+
         if (modalType === 'update-form') {
             itemId = await fetchPut(apiPath, inputData);
             updatePutUiFunc && updatePutUiFunc([itemId, ...Object.values(inputData)]);
@@ -69,8 +70,16 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
                     setIsFetching(false);
                     return;
                 }
-                itemId = await fetchPost(apiPath, inputData, authRequired ?? true);
-                updatePostUiFunc && updatePostUiFunc([itemId, ...Object.values(inputData)]);
+                try {
+                    itemId = await fetchPost(apiPath, inputData, authRequired ?? true);
+                    updatePostUiFunc && updatePostUiFunc([itemId, ...Object.values(inputData)]);
+                    if (popUpTitle === 'Send an offer to admin') {
+                        alert('Your submittion was sent successfully!');
+                    }
+                }
+                catch {
+                    throw Error("Unable to submit data...");
+                }
             }
         }
         setIsFetching('Success');

@@ -76,7 +76,10 @@ function CustomizedNavItem(props) {
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav
                     className="mr-auto site-nav-bar"
-                    style={{ width: "72%", marginLeft: 'auto', justifyContent: 'space-between', alignItems: 'center' }}>
+                    style={{
+                        width: "72%", marginLeft: 'auto', marginBottom: navExpended ? '10px' : '0',
+                        justifyContent: 'space-between', alignItems: 'center'
+                    }}>
                     {props.content.map((item, index) =>
                         <NavLink
                             activeClassName={item.name !== "Logout" ? "active-nav" : "logout-nav"}

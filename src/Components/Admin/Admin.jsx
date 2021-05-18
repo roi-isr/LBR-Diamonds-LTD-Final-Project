@@ -10,15 +10,16 @@ import './Admin.css';
 import styled from 'styled-components/macro';
 
 const AdminWelcome = styled.h1`
-    font-size: 180px;
+    font-size: 10rem;
     text-align: center;
-    margin: 100px 0;
+    width: 90%;
+    margin: 100px auto;
     border: 10px solid #000;
     border-radius: 5px;
     text-shadow: 1px 1px 1px #000;
     background-image: linear-gradient(to right, #F0F8FF, #5F9EA0);
     @media (max-width: 990px){
-        font-size: 105px;
+        font-size: 5rem;
     }
 `
 

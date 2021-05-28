@@ -8,6 +8,7 @@ import './PredictPrice.css';
 import fetchGet from '../../../ApiEndpoints/Get';
 import fetchPost from '../../../ApiEndpoints/Post';
 import Loader from 'react-loader-spinner';
+import fetchDelete from '../../../ApiEndpoints/Delete';
 
 let predictedDiamondObj = {};
 
@@ -107,6 +108,16 @@ export default function PredictForm() {
         fetchPost('admin-advise', predictedDiamondObj);
         alert("תודה על חוות דעתך!");
     }
+
+    const resetModels = async () => {
+        const confirmRes = window.confirm("האם אתה בטוח שברצונך לאפס את המודל לחיזוי יהלומים? לידיעתך, לא לשחזר את הנתונים לאחר אישור.");
+        if (!confirmRes) {
+            return;
+        }
+        await fetchDelete('reset-models');
+        alert('המודל לחיזוי יהלומים התאפס בהצלחה!');
+    }
+
     return (
         <div className="main-prediction-page">
             <h1 className="pred-title-div">Predict diamonds price (ML based)</h1>
@@ -118,7 +129,6 @@ export default function PredictForm() {
 
                 <div
                     dir='rtl'
-                    background={background}
                     className="predict-form"
                 >
                     <Form onSubmit={handleSubmit}>
@@ -246,6 +256,12 @@ export default function PredictForm() {
                                 </div>
                         }
                     </div>
+                    <Button
+                        variant="danger"
+                        style={{ width: "20%", alignSelf: 'center', borderRadius: '50%', fontSize: '0.8rem', marginTop: '10px' }}
+                        onClick={resetModels}>
+                        איפוס המודל
+                    </Button>
                 </div>
             </div>
         </div>

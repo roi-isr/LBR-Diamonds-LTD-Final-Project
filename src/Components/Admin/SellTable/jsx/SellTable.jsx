@@ -13,11 +13,11 @@ const updateMap = new Map();
 const inputFields = [
   { name: "קוד", type: 'text' },
   { name: "מודל", type: 'text' },
-  { name: "משקל", type: 'text' },
-  { name: "מחיר לקראט", type: 'text' },
+  { name: "משקל", type: 'number' },
+  { name: "מחיר לקראט", type: 'number' },
   { name: "שם הקונה", type: 'text' },
-  { name: "מייל הקונה", type: 'text' },
-  { name: "טלפון הקונה", type: 'text' },
+  { name: "מייל הקונה", type: 'email' },
+  { name: "טלפון הקונה", type: 'number' },
   { name: "תאריך מכירה", type: 'date' },
   { name: "תשלום", type: 'text' },
 ];

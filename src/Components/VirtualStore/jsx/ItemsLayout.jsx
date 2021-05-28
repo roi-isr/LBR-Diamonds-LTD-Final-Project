@@ -12,10 +12,10 @@ const headers = ['Model', 'Weight (Carat)', 'Clarity', 'Color', 'Price (per Cara
 
 const offerInputFields = [
   { name: "Name", type: 'text' },
-  { name: "Phone", type: 'text' },
-  { name: "Email", type: 'text' },
-  { name: "Offered Weight", type: 'text' },
-  { name: "Offered Price (per carat)", type: 'text' },
+  { name: "Phone", type: 'number' },
+  { name: "Email", type: 'email' },
+  { name: "Offered Weight", type: 'number' },
+  { name: "Offered Price (per carat)", type: 'number' },
   { name: "Additional comments", type: 'text' },
 ];
 

@@ -11,8 +11,8 @@ import NoItems from '../../../UI-Elements/NoItems';
 const updateMap = new Map();
 
 const inputFields = [
-  { name: "מספר החבילה", type: 'text' },
-  { name: "משקל החבילה", type: 'text' },
+  { name: "מספר החבילה", type: 'number' },
+  { name: "משקל החבילה", type: 'number' },
   { name: " מהיכן המשלוח", type: 'text' },
   { name: "חברת השילוח", type: 'text' },
   { name: "שם השולח", type: 'text' },
@@ -20,8 +20,8 @@ const inputFields = [
 
 const moveToStockFields = (currWeight) => [
   { name: "מודל", type: 'text' },
-  { name: "משקל החבילה", type: 'text', defaultValue: currWeight.toString() },
-  { name: "עלות", type: 'text' },
+  { name: "משקל החבילה", type: 'number', defaultValue: currWeight.toString() },
+  { name: "עלות", type: 'number' },
   {
     name: "ניקיון", select: true,
     options: [
@@ -54,7 +54,7 @@ const moveToStockFields = (currWeight) => [
   { name: "קוד", type: 'text' },
   { name: "הערות", type: 'text' },
   { name: "תאריך קנייה - תשלום", type: 'date' },
-  { name: "מחיר מכירה", type: 'text' },
+  { name: "מחיר מכירה", type: 'number' },
   {
     name: "סטטוס", select: true,
     options: [{ value: 'בחנות', label: 'בחנות' }, { value: 'לא בחנות', label: 'לא בחנות' }]
@@ -234,7 +234,7 @@ export default function DeliveryTable() {
               closeForm={() => setMoveToStockModalId(false)}
               popUpTitle="העברת משלוח למלאי"
               apiPath={`delivery/move-to-stock/${moveToStockModalId['_id']}`}
-              deleteUiFunc={() => setContent(prevContent => prevContent.filter(item => item[0] != moveToStockModalId['_id']))}
+              deleteUiFunc={() => setContent(prevContent => prevContent.filter(item => item[0] !== moveToStockModalId['_id']))}
             />
           }
         </React.Fragment>

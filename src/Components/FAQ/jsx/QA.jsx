@@ -2,7 +2,6 @@ import React from 'react';
 import '../css/QA.css'
 import { Button } from 'react-bootstrap';
 import Factory from '../../../Assets/diamonds_comps/diamond_photo.png';
-import Avatar from '@material-ui/core/Avatar';
 import styled from 'styled-components/macro';
 
 const DiamondIcon = styled.div

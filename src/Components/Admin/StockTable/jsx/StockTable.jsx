@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import '../css/StockTable.css'
-import { CircularProgressbar } from 'react-circular-progressbar'
-import ManagementTable from '../../../ManagementTable/jsx/ManagementTable'
+import '../css/StockTable.css';
+import ManagementTable from '../../../ManagementTable/jsx/ManagementTable';
 import Button from 'react-bootstrap/Button';
 import fetchGet from '../../../../ApiEndpoints/Get';
 import fetchDelete from '../../../../ApiEndpoints/Delete';
@@ -29,8 +28,8 @@ const updateMap = new Map();
 
 const inputFields = [
   { name: "מודל", type: 'text' },
-  { name: "משקל החבילה", type: 'text' },
-  { name: "עלות", type: 'text' },
+  { name: "משקל החבילה", type: 'number' },
+  { name: "עלות", type: 'number' },
   {
     name: "ניקיון", select: true,
     options: [
@@ -63,7 +62,7 @@ const inputFields = [
   { name: "קוד", type: 'text' },
   { name: "הערות", type: 'text' },
   { name: "תאריך קנייה - תשלום", type: 'date' },
-  { name: "מחיר מכירה", type: 'text' },
+  { name: "מחיר מכירה", type: 'number' },
   {
     name: "סטטוס", select: true,
     options: [{ value: 'בחנות', label: 'בחנות' }, { value: 'לא בחנות', label: 'לא בחנות' }]
@@ -239,7 +238,7 @@ export default function StockTable() {
         stockValues['clearance'], stockValues['color'],
         stockValues['code'], stockValues['comments'],
         stockValues['sell_date'], stockValues['cost_per_sell'], stockValues['status'],
-        stockValues['weight_in_karat'] * stockValues['cost_per_karat'],
+       (stockValues['weight_in_karat'] * stockValues['cost_per_karat']).toFixed(2),
         offerCounterData[stockValues['stock_id']] ?? 0
       );
       tempStock.push(subTempStock);

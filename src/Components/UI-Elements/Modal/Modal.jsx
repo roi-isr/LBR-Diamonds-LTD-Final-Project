@@ -12,7 +12,6 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import MenuItem from '@material-ui/core/MenuItem'
 
 
-
 function ModalForm({ modalType, fields, autoShow, closeForm,
     popUpTitle, apiPath, updatePostUiFunc, updatePutUiFunc, deleteUiFunc,
     directionInput, authRequired, pagePagination, currPage, removeCurrentOfferFromUi, payload }) {
@@ -343,23 +342,22 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
             break;
 
         case 'customer-info-form':
-            {
-                renderForm = fields.map((item, index) =>
-                    <div
-                        className='info-customer-div'
-                        key={'item-info' + index}>
-                        <FormLabel>{item.name}</FormLabel>
-                        <TextField
-                            inputProps={{ style: { textAlign: 'center', height: '1px' } }}
-                            value={item.content}
-                            disabled
-                            type={'text'}
-                            variant="outlined"
-                            color="secondary">
-                        </TextField>
-                    </div>
-                )
-            }
+            renderForm = fields.map((item, index) =>
+                <div
+                    className='info-customer-div'
+                    key={'item-info' + index}>
+                    <FormLabel>{item.name}</FormLabel>
+                    <TextField
+                        inputProps={{ style: { textAlign: 'center', height: '1px' } }}
+                        value={item.content}
+                        disabled
+                        type={'text'}
+                        variant="outlined"
+                        color="secondary">
+                    </TextField>
+                </div>
+            )
+
             const customerEmail = fields[1].content;
             renderForm.push(
                 <Button
@@ -372,6 +370,9 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
                 </Button>
             );
             break;
+
+        default:
+            throw Error("Invalid modelType");
     }
 
 

@@ -36,7 +36,7 @@ function ManagementTable({ title, headers, content, direction = 'rtl', searchStr
             setSearchVisible(false);
             cleanSearch();
         };
-    }, [cleanSearch]);
+    }, [cleanSearch, setSearchVisible]);
 
     useEffect(() => {
         if (searchStr === '') {
@@ -83,7 +83,7 @@ function ManagementTable({ title, headers, content, direction = 'rtl', searchStr
                 const dateOneSplit = twoDate[0].split('/');
                 const dateTwoSplit = twoDate[1].split('/');
                 // Prevent 19 prefix in years
-                const boundYear = dateTwoSplit[1].length == 2 ? `20${dateTwoSplit[1]}` : dateTwoSplit[1]
+                const boundYear = dateTwoSplit[1].length === 2 ? `20${dateTwoSplit[1]}` : dateTwoSplit[1]
                 return [
                     new Date(`${dateOneSplit[0]}-1-${dateOneSplit[1]}`),
                     new Date(boundYear, dateTwoSplit[0], 0)

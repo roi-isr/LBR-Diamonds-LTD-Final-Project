@@ -46,6 +46,7 @@
 .predict-form {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     margin: 0 auto;
     background-color: gainsboro;
     padding: 30px;

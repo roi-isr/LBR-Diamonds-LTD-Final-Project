@@ -3,13 +3,13 @@ import './RadioBox.css';
 
 function RadioBox({ name, optionArray, btnHeight, btnWidth, onClickedState }) {
     const [selectedOption, setSelectedOption] = useState('');
-
+    
+    // Handles radio click events
     const clickHandler = (e, item) => {
         e.preventDefault();
         setSelectedOption(item)
         onClickedState(name, item)
     }
-
 
     return (
         <div className="predict-form-option">

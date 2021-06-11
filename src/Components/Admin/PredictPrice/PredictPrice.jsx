@@ -1,8 +1,8 @@
 
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
-import RadioBox from "./RadioBox"
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import RadioBox from "./RadioBox";
 import background from '../../../Assets/diamonds_comps/diamond_photo.png';
 import './PredictPrice.css';
 import fetchGet from '../../../ApiEndpoints/Get';
@@ -29,7 +29,11 @@ export default function PredictForm() {
 
     const inputFieldsWidth = "200px";
 
-    const inputStyle = { width: inputFieldsWidth, margin: 'auto', textAlign: 'center' };
+    const inputStyle = {
+        width: inputFieldsWidth,
+        margin: 'auto',
+        textAlign: 'center'
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -83,6 +87,7 @@ export default function PredictForm() {
         }
         return true;
     }
+
     const onChaneInput = (name, item) => {
         const inputDataTemp = { ...inputData };
         inputDataTemp[name] = item;
@@ -101,6 +106,7 @@ export default function PredictForm() {
         predictedDiamondObj['weight'] = +predictedDiamondObj['weight'];
         predictedDiamondObj['table'] = +predictedDiamondObj['table'];
         predictedDiamondObj['depth'] = +predictedDiamondObj['depth'];
+        // Replace price with a pure number
         const price = Number(curPrediction.replace(/[^0-9.-]+/g, ""));
         predictedDiamondObj['advise-price'] = (adminAdvise) === "" ?
             price : (+adminAdvise);

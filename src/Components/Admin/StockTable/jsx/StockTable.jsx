@@ -238,7 +238,7 @@ export default function StockTable() {
         stockValues['clearance'], stockValues['color'],
         stockValues['code'], stockValues['comments'],
         stockValues['sell_date'], stockValues['cost_per_sell'], stockValues['status'],
-       (stockValues['weight_in_karat'] * stockValues['cost_per_karat']).toFixed(2),
+        (stockValues['weight_in_karat'] * stockValues['cost_per_karat']).toFixed(2),
         offerCounterData[stockValues['stock_id']] ?? 0
       );
       tempStock.push(subTempStock);

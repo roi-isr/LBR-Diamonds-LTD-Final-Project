@@ -26,7 +26,8 @@ const OffersCounterTd = styled.td`
     color: rgb(${props => (+props.curItem) * 25},0,${props => 255 - ((+props.curItem) * 25)});
     `;
 
-function ManagementTable({ title, headers, content, direction = 'rtl', searchStr, setSearchVisible, cleanSearch }) {
+function ManagementTable({ title, headers, content, direction = 'rtl',
+    searchStr, setSearchVisible, cleanSearch }) {
     const [shownContent, setShownContent] = useState([...content]);
     const [orderColumn, setOrderColumn] = useState("");
 
@@ -149,6 +150,10 @@ function ManagementTable({ title, headers, content, direction = 'rtl', searchStr
         sorterFunc(ind, order, shownContent, setShownContent)
     }
 
+    const isInt = (number) => {
+        return number % 1 === 0;
+    }
+    
     const shownContentTable = shownContent.map((row, index) =>
         <tr
             className='align-middle'
@@ -165,6 +170,27 @@ function ManagementTable({ title, headers, content, direction = 'rtl', searchStr
                         </OffersCounterTd>
                     );
                 }
+                else if (new Date(item) !== 'Invalid Date' && !isNaN(new Date(item)) && isNaN(item)) {
+                    const currDate = new Date(item);
+                    renderTd = (
+                        <td className="align-middle"
+                            key={Math.random() * idx}>
+                            {`${currDate.getDate()}/${currDate.getMonth() + 1}/${currDate.getFullYear()}`}
+                        </td>
+                    );
+                }
+                else if (!isNaN(item)) {
+                    let fixedNum = item;
+                    if (!isInt(item)) {
+                        fixedNum = parseFloat(item).toFixed(2);
+                    }
+                    renderTd = (
+                        <td className="align-middle"
+                            key={Math.random() * idx}>
+                            {fixedNum}
+                        </td>
+                    );
+                }
                 else {
                     renderTd = (
                         <td className="align-middle"
@@ -178,6 +204,7 @@ function ManagementTable({ title, headers, content, direction = 'rtl', searchStr
             )}
         </tr>
     );
+
     return (
         <div className="man-table-wrapper">
             <StoreCustomTitle>

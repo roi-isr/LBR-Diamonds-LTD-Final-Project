@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import ManagementTable from '../../../ManagementTable/jsx/ManagementTable'
-import Button from 'react-bootstrap/Button'
-import FormModal from '../../../UI-Elements/Modal/Modal'
+import ManagementTable from '../../../ManagementTable/jsx/ManagementTable';
+import Button from 'react-bootstrap/Button';
+import FormModal from '../../../UI-Elements/Modal/Modal';
 import fetchGet from '../../../../ApiEndpoints/Get';
 import fetchDelete from '../../../../ApiEndpoints/Delete';
 import Loader from 'react-loader-spinner';
@@ -16,8 +16,8 @@ const inputFields = [
   { name: "משקל", type: 'number' },
   { name: "מחיר לקראט", type: 'number' },
   { name: "שם הקונה", type: 'text' },
-  { name: "מייל הקונה", type: 'email' },
   { name: "טלפון הקונה", type: 'number' },
+  { name: "מייל הקונה", type: 'email' },
   { name: "תאריך מכירה", type: 'date' },
   { name: "תשלום", type: 'text' },
 ];
@@ -52,6 +52,7 @@ export default function SellTable() {
 
     const deleteRow = async (index) => {
       const con = window.confirm("Are you sure that you want to delete the item?");
+
       if (!con) {
         return
       }

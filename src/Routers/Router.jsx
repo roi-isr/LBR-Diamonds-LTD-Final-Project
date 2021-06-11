@@ -12,7 +12,7 @@ import Admin from '../Components/Admin/Admin';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import NotFound from '../Components/NotFound/NotFound';
 import BasicTable from '../Components/Admin/StockTable/jsx/StockTable';
-import DeliveryTable from '../Components/Admin/DeliveryCheck/jsx/DeliveryFile';
+import DeliveryTable from '../Components/Admin/DeliveryCheck/jsx/DeliveryTable';
 import SellTable from '../Components/Admin/SellTable/jsx/SellTable';
 import AdminContact from '../Components/Admin/ContactData/jsx/ContactData';
 import PredictForm from '../Components/Admin/PredictPrice/PredictPrice';

@@ -65,7 +65,7 @@ function ContactData() {
                     variant="outline-success"
                     onClick={() => setitemDetailsIndex(item[4])}>
                     צפה בפרטי הפנייה
-                      </Button>;
+                </Button>;
             const pushArr = item.slice(0, -1);
             pushArr.push(confirmBtn, deleteBtn);
             tempContent.push([...pushArr]);
@@ -122,9 +122,7 @@ function ContactData() {
             })
             .then(response => response.json())
             .then(data => onSubmitSuccess(data.message))
-            .catch(() => onSubmitFail())
-
-
+            .catch(() => onSubmitFail());
     }
 
     // Returns the table to our requested page.
@@ -157,7 +155,6 @@ function ContactData() {
                     }
                 </React.Fragment>
             }
-
         </div>
     );
 }

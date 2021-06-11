@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import ManagementTable from '../../../ManagementTable/jsx/ManagementTable'
-import Button from 'react-bootstrap/Button'
-import '../css/DeliveryFile.css';
+import ManagementTable from '../../../ManagementTable/jsx/ManagementTable';
+import Button from 'react-bootstrap/Button';
+import '../css/DeliveryTable.css';
 import FormModal from '../../../UI-Elements/Modal/Modal';
 import fetchGet from '../../../../ApiEndpoints/Get';
 import fetchDelete from '../../../../ApiEndpoints/Delete';

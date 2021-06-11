@@ -20,9 +20,7 @@ import { fetchAuthRequest } from '../../../ApiEndpoints/Authentication';
 
 const LoadingDiv = styled.div
   `
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  text-align: right;
 `;
 
 // copyright for using Material-UI style template

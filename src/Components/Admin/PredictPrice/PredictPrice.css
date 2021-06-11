@@ -1,4 +1,4 @@
-.main-prediction-page{
+.main-prediction-page {
     padding: 5px;
 }
 
@@ -54,7 +54,6 @@
     border-radius: 10px;
 }
 
-
 @media only screen and (max-width: 1320px) {
     .predict-main-div {
         display: flex;
@@ -68,4 +67,3 @@
         font-size: 2.5rem;
     }
 }
-

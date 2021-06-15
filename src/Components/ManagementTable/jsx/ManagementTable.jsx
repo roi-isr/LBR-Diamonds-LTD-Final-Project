@@ -153,7 +153,7 @@ function ManagementTable({ title, headers, content, direction = 'rtl',
     const isInt = (number) => {
         return number % 1 === 0;
     }
-    
+
     const shownContentTable = shownContent.map((row, index) =>
         <tr
             className='align-middle'
@@ -170,7 +170,10 @@ function ManagementTable({ title, headers, content, direction = 'rtl',
                         </OffersCounterTd>
                     );
                 }
-                else if (new Date(item) !== 'Invalid Date' && !isNaN(new Date(item)) && isNaN(item)) {
+                else if (new Date(item) !== 'Invalid Date' &&
+                    !isNaN(new Date(item)) &&
+                    !item.toString().match(/([A-Za-z]-)+/g) &&
+                    isNaN(item)) {
                     const currDate = new Date(item);
                     renderTd = (
                         <td className="align-middle"

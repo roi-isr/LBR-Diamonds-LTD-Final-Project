@@ -1,7 +1,6 @@
 import React from 'react';
 import '../css/VirtualStore.css';
-import ItemsLayout from './ItemsLayout'
-
+import ItemsLayout from './ItemsLayout';
 
 function VirtualStore() {
   return (

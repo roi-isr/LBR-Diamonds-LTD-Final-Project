@@ -20,30 +20,32 @@ const testData = {
     diamondColor: '5',
 }
 
-test('Check for 6 buttons (confirm, send mail, delete, next, previous, close) in a offer-info-form modal', async () => {
-    render(
-        <FormModal
-            modalType="offer-info-form"
-            autoShow={true}
-            fields={testData}
-            popUpTitle="עדכון לדוגמא"
-        />
-    );
+describe('Modal tests', () => {
+    test('Check for 6 buttons (confirm, send mail, delete, next, previous, close) in a offer-info-form modal', async () => {
+        render(
+            <FormModal
+                modalType="offer-info-form"
+                autoShow={true}
+                fields={testData}
+                popUpTitle="עדכון לדוגמא"
+            />
+        );
 
-    const btnElements = await screen.findAllByRole('button');
-    expect(btnElements).toHaveLength(6);
-});
+        const btnElements = await screen.findAllByRole('button');
+        expect(btnElements).toHaveLength(6);
+    });
 
-test('Check for proper modal title', () => {
-    render(
-        <FormModal
-            modalType="offer-info-form"
-            autoShow={true}
-            fields={testData}
-            popUpTitle="עדכון לדוגמא"
-        />
-    );
+    test('Check for proper modal title', () => {
+        render(
+            <FormModal
+                modalType="offer-info-form"
+                autoShow={true}
+                fields={testData}
+                popUpTitle="עדכון לדוגמא"
+            />
+        );
 
-    const titleElement = screen.getByText('עדכון לדוגמא');
-    expect(titleElement).toBeInTheDocument();
+        const titleElement = screen.getByText('עדכון לדוגמא');
+        expect(titleElement).toBeInTheDocument();
+    });
 });

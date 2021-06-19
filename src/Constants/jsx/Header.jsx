@@ -17,24 +17,6 @@ function Header(props) {
                     alt="logo"
                 />
             </div>
-            {/* <CircularProgressbar
-                value={4}
-                maxValue={5}
-                background={false}
-                text={"מסגרת"}
-                // styles={buildStyles({
-                //     // Rotation of path and trail, in number of turns (0-1)
-                //     rotation: 0.25,
-                //     // Text size
-                //     textSize: '10px',
-                //     // How long animation takes to go from one percentage to another, in seconds
-                //     pathTransitionDuration: 0.5,
-                //     // Colors
-                //     textColor: '#f88',
-                //     trailColor: '#d6d6d6',
-                // })}
-            /> */}
-
             {props.visibility ? <ConnectedNavItem /> : null}
         </header>
     );

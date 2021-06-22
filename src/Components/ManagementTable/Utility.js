@@ -26,3 +26,50 @@ export function sorter(index, order, content, setContentHook) {
     });
     setContentHook(tempContent);
 }
+
+export const convertDateFormat = (dateStr) => {
+    if (new RegExp('^\\d{1,2}/\\d{1,2}/\\d{2,4}$').test(dateStr)) {
+        const dateSplit = dateStr.split('/');
+        return new Date(`${dateSplit[1]}-${dateSplit[0]}-${dateSplit[2]}`);
+    }
+    else if (!isNaN(new Date(dateStr))) {
+        return new Date(dateStr);
+    }
+    return null;
+}
+
+export const convertShortenDateFormat = (dateStr) => {
+    if (new RegExp('^\\d{1,2}/\\d{2,4}$').test(dateStr)) {
+        const dateSplit = dateStr.split('/');
+        return new Date(`${dateSplit[0]}-1-${dateSplit[1]}`);
+    }
+    return null;
+}
+
+export const convertRangeDateFormat = (dateStr) => {
+    if (new RegExp('^\\d{1,2}/\\d{1,2}/\\d{2,4}-\\d{1,2}/\\d{1,2}/\\d{2,4}$').test(dateStr)) {
+        const twoDate = dateStr.split('-');
+        const dateOneSplit = twoDate[0].split('/');
+        const dateTwoSplit = twoDate[1].split('/');
+        return [
+            new Date(`${dateOneSplit[1]}-${dateOneSplit[0]}-${dateOneSplit[2]}`),
+            new Date(`${dateTwoSplit[1]}-${dateTwoSplit[0]}-${dateTwoSplit[2]}`)
+        ]
+    }
+    return null;
+}
+
+export const convertRangeShortenDateFormat = (dateStr) => {
+    if (new RegExp('^\\d{1,2}/\\d{2,4}-\\d{1,2}/\\d{2,4}$').test(dateStr)) {
+        const twoDate = dateStr.split('-');
+        const dateOneSplit = twoDate[0].split('/');
+        const dateTwoSplit = twoDate[1].split('/');
+        // Prevent 19 prefix in years
+        const boundYear = dateTwoSplit[1].length === 2 ? `20${dateTwoSplit[1]}` : dateTwoSplit[1]
+        return [
+            new Date(`${dateOneSplit[0]}-1-${dateOneSplit[1]}`),
+            new Date(boundYear, dateTwoSplit[0], 0)
+        ];
+    }
+    return null;
+}

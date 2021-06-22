@@ -20,7 +20,7 @@ const testData = {
     diamondColor: '5',
 }
 
-describe('Modal tests', () => {
+describe('Modal structural tests', () => {
     test('Check for 6 buttons (confirm, send mail, delete, next, previous, close) in a offer-info-form modal', async () => {
         render(
             <FormModal
@@ -50,24 +50,24 @@ describe('Modal tests', () => {
     });
 });
 
-describe('Modal tests', () => {
-    test('', async () => {
+describe('Modal date format tests', () => {
+    test('date 1', async () => {
         const result = dateFormatStr(new Date('2-1-2020'));
         expect(result).toBe('2020-02-01');
     });
-    test('', async () => {
+    test('date 2', async () => {
         const result = dateFormatStr(new Date('12-21-2020'));
         expect(result).toBe('2020-12-21');
     });
-    test('', async () => {
+    test('date 3', async () => {
         const result = dateFormatStr(new Date('3-31-2022'));
         expect(result).toBe('2022-03-31');
     });
-    test('', async () => {
+    test('date 4', async () => {
         const result = dateFormatStr(new Date('10-10-2019'));
         expect(result).toBe('2019-10-10');
     });
-    test('', async () => {
+    test('date 5', async () => {
         const result = dateFormatStr(new Date('5-5-2021'));
         expect(result).toBe('2021-05-05');
     });

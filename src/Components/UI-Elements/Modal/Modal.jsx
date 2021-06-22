@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import './Modal.css';
 import Modal from 'react-bootstrap/Modal';
 import TextField from '@material-ui/core/TextField';
 import FormLabel from '@material-ui/core/FormLabel';
-import Button from 'react-bootstrap/Button'
+import Button from 'react-bootstrap/Button';
 import fetchPost from '../../../ApiEndpoints/Post';
 import fetchPut from '../../../ApiEndpoints/Put';
 import fetchDelete from '../../../ApiEndpoints/Delete';
 import Loader from 'react-loader-spinner';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import MenuItem from '@material-ui/core/MenuItem'
+import MenuItem from '@material-ui/core/MenuItem';
+import { dateFormatStr } from './Utility'
+import './Modal.css';
 
 
 function ModalForm({ modalType, fields, autoShow, closeForm,
@@ -124,7 +125,7 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
             renderForm = fields.map((item, index) => {
                 if (item.type === 'date') {
                     const now = new Date(inputData[index]);
-                    dateFormat = `${now.getFullYear()}-${now.getMonth() < 9 ? "0" : ""}${now.getMonth() + 1}-${now.getDate() < 10 ? "0" : ""}${now.getDate()}`
+                    dateFormat = dateFormatStr(now);
                 }
                 return (
                     <div
@@ -249,7 +250,7 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
                         name="next-offer"
                         onClick={() => pagePagination('+')}>
                         הבא
-            </Button>
+                    </Button>
                     <div className="curr-page-h6">
                         <h6 >
                             {currPage}
@@ -260,20 +261,20 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
                                 dir="rtl"
                                 onClick={() => acceptOffer()}>
                                 אשר מכירה
-                    </Button>
+                            </Button>
                             <Button
                                 variant="warning"
                                 dir="rtl"
                                 href={`https://mail.google.com/mail/u/0/?fs=1&to=${offerUserEmail}&su=A%20response%20to%20your%20offer&body=%0A%0A%0ABest%20regards,%0ALBR%20Diamonds.&tf=cm`}
                                 target="_blank">
                                 חזור במייל!
-                    </Button>
+                            </Button>
                             <Button
                                 variant="danger"
                                 dir="rtl"
                                 onClick={() => deleteOffer(offerId)}>
                                 הסר פנייה
-                    </Button>
+                            </Button>
                         </div>
                     </div>
                     <Button
@@ -281,7 +282,7 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
                         name="prev-offer"
                         onClick={() => pagePagination('-')}>
                         הקודם
-            </Button>
+                    </Button>
                 </div >
             )
             break;

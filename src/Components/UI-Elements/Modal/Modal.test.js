@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import FormModal from "./Modal";
-
+import { dateFormatStr } from './Utility';
 
 const testData = {
     offer_id: 'test',
@@ -47,5 +47,28 @@ describe('Modal tests', () => {
 
         const titleElement = screen.getByText('עדכון לדוגמא');
         expect(titleElement).toBeInTheDocument();
+    });
+});
+
+describe('Modal tests', () => {
+    test('', async () => {
+        const result = dateFormatStr(new Date('2-1-2020'));
+        expect(result).toBe('2020-02-01');
+    });
+    test('', async () => {
+        const result = dateFormatStr(new Date('12-21-2020'));
+        expect(result).toBe('2020-12-21');
+    });
+    test('', async () => {
+        const result = dateFormatStr(new Date('3-31-2022'));
+        expect(result).toBe('2022-03-31');
+    });
+    test('', async () => {
+        const result = dateFormatStr(new Date('10-10-2019'));
+        expect(result).toBe('2019-10-10');
+    });
+    test('', async () => {
+        const result = dateFormatStr(new Date('5-5-2021'));
+        expect(result).toBe('2021-05-05');
     });
 });

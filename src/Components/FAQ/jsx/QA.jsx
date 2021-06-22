@@ -63,7 +63,8 @@ class QA extends React.Component {
         <Button
           className="qa-search-btn"
           color="primary"
-          href='/store'>
+          href='/store'
+          id='go-to-store'>
           SEARCH FOR A DIAMOND NOW
         </Button>
       </div >

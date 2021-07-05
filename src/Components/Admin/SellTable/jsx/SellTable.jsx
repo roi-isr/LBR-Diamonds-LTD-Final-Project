@@ -94,7 +94,7 @@ export default function SellTable() {
           onClick={() => deleteRow(index)}
           variant="outline-danger">
           הסר
-       </Button>;
+        </Button>;
 
       const renderItems = item.slice(1);
 

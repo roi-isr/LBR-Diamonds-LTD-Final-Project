@@ -21,7 +21,7 @@ export default function fetchGet(path, authRequired = true) {
                     resolve({});
                 }
                 else {
-                    alert("Unabled to fetch data from DB");
+                    // alert("Unabled to fetch data from DB");
                     reject();
                 }
             })
@@ -29,7 +29,7 @@ export default function fetchGet(path, authRequired = true) {
                 resolve(data);
             })
             .catch(() => {
-                alert("Unabled to fetch data from DB");
+                // alert("Unabled to fetch data from DB");
                 reject();
             });
     })

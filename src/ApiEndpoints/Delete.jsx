@@ -18,7 +18,7 @@ export default function fetchDelete(path) {
                     resolve();
                 }
                 else {
-                    alert("Your deletion failed");
+                    // alert("Your deletion failed");
                     reject();
                 }
             })

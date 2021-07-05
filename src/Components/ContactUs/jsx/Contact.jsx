@@ -103,7 +103,6 @@ function ContactForm() {
 
         const onSubmitFail = () => {
             alert("Couldn't submit your message. Please try again later.")
-            console.log("בעיה בשליחת ההודעה...");
         }
         return fetch(`${ServerUrl}/contact`,
             {

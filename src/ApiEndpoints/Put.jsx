@@ -20,12 +20,12 @@ export default function fetchPut(path, data) {
                     resolve(data._id);
                 }
                 else {
-                    alert("Your submittion failed");
+                    // alert("Your submittion failed");
                     reject();
                 }
             })
             .catch(() => {
-                alert("Your submittion failed");
+                // alert("Your submittion failed");
                 reject();
 
             });

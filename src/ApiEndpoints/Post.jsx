@@ -1,5 +1,5 @@
-import { ServerUrl } from './ServerUrl'
-import { getValidToken } from './Authentication'
+import { ServerUrl } from './ServerUrl';
+import { getValidToken } from './Authentication';
 
 
 export default function fetchPost(path, data, authRequired=true) {
@@ -21,14 +21,13 @@ export default function fetchPost(path, data, authRequired=true) {
                     resolve(data._id);
                 }
                 else {
-                    alert("Your submittion failed");
+                    // alert("Your submittion failed");
                     reject();
                 }
             })
             .catch(() => {
-                alert("Your submittion failed");
+                // alert("Your submittion failed");
                 reject();
-
             });
     })
 }

@@ -21,10 +21,11 @@ export function fetchAuthRequest(httpContent) {
                     });
                 }
                 else {
-                    reject(data.message);
+                    console.log(data.message)
+                    reject(data.message || "לא ניתן להתחבר למערכת כרגע. אנא נסה שנית מאוחר יותר.");
                 }
             })
-            .catch((e) => reject(e.name));
+            .catch((e) => reject( "לא ניתן להתחבר למערכת כרגע. אנא נסה שנית מאוחר יותר."));
     })
 }
 

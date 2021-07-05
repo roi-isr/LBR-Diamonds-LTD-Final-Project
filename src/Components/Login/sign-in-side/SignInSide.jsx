@@ -91,7 +91,8 @@ function SignInSide(props) {
       const tokens = await fetchAuthRequest(httpContent);
       props.tokenSaver(tokens);
     } catch (error) {
-      alert(error);
+      if (error)
+        alert(error);
     } finally {
       setInSignProcess(false);
     }
@@ -122,7 +123,7 @@ function SignInSide(props) {
             component="h1"
             variant="h5">
             Sign in
-    </Typography>
+          </Typography>
           <form className={classes.form} noValidate>
             <TextField
               margin="normal"
@@ -164,7 +165,7 @@ function SignInSide(props) {
               className={classes.submit}
             >
               Sign In
-      </Button>
+            </Button>
             <Box sx={{ mt: 5 }}>
               <Copyright />
             </Box>

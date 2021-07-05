@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import '../css/Contact.css'
+import '../css/Contact.css';
+import fetchPost from '../../../ApiEndpoints/Post';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import styled from 'styled-components/macro'
 import L from 'leaflet';
 import icon from 'leaflet/dist/images/marker-icon.png';
-import { ServerUrl } from '../../../ApiEndpoints/ServerUrl'
+import { ServerUrl } from '../../../ApiEndpoints/ServerUrl';
 import Loader from 'react-loader-spinner';
 
 /* Creating a styled component that wraps the map and gives it a unique style */
@@ -55,7 +56,7 @@ function MapDisplay() {
                     <Marker position={position} icon={markerIcon}>
                         <Popup>
                             בורסת היהלומים רמת גן
-                          </Popup>
+                        </Popup>
                     </Marker>
                     <MapFeatures />
                 </MapContainer>
@@ -63,7 +64,7 @@ function MapDisplay() {
                     className="home-btn"
                     onClick={getBackToCenter}>
                     H
-              </button>
+                </button>
             </MapWrapper>
             {/* go back to centrelized position button */}
         </div>
@@ -88,34 +89,20 @@ function ContactForm() {
             phone: phone,
             content: content
         }
-        await fetchContact(contentData);
-        setLoading(false);
-    }
-
-    const fetchContact = async (content) => {
-        const onSubmitSuccess = () => {
+        try {
+            await fetchPost('contact', contentData, false);
             alert("Your message was sent successfully!");
             setEmail("");
             setName("");
             setPhone("");
             setContent("");
         }
-
-        const onSubmitFail = () => {
-            alert("Couldn't submit your message. Please try again later.")
+        catch (e) {
+            alert("Couldn't submit your message. Please try again later.");
         }
-        return fetch(`${ServerUrl}/contact`,
-            {
-                mode: 'no-cors',
-                method: 'POST',
-                headers:
-                {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(content)
-            })
-            .then(() => onSubmitSuccess())
-            .catch(() => onSubmitFail())
+        finally {
+            setLoading(false);
+        }
     }
 
     const formElementsAttr = [

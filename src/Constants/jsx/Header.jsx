@@ -66,7 +66,6 @@ function CustomizedNavItem(props) {
                         <NavLink
                             activeClassName={item.name !== "Logout" ? "active-nav" : "logout-nav"}
                             isActive={false}
-                            // as={Link}
                             to={{
                                 pathname: item.path ?? null
                             }}

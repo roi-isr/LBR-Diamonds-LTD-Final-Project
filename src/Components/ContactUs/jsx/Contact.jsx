@@ -7,7 +7,6 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import styled from 'styled-components/macro'
 import L from 'leaflet';
 import icon from 'leaflet/dist/images/marker-icon.png';
-import { ServerUrl } from '../../../ApiEndpoints/ServerUrl';
 import Loader from 'react-loader-spinner';
 
 /* Creating a styled component that wraps the map and gives it a unique style */

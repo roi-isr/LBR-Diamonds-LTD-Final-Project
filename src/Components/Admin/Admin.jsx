@@ -37,11 +37,6 @@ function Admin(props) {
         props.showNav(false);
     }, [props, history]);
 
-    /* Remove access token from browser cookies */
-    const removeCookies = () => {
-        (new WebCookies()).removeCookies();
-    }
-
     /* Display dedicated navbar options for admin */
     const changeNavToAdmin = useCallback(() => {
         const adminNav = [

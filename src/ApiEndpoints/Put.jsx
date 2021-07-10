@@ -1,5 +1,5 @@
-import { ServerUrl } from './ServerUrl'
-import { getValidToken } from './Authentication'
+import { ServerUrl } from './ServerUrl';
+import { getValidToken } from './Authentication';
 
 export default function fetchPut(path, data) {
     return new Promise(async (resolve, reject) => {

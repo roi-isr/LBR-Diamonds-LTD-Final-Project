@@ -1,7 +1,7 @@
 import { SAVE_TOKEN, UPDATE_LOGIN_STAT, LOG_OUT } from './actionTypes';
 import { refreshToken } from '../../ApiEndpoints/Authentication'
 
-// Change site navbar visibility
+// Save a token
 export const save_token = (val) => {
     return {
         type: SAVE_TOKEN,

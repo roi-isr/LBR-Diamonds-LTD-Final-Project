@@ -33,7 +33,6 @@ function Admin(props) {
             setTimeout(() => history.goBack(), 0)
             return;
         }
-        removeCookies();
         props.logOut();
         props.showNav(false);
     }, [props, history]);

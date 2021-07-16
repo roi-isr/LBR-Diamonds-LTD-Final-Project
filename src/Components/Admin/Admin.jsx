@@ -3,9 +3,8 @@
 import React, { useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { change_content, change_visiblity, log_out } from '../../store/actions/index';
-import { WebCookies } from '../../Entities/Cookies';
 import { withRouter, useHistory } from 'react-router-dom';
-import RouterComponent from '../../Routers/Router'
+import RouterComponent from '../../Routers/Router';
 import './Admin.css';
 import styled from 'styled-components/macro';
 
@@ -21,7 +20,7 @@ const AdminWelcome = styled.h1`
     @media (max-width: 990px){
         font-size: 5rem;
     }
-`
+`;
 
 function Admin(props) {
     const history = useHistory();

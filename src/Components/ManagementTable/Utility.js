@@ -7,11 +7,11 @@ export function sorter(index, order, content, setContentHook) {
             !isNaN(b[index]) && !isNaN(parseFloat(b[index]))) {
             return (parseFloat(a[index]) - parseFloat(b[index])) * orderSign;
         }
-         // date sort
-        else if ((new Date(a[index])) !== 'Invalid Date' && !isNaN(new Date(a[index])) &&
-            (new Date(b[index])) !== 'Invalid Date' && !isNaN(new Date(b[index]))
+        // date sort
+        else if ((new Date(a[index])) !== 'Invalid Date' && !isNaN(new Date(a[index]) && !RegExp('[a-zA-Z]').test(new Date(a[index]))) &&
+            (new Date(b[index])) !== 'Invalid Date' && !isNaN(new Date(b[index]) && !RegExp('[a-zA-Z]').test(new Date(b[index])))
             && !a[index].match(/([A-Za-z]-)+/g)) {
-            return ((new Date(a[index])) > (new Date(b[index])) ? 1 : (new Date(a[index])) < (new Date(b[index])) ? -1 : 0 ) * orderSign;
+            return ((new Date(a[index])) > (new Date(b[index])) ? 1 : (new Date(a[index])) < (new Date(b[index])) ? -1 : 0) * orderSign;
         }
         // string sort (default)
         else if (a[index].toLowerCase() > b[index].toLowerCase()) {
@@ -32,7 +32,7 @@ export const convertDateFormat = (dateStr) => {
         const dateSplit = dateStr.split('/');
         return new Date(`${dateSplit[1]}-${dateSplit[0]}-${dateSplit[2]}`);
     }
-    else if (!isNaN(new Date(dateStr))) {
+    else if (!isNaN(new Date(dateStr)) && !RegExp('[a-zA-Z]').test(dateStr)) {
         return new Date(dateStr);
     }
     return null;

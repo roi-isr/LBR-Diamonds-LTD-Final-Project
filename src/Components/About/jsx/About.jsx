@@ -1,3 +1,5 @@
+// About the company details
+
 import React from 'react';
 import '../css/About.css';
 import Factory from '../../../Assets/diamonds_comps/diamond_photo.png';

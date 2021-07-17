@@ -1,3 +1,5 @@
+// A component used for contacting the admin, as well as displaying an interctive map the shows the company exact location
+
 import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';

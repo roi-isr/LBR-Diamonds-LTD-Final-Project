@@ -1,3 +1,4 @@
+// A function that is responsible for sorting the management tables
 export function sorter(index, order, content, setContentHook) {
     const tempContent = [...content];
     const orderSign = order === 'ASC' ? 1 : -1;
@@ -26,6 +27,8 @@ export function sorter(index, order, content, setContentHook) {
     });
     setContentHook(tempContent);
 }
+
+// Utility functions for converting string to date (if those string are dates)
 
 export const convertDateFormat = (dateStr) => {
     if (new RegExp('^\\d{1,2}/\\d{1,2}/\\d{2,4}$').test(dateStr)) {

@@ -1,3 +1,5 @@
+// Q&A page - common questions answers
+
 import React from 'react';
 import '../css/QA.css'
 import { Button } from 'react-bootstrap';

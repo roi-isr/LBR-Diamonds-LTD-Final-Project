@@ -1,3 +1,5 @@
+// 404 component (page not found)
+
 import React from 'react';
 import styled from 'styled-components/macro'
 import NotFoundPic from '../../Assets/not_found_404/not_found_img.jpg'

@@ -1,3 +1,5 @@
+// A component that represent the management tables across the whole platform
+
 import React, { useState, useEffect } from "react";
 import SortIcon from '@material-ui/icons/Sort';
 import { Table } from 'react-bootstrap';

@@ -1,4 +1,4 @@
-/* Home page component */
+/* Home page component - displaying picture of some diamonds */
 
 import React from 'react';
 import SlideImg from './SlideImg'

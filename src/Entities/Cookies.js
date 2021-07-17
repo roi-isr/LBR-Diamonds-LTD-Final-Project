@@ -1,6 +1,7 @@
 /* A class response of creating web browser's cookies instances */
 
 import Cookies from "universal-cookie";
+
 export class WebCookies {
     constructor() {
         this._cookies = new Cookies();

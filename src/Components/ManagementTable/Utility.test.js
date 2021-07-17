@@ -1,5 +1,4 @@
 import {
-    sorter as sorterFunc,
     convertDateFormat,
     convertShortenDateFormat,
     convertRangeDateFormat,

@@ -44,6 +44,10 @@ function CustomizedNavItem(props) {
 
     const onSearchClicked = (e) => {
         e.preventDefault();
+        // Prevent the character '\' (backslash) as a valid search string
+        if(searchStr.includes('\\')){
+            return;
+        }
         props.sendSearch(searchStr);
         closeNav();
     }

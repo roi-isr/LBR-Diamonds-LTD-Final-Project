@@ -11,7 +11,8 @@ export function sorter(index, order, content, setContentHook) {
         // date sort
         else if ((new Date(a[index])) !== 'Invalid Date' && !isNaN(new Date(a[index]))
             && (new Date(b[index])) !== 'Invalid Date' && !isNaN(new Date(b[index]))
-            && !a[index].match(/([A-Za-z])+/g) && !b[index].match(/([A-Za-z])+/g)) {
+            && ((!a[index].match(/([A-Za-z])+/g) && !b[index].match(/([A-Za-z])+/g))
+                || (a[index].includes('GMT') && b[index].includes('GMT')))) {
             return ((new Date(a[index])) > (new Date(b[index])) ? 1 : (new Date(a[index])) < (new Date(b[index])) ? -1 : 0) * orderSign;
         }
         // string sort (default)

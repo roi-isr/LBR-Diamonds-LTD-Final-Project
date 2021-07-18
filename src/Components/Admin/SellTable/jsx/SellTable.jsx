@@ -110,8 +110,10 @@ export default function SellTable() {
       { name: "משקל", content: item[3] },
       { name: "מחיר לקראט", content: item[4] },
       { name: "שם הקונה", content: item[5] },
-      { name: "תאריך מכירה", content: item[6], type: 'date' },
-      { name: "תשלום", content: item[7] },
+      { name: "טלפון הקונה", content: item[6] },
+      { name: "מייל הקונה", content: item[7] },
+      { name: "תאריך מכירה", content: item[8], type: 'date' },
+      { name: "תשלום", content: item[9] },
     ];
   }
 
@@ -130,7 +132,8 @@ export default function SellTable() {
     const tempContent = [...content];
     const wantedIndex = tempContent.findIndex((item) => item[0] === updatedItem[0]);
     const updatedItemFixed = [...updatedItem];
-    updatedItemFixed.splice(5, 0, updatedItem[3] * updatedItem[4])
+    updatedItemFixed.splice(5, 0, updatedItem[3] * updatedItem[4]);
+    updatedItemFixed.splice(updatedItemFixed.length-4, 2);
     tempContent[wantedIndex] = [...updatedItemFixed];
     setItemForUpdate(updatedItem);
     setContent(tempContent);
@@ -155,6 +158,8 @@ export default function SellTable() {
         { name: "משקל", content: sellValues['weight_in_carat'] },
         { name: "מחיר לקראט", content: sellValues['price_per_carat'] },
         { name: "שם הקונה", content: sellValues['buying_customer'] },
+        { name: "טלפון הקונה", content: sellValues['customer_phone'] },
+        { name: "מייל הקונה", content: sellValues['customer_mail'] },
         { name: "תאריך מכירה", content: sellValues['sell_date'], type: 'date' },
         { name: "תשלום", content: sellValues['payment_method'] },
       ];

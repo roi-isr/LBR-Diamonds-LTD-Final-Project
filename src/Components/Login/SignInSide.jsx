@@ -21,7 +21,7 @@ import styled from 'styled-components/macro';
 import { fetchAuthRequest } from '../../ApiEndpoints/Authentication';
 
 const LoadingDiv = styled.div
-`
+  `
   text-align: right;
 `;
 

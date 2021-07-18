@@ -52,7 +52,6 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
         } else {
             if (popUpTitle === 'העברת משלוח למלאי') {
                 let inputDataFixed;
-                console.log(inputData)
                 if (!inputData[1]) {
                     inputDataFixed = { ...inputData, 1: fields[1].defaultValue };
                 }

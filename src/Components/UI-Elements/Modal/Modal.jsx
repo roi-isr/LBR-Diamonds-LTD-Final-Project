@@ -380,6 +380,7 @@ function ModalForm({ modalType, fields, autoShow, closeForm,
         <React.Fragment>
             {modalType === 'input-form' &&
                 popUpTitle !== "העברת משלוח למלאי" &&
+                popUpTitle !== "Send an offer to admin" &&
                 <button
                     type="button"
                     className="btn btn-primary btn-lg btn-block"
